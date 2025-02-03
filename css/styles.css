@@ -10,6 +10,20 @@ body {
   height: 200vh; /* Allow scrolling */
 }
 
+/* Pseudo-element ::before to cover the whole body and make sure I can add background image to background*/
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../assets/images/background_img.jpg'); 
+  background-size: cover; /* Make sure the image covers the whole body */
+  background-position: center; /* Center the background image */
+  opacity: 0.15; /* Set opacity */
+
+}
 .circle-container {
   position: fixed;
   top: 10%;
@@ -18,6 +32,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 20vh;
+  
 }
 
 .circle {
@@ -57,6 +72,10 @@ body {
   border-radius: 50%;
 }
 
+
+/* Start flickering effect */
+
+/* End flickering effect */
 
 @keyframes rotateText {
   0% {
