@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Playwrite AT", serif;
   background-color: #f0f0f0;
   height: 200vh; /* Allow scrolling */
 }
@@ -52,7 +52,6 @@ body::before {
   font-size: 15px; /* Reduced font size to fit within the smaller circle */
   font-weight: bold;
   color: #333;
-  font-family: 'Bebas Neue', sans-serif; /* Apply Bebas Neue font */
 }
 
 .rotating-text span {
@@ -73,10 +72,6 @@ body::before {
 }
 
 
-/* Start flickering effect */
-
-/* End flickering effect */
-
 @keyframes rotateText {
   0% {
     transform: rotate(0deg);
@@ -85,3 +80,82 @@ body::before {
     transform: rotate(360deg);
   }
 }
+
+/* Start flickering effect */
+
+
+.flicker-strike-text {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+
+}
+
+/* Flickering effect for the 'ROOTING' text */
+.strikethrough-flicker {
+  position: relative;
+  display: inline-block;
+  animation: flicker 1.5s infinite;  /* Flicker effect */
+  animation: appearStrikethrough 4s ease forwards;
+  color: #ff6347;  /* Optional color for the strikethrough text */
+  text-align: center; /* Ensure text is centered horizontally inside the container */
+  position: fixed; /* Fix the position to keep it in place during scrolling */
+  top: 100px; /* 20px from the top */
+  left: 41%; /* Center horizontally by moving it 50% from the left */
+  transform: translateX(-50%); /* Offsetting for perfect centering */
+
+}
+
+/* Styling for the 'RESEARCH' part with black color */
+.research {
+  color: black;  /* Set the color to black for 'RESEARCH' */
+  text-align: center; /* Ensure text is centered horizontally inside the container */
+  position: fixed; /* Fix the position to keep it in place during scrolling */
+  top: 100px; /* 20px from the top */
+  left: 61%; /* Center horizontally by moving it 61% from the left */
+  transform: translateX(-50%); /* Offsetting for perfect centering */
+  animation: flicker 4s ease forwards;
+
+}
+
+/* Keyframes for flickering effect */
+/* Keyframes for the strikethrough effect */
+@keyframes appearStrikethrough {
+  0% {
+    opacity: 0; /* Initially hidden */
+    text-decoration: none; /* No strike-through at start */
+  }
+  25% {
+    opacity: 0.5; /* Make text visible */
+    text-decoration: none; /* No strike-through at start */
+  }
+  50% {
+    opacity: 0.75; /* Make text visible */
+    text-decoration: none; /* No strike-through at start */
+  }
+  100% {
+    opacity: 1; /* Text stays visible */
+    text-decoration: line-through; /* Apply strikethrough */
+  }
+}
+
+/* Keyframes for flickering effect */
+@keyframes flicker {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* End flickering effect */
