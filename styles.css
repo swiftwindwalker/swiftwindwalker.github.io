@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  height: 200vh; /* Allow scrolling */
+}
+
+.circle-container {
+  position: fixed;
+  top: 10%;
+  right: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.circle {
+  width: 75px;   /* Reduced size by 70% */
+  height: 75px;  /* Reduced size by 70% */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rotating-text {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px; /* Reduced font size to fit within the smaller circle */
+  font-weight: bold;
+  color: #333;
+  font-family: 'Bebas Neue', sans-serif; /* Apply Bebas Neue font */
+}
+
+.rotating-text span {
+  position: absolute;
+  transform-origin: center center;
+  display: inline-block;
+  white-space: nowrap;
+  transform: rotate(0deg);
+}
+
+.center-image {
+  width: 80px;    /* Set the image size */
+  height: 80px;   /* Set the image size */
+  position: absolute;
+  z-index: 0;     /* Ensure image stays behind the rotating text */
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+@keyframes rotateText {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
