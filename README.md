@@ -1,2 +1,2 @@
 # swiftwindwalker.github.io
-Test
+This is for testing purpose only
