@@ -2,15 +2,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+
+
 }
 
 body {
   font-family: "Playwrite AT", serif;
   background-color: #f0f0f0;
   height: 200vh; /* Allow scrolling */
+  position: relative; /* Required for pseudo-element positioning */
+  color: white;
 }
 
-/* Pseudo-element ::before to cover the whole body and make sure I can add background image to background*/
+/* Pseudo-element ::before to cover the whole body and make sure I can add background image */
 body::before {
   content: "";
   position: fixed;
@@ -18,12 +23,13 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('../assets/images/background_img.jpg'); 
-  background-size: cover; /* Make sure the image covers the whole body */
+  background-image: url('../assets/images/background_img.jpg');
+  background-size: cover; /* Ensure the image covers the whole body */
   background-position: center; /* Center the background image */
   opacity: 0.15; /* Set opacity */
-
 }
+
+/* The circle container */
 .circle-container {
   position: fixed;
   top: 10%;
@@ -31,113 +37,80 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20vh;
-  
+  z-index: 1;
 }
 
+/* The rotating circle */
 .circle {
-  width: 75px;   /* Reduced size by 70% */
-  height: 75px;  /* Reduced size by 70% */
+  width: 75px; /* Reduced size */
+  height: 75px; /* Reduced size */
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url('../assets/images/dices.gif');
+  background-size: cover; /* Ensure the image covers the whole body */
+  background-position: center; /* Center the background image */
+  border-radius: 50%; /* Ensure it's circular */
+
+
 }
 
+/* Rotating text inside the circle */
 .rotating-text {
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 15px; /* Reduced font size to fit within the smaller circle */
+  font-size: 15px; /* Font size to fit */
   font-weight: bold;
   color: #333;
+  text-align: center;
 }
 
 .rotating-text span {
   position: absolute;
   transform-origin: center center;
-  display: inline-block;
-  white-space: nowrap;
   transform: rotate(0deg);
 }
 
-.center-image {
-  width: 80px;    /* Set the image size */
-  height: 80px;   /* Set the image size */
-  position: absolute;
-  z-index: 0;     /* Ensure image stays behind the rotating text */
-  object-fit: cover;
-  border-radius: 50%;
-}
 
-
-@keyframes rotateText {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* Start flickering effect */
-
-
-.flicker-strike-text {
+/* Start flickering and strikethrough effect */
+.title-flicker-strike-text {
   font-size: 48px;
   font-weight: bold;
   color: white;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center; /* Center "ROOTING" and "RESEARCH" vertically */
+  justify-content: center; /* Center both horizontally */
+  z-index: 1;
+}
+
+/* Flickering effect for 'ROOTING' */
+.rooting-title {
+
+  display: inline-flex;
+  animation: flicker 1.5s infinite, appearStrikethrough 4s ease forwards;
+  color: #ff6347;
+  top: 20%;
+  left: 40%;
+  transform: translateX(-50%);
+  position: fixed;
+  z-index: 2;
+  white-space: nowrap; /* Ensure the text stays on one line */
 
 }
 
-/* Flickering effect for the 'ROOTING' text */
-.strikethrough-flicker {
-  position: relative;
-  display: inline-block;
-  animation: flicker 1.5s infinite;  /* Flicker effect */
-  animation: appearStrikethrough 4s ease forwards;
-  color: #ff6347;  /* Optional color for the strikethrough text */
-  text-align: center; /* Ensure text is centered horizontally inside the container */
-  position: fixed; /* Fix the position to keep it in place during scrolling */
-  top: 100px; /* 20px from the top */
-  left: 41%; /* Center horizontally by moving it 50% from the left */
-  transform: translateX(-50%); /* Offsetting for perfect centering */
-
-}
-
-/* Styling for the 'RESEARCH' part with black color */
-.research {
-  color: black;  /* Set the color to black for 'RESEARCH' */
-  text-align: center; /* Ensure text is centered horizontally inside the container */
-  position: fixed; /* Fix the position to keep it in place during scrolling */
-  top: 100px; /* 20px from the top */
-  left: 61%; /* Center horizontally by moving it 61% from the left */
-  transform: translateX(-50%); /* Offsetting for perfect centering */
+/* Styling for 'RESEARCH' part with black color */
+.research-title {
+  color: black;
+  text-align: center;
+  position: fixed;
+  top: 20%;
+  left: 60%;
+  transform: translateX(-50%);
   animation: flicker 4s ease forwards;
-
-}
-
-/* Keyframes for flickering effect */
-/* Keyframes for the strikethrough effect */
-@keyframes appearStrikethrough {
-  0% {
-    opacity: 0; /* Initially hidden */
-    text-decoration: none; /* No strike-through at start */
-  }
-  25% {
-    opacity: 0.5; /* Make text visible */
-    text-decoration: none; /* No strike-through at start */
-  }
-  50% {
-    opacity: 0.75; /* Make text visible */
-    text-decoration: none; /* No strike-through at start */
-  }
-  100% {
-    opacity: 1; /* Text stays visible */
-    text-decoration: line-through; /* Apply strikethrough */
-  }
+  z-index: 2;
+  white-space: nowrap; /* Ensure the text stays on one line */
 }
 
 /* Keyframes for flickering effect */
@@ -158,4 +131,78 @@ body::before {
     opacity: 1;
   }
 }
-/* End flickering effect */
+
+/* Keyframes for strikethrough effect */
+@keyframes appearStrikethrough {
+  0% {
+    opacity: 0;
+    text-decoration: none;
+  }
+  25% {
+    opacity: 0.5;
+    text-decoration: none;
+  }
+  50% {
+    opacity: 0.75;
+    text-decoration: none;
+  }
+  100% {
+    opacity: 1;
+    text-decoration: line-through solid rgba(0, 0, 0, 0.8); /* Apply strikethrough */
+  }
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+  /* Adjust circle and text for smaller screens - Ipad Mini */
+  .circle-container {
+    top: 5%;
+    right: 7%;
+    height: 15vh;
+  }
+
+  .circle {
+    width: 30px;
+    height: 30px;
+  }
+
+  .rotating-text {
+    font-size: 10px;
+  }
+
+  .title-flicker-strike-text {
+    font-size: 28px;
+
+  }
+
+  
+}
+
+@media (max-width: 480px) {
+  /* Further adjust for small screens - Iphone 12 Pro*/
+  .circle-container {
+    top: 5%;
+    right: 7%;
+    height: 10vh;
+    width: 10vh;
+  }
+
+  .circle {
+    width: 20px; /* Smaller circle */
+
+    height: 20px; /* Smaller circle */
+
+   /* background-size:40px;*/
+    /*background-color: rgba(0, 0, 0, 0.5); debugging size */
+   /* border-radius: 50%;*/
+  }
+
+  .rotating-text {
+    font-size: 8px;
+  }
+
+  .title-flicker-strike-text {
+    font-size: 14px;
+  }
+
+}
