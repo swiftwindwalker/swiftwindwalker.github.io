@@ -1,21 +1,20 @@
+/* General Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
-
-
 }
 
+/* Body Styles */
 body {
   font-family: "Playwrite AT", serif;
   background-color: #f0f0f0;
   height: 200vh; /* Allow scrolling */
-  position: relative; /* Required for pseudo-element positioning */
+  position: relative;
   color: white;
 }
 
-/* Pseudo-element ::before to cover the whole body and make sure I can add background image */
+/* Pseudo-element for background image */
 body::before {
   content: "";
   position: fixed;
@@ -24,9 +23,9 @@ body::before {
   right: 0;
   bottom: 0;
   background-image: url('../assets/images/background_img.jpg');
-  background-size: cover; /* Ensure the image covers the whole body */
-  background-position: center; /* Center the background image */
-  opacity: 0.15; /* Set opacity */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
 }
 
 /* The circle container */
@@ -42,18 +41,19 @@ body::before {
 
 /* The rotating circle */
 .circle {
-  width: 75px; /* Reduced size */
-  height: 75px; /* Reduced size */
+  width: 10vw; /* Responsive size (10% of viewport width) */
+  height: 10vw; /* Maintain aspect ratio */
+  max-width: 100px; /* Max size for bigger screens */
+  max-height: 100px; /* Max size for bigger screens */
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   background-image: url('../assets/images/dices.gif');
-  background-size: cover; /* Ensure the image covers the whole body */
-  background-position: center; /* Center the background image */
-  border-radius: 50%; /* Ensure it's circular */
-
-
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  animation: rotateText 20s linear infinite; /* Apply rotation animation */
 }
 
 /* Rotating text inside the circle */
@@ -61,10 +61,9 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 15px; /* Font size to fit */
+  font-size: 15px;
   font-weight: bold;
   color: #333;
-  text-align: center;
 }
 
 .rotating-text span {
@@ -73,34 +72,31 @@ body::before {
   transform: rotate(0deg);
 }
 
-
-/* Start flickering and strikethrough effect */
+/* Title flicker and strike-through effects */
 .title-flicker-strike-text {
   font-size: 48px;
   font-weight: bold;
   color: white;
   display: inline-flex;
-  align-items: center; /* Center "ROOTING" and "RESEARCH" vertically */
-  justify-content: center; /* Center both horizontally */
+  align-items: center;
+  justify-content: center;
   z-index: 1;
 }
 
 /* Flickering effect for 'ROOTING' */
 .rooting-title {
-
   display: inline-flex;
   animation: flicker 1.5s infinite, appearStrikethrough 4s ease forwards;
   color: #ff6347;
+  position: fixed;
   top: 20%;
   left: 40%;
   transform: translateX(-50%);
-  position: fixed;
   z-index: 2;
-  white-space: nowrap; /* Ensure the text stays on one line */
-
+  white-space: nowrap;
 }
 
-/* Styling for 'RESEARCH' part with black color */
+/* Styling for 'RESEARCH' with black color */
 .research-title {
   color: black;
   text-align: center;
@@ -110,10 +106,10 @@ body::before {
   transform: translateX(-50%);
   animation: flicker 4s ease forwards;
   z-index: 2;
-  white-space: nowrap; /* Ensure the text stays on one line */
+  white-space: nowrap;
 }
 
-/* Keyframes for flickering effect */
+/* Flickering effect */
 @keyframes flicker {
   0% {
     opacity: 1;
@@ -152,18 +148,65 @@ body::before {
   }
 }
 
-/* Media Queries for Mobile Responsiveness */
+/* Keyframes for rotating text */
+@keyframes rotateText {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile responsiveness (Tablet & Small Screens) */
 @media (max-width: 768px) {
-  /* Adjust circle and text for smaller screens - Ipad Mini */
+  /* Adjust circle and text for smaller screens */
   .circle-container {
     top: 5%;
-    right: 7%;
+    right: 5%;
+    width: 15vh;
     height: 15vh;
   }
 
   .circle {
-    width: 30px;
-    height: 30px;
+    width: 30vw;  /* Circle size is 30% of viewport width on tablets */
+    height: 30vw; /* Maintain aspect ratio */
+    max-width: 75px;  /* Max size */
+    max-height: 75px; /* Max size */
+  }
+
+  .rotating-text {
+    font-size: 12px;
+  }
+
+  .title-flicker-strike-text {
+    font-size: 30px;
+  }
+
+  .rooting-title, .research-title {
+    top: 15%; /* Adjust position for smaller screens */
+    font-size: 18px;
+  }
+}
+
+/* Mobile (Very Small Screens) */
+@media (max-width: 480px) {
+  /* Adjust for very small screens */
+  .circle-container {
+    top: 5%;
+    right: 5%;
+    width: 10vh;
+    height: 10vh;
+  }
+
+  .circle {
+    width: 40vw; /* Circle size is 40% of viewport width */
+    height: 40vw; /* Maintain aspect ratio */
+    max-width: 50px;  /* Max size for small screens */
+    max-height: 50px; /* Max size for small screens */
   }
 
   .rotating-text {
@@ -171,38 +214,11 @@ body::before {
   }
 
   .title-flicker-strike-text {
-    font-size: 28px;
-
+    font-size: 20px;
   }
 
-  
-}
-
-@media (max-width: 480px) {
-  /* Further adjust for small screens - Iphone 12 Pro*/
-  .circle-container {
-    top: 5%;
-    right: 7%;
-    height: 10vh;
-    width: 10vh;
-  }
-
-  .circle {
-    width: 20px; /* Smaller circle */
-
-    height: 20px; /* Smaller circle */
-
-   /* background-size:40px;*/
-    /*background-color: rgba(0, 0, 0, 0.5); debugging size */
-   /* border-radius: 50%;*/
-  }
-
-  .rotating-text {
-    font-size: 8px;
-  }
-
-  .title-flicker-strike-text {
+  .rooting-title, .research-title {
+    top: 10%;
     font-size: 14px;
   }
-
 }
