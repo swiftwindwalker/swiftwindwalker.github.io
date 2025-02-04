@@ -8,67 +8,334 @@
   <!-- Google Fonts link -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;500;600;700;800&family=Josefin+Slab:ital,wght@0,400;0,600;1,300;1,400;1,600&family=Muli:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
+    rel="stylesheet" />
 </head>
 
 <body>
-  <div class="background-image">
-    <!-- moved background image to css, commenting it out-->
-    <!--<img src="assets/images/background_img.jpg" style="opacity: 0.15"> -->
-    <div class="title-flicker-strike-text">
-      <span class="rooting-title">ROOTING</span><span class="research-title">RESEARCH</span>
-    </div>
 
-    <div class="circle-container">
-      <div class="circle">
-       <!----<img src="assets/images/dices.gif" alt="Center Image" class="center-image"> -->
-        <div class="rotating-text">
-          <span>R</span>
-          <span>O</span>
-          <span>O</span>
-          <span>T</span>
-          <span>I</span>
-          <span>N</span>
-          <span>G</span>
-          <span> </span>
-          <span>R</span>
-          <span>E</span>
-          <span>S</span>
-          <span>E</span>
-          <span>A</span>
-          <span>R</span>
-          <span>C</span>
-          <span>H</span>
-          <span> </span>
-          <span> </span>
-          <span>.</span>
-          <span> </span>
-          <span> </span>
-          <span>R</span>
-          <span>O</span>
-          <span>O</span>
-          <span>T</span>
-          <span>I</span>
-          <span>N</span>
-          <span>G</span>
-          <span> </span>
-          <span>R</span>
-          <span>E</span>
-          <span>S</span>
-          <span>E</span>
-          <span>A</span>
-          <span>R</span>
-          <span>C</span>
-          <span>H</span>
-          <span> </span>
-          <span> </span>
-          <span>.</span>
-          <span> </span>
-          <span> </span>
+  <!-- The intro delay with circle animation-->
+  <div class="spinner-container">
+    <div class="circles">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <!-- Menu on the right side of the home page-->
+  <div class="container">
+    <div class="hamburger-menu">
+      <div class="line line-1"></div>
+      <div class="line line-2"></div>
+      <div class="line line-3"></div>
+      <span>Close</span>
+    </div>
+    <header class="header" id="home">
+         <!--  <div class="img-wrapper">
+     <video autoplay muted id="myVideo">
+      <source src="images/animation-bg-2.mp4" type="video/mp4">
+    </video> -->
+
+
+        <!--<img src="images/bg.jpg" /> changed background image
+      </div>-->
+      <div class="banner">
+        <h1></h1>
+        <p>A global partner to the pharmaceutical industry in close partnership with academia, patients, public
+          institutions & clinical experts.</p>
+        <button onclick="location.href='#about-us'" type="button">Discover Now</button>
+      </div>
+    </header>
+    
+    <section class="sidebar">
+      <ul class="menu">
+        <li class="menu-item">
+          <a href="#home" class="menu-link" data-content="Home">Home</a>
+        </li>
+        <li class="menu-item">
+          <a href="#about-us" class="menu-link" data-content="About Us">About Us</a>
+        </li>
+        <li class="menu-item">
+          <a href="#team" class="menu-link" data-content="Team">Team</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#commercialservices" class="menu-link" data-content="Services">Services</a>
+        </li>
+
+        <li class="menu-item">
+          <a href="#contact" class="menu-link" data-content="Contact">Contact</a>
+        </li>
+      </ul>
+      <div class="social-media">
+        <a href="https://github.com/swiftwindwalker" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/ravzzy/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://x.com/ravzzy" target="_blank"><i class="fab fa-twitter"></i></a>
+      </div>
+    </section>
+
+    <div class="background-image">
+      <!-- moved background image to css, commenting it out-->
+      <!--<img src="assets/images/background_img.jpg" style="opacity: 0.15"> -->
+
+      <div class="title-flicker-strike-text">
+        <span class="rooting-title">ROOTING</span><span class="research-title">RESEARCH</span>
+      </div>
+
+      <div class="circle-container">
+        <div class="circle">
+          <!----<img src="assets/images/dices.gif" alt="Center Image" class="center-image"> -->
+          <div class="rotating-text">
+            <span>R</span>
+            <span>O</span>
+            <span>O</span>
+            <span>T</span>
+            <span>I</span>
+            <span>N</span>
+            <span>G</span>
+            <span> </span>
+            <span>R</span>
+            <span>E</span>
+            <span>S</span>
+            <span>E</span>
+            <span>A</span>
+            <span>R</span>
+            <span>C</span>
+            <span>H</span>
+            <span> </span>
+            <span>.</span>
+            <span> </span>
+            <span>R</span>
+            <span>O</span>
+            <span>O</span>
+            <span>T</span>
+            <span>I</span>
+            <span>N</span>
+            <span>G</span>
+            <span> </span>
+            <span>R</span>
+            <span>E</span>
+            <span>S</span>
+            <span>E</span>
+            <span>A</span>
+            <span>R</span>
+            <span>C</span>
+            <span>H</span>
+            <span> </span>
+            <span>.</span>
+            <span> </span>
+          </div>
         </div>
       </div>
     </div>
+
+    <section class="about-us" id="about-us">
+      <div class="section-header">
+        <h1 class="section-heading">About Us</h1>
+        <div class="underline"></div>
+      </div>
+      <div class="services">
+        <div class="service">
+          <div class="service-header">
+            <i class="fas fa-pen-nib"></i>
+            <h3>Market Leader</h3>
+          </div>
+          <p class="service-text">
+            Quantify is an experienced partner in health economics, outcomes research, real-world evidence and market
+            access. We provide services in value strategy, modelling, reimbursement support, evidence generation,
+            biostatistics, study design and analysis.
+          </p>
+        </div>
+        <div class="service">
+          <div class="service-header">
+            <i class="fas fa-paint-roller"></i>
+            <h3>Service Offered</h3>
+          </div>
+          <p class="service-text">
+            We have the expertise and experience to identify, quantify and communicate the value of health care
+            interventions and reforms. With our technical and innovative ability, we are able to design and execute any
+            type of project in the area of health economics, outcomes research, real-world evidence and market access.
+          </p>
+        </div>
+        <div class="service">
+          <div class="service-header">
+            <i class="fas fa-pencil-alt"></i>
+            <h3>Uniqueness</h3>
+          </div>
+          <p class="service-text">
+            Our experienced partners are active in the everyday business, contributing with methodological and strategic
+            guidance to make each project successful and assure high quality. Every client is important to us; we don’t
+            apply a standard solution to projects, but strive to meet the individual needs and be a valuable discussion
+            partner. Our organization is lean and flexible, and customers express satisfaction with resulting quick
+            turnaround times and direct communication.
+          </p>
+        </div>
+        <div class="service">
+          <div class="service-header">
+            <i class="fas fa-paint-brush"></i>
+            <h3>Our Goal</h3>
+          </div>
+          <p class="service-text">
+            Be our clients’ first choice for health economics, outcomes research and real-world evidence services,
+            because we continuously deliver excellent services, which meet the needs of our client.
+          </p>
+        </div>
+        <div class="service">
+          <div class="service-header">
+            <i class="fas fa-ruler-combined"></i>
+            <h3>Innovation</h3>
+          </div>
+          <p class="service-text">
+            Drive innovation, by developing new solutions in the HEOR field and being active in the scientific
+            community, and also enable better quality and efficiency in healthcare by supporting informed decision
+            making.
+          </p>
+        </div>
+        <div class="service">
+          <div class="service-header">
+            <i class="far fa-building"></i>
+            <h3>History</h3>
+          </div>
+          <p class="service-text">
+            The company was founded in 2011, and is led by the founding partners and our CEO; each with 8 to 16 years’
+            experience from HEOR, both from other consultancies, the pharmaceutical industry and research at the
+            Karolinska Institute.
+
+            We have provided consultancy services and advice to most large pharmaceutical companies, as well as to
+            numerous regional, national and international organizations and governmental bodies. We primarily cover
+            Europe and North America.
+          </p>
+        </div>
+        <div class="about-us-img-wrapper">
+          <img src="assets/images/aboutus.jpg" />
+        </div>
+      </div>
+    </section>
+
+    <section class="team" id="team">
+      <div class="section-header">
+        <h1 class="section-heading">Our Team</h1>
+        <div class="underline"></div>
+      </div>
+      <div class="cards-wrapper">
+        <div class="card" data-tilt>
+          <div class="card-img-wrapper">
+            <img src="assets/images/person-1.jpg" alt="CEO" />
+          </div>
+          <div class="card-info">
+            <h2>Puneet Kaushik</h2>
+            <h3>CEO</h3>
+            <p>
+              "Puneet serves as the country director for Quantify HEOR Private Limited and serves on its Board of
+              Directors along with Johan Mesterton and Kirk Geale. He holds a Masters in Pharmaceutical Sciences with a
+              specialization in Drug Regulatory Affairs from MD University, Rohtak, India. He also holds a professional
+              diploma in clinical research and also a certification in Health economics from Indian Institute of Public
+              Health."
+            </p>
+            <button>Read More</button>
+          </div>
+        </div>
+        <div class="card" data-tilt>
+          <div class="card-img-wrapper">
+            <img src="assets/images/person-2.jpg" alt="Partner" />
+          </div>
+          <div class="card-info">
+            <h2>Ann Brown</h2>
+            <h3>Partner</h3>
+            <p>
+              "She has a broad competence within research and has co-authored about 30 peer-reviewed papers including
+              registry studies, prospective cohorts, within-trial analysis, patient- and caregiver preference studies
+              and decision analytic models. She was coordinator and first author of the European study on the costs of
+              brain disorders (2010), initiated by European Brain Council."
+            </p>
+            <button>Read More</button>
+          </div>
+        </div>
+    </section>
+
+    <section class="commercialservices" id="commercialservices">
+      <div class="section-header">
+        <h1 class="section-heading">Services We Offer</h1>
+        <div class="card-info">
+          <h2>Ann Brown</h2>
+          <h3>Partner</h3>
+          <p>
+            "Do select the Service you wish to know more."
+          </p>
+        </div>
+        <div class="underline"></div>
+      </div>
+
+      <!-- Dropdown container -->
+      <div class="dropdown-container">
+        <button class="dropdown-btn">Select Service</button>
+        <div class="dropdown-content">
+          <a href="#">Modelling, Access and Strategy</a>
+          <a href="#">Real World Evidence and Analytics</a>
+          <a href="#">Evidence Review and Synthesis</a>
+          <a href="#">Medical Writing and Editorial Support</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact-wrapper">
+        <div class="contact-left"></div>
+        <div class="contact-right">
+          <h1 class="contact-heading">Contact</h1>
+          <form method="POST" id="form">
+            <!-- change the key, upto 250 per month free -->
+            <input type="hidden" name="access_key" value="2d3b2745-1b24-4a2f-877b-3e324322475f">
+            <!-- For testing purpose email will be sent to testmail2025@sharklasers.com -->
+            <div class="input-group">
+              <input type="text" name="name" class="field" />
+              <label class="input-label">Full Name</label>
+            </div>
+            <div class="input-group">
+              <input type="email" name="email" class="field" />
+              <label class="input-label">Email</label>
+            </div>
+            <div class="input-group">
+              <textarea name="message" class="field"></textarea>
+              <label class="message">Message</label>
+            </div>
+            <input type="submit" class="submit-btn" value="Submit" />
+            <div id="result"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+
+    <footer class="footer">
+      <div class="footer-content">
+        <p class="copyright">
+          Copyright &copy; 2025, swiftwindwalker - All Rights Reserved
+        </p>
+        <div class="social-list">
+          <a href="https://www.github.com/swiftwindwalker" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/ravzzy/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.x.com/ravzzy" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <a href="#" class="scroll-btn">
+      <i class="fas fa-arrow-up"></i>
+    </a>
   </div>
   <script src="js/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+  <script src="js/tilt.js"></script>
 </body>
 
 </html>
