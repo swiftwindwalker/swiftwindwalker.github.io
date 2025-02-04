@@ -54,11 +54,18 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('../assets/images/dices.gif');
-  background-size: cover;
+
+  /* background-image: url('../assets/images/dices.gif');
+  background-size: cover; */
+
+  background-image: url('../assets/images/rooting_research_logo.png');
+/* Use cover or contain based on the behavior you want */
+  background-size: contain; /* Ensures the image covers the circle */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+
   background-position: center;
-  border-radius: 0%;
-  animation: rotateText 20s linear infinite;
+  border-radius:50%;
+  /*animation: rotateText 20s linear infinite; */
   /* Apply rotation animation */
 }
 
@@ -157,7 +164,6 @@ body::before {
 
   75% {
     opacity: 1;
-
   }
 
   100% {
