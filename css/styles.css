@@ -63,7 +63,7 @@ body::before {
     visibility: hidden;
   }
   100% {
-    opacity: 1;
+    opacity: 0.8;
     visibility: visible;
 
   }
@@ -1145,6 +1145,9 @@ html {
   box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
   opacity: 0.5;
+  opacity: 0; /* Start hidden */
+  visibility: hidden; /* Hide from interactions */
+  animation: fadeIn 1s ease-in-out 4s forwards; /* 4s delay, then fade in */
 }
 
 @media (max-width: 1500px) {
@@ -1471,6 +1474,8 @@ html {
 }
 /* homepage-img1 properties */
 .homepage-img1-card {
+  width: 100%; /* Ensure full container width */
+  height: 100%; /* Ensure full container height */
   top: 30%;
   left: 15%;
   width: 12.35vw; /* Adjust this to match the image width */
@@ -1490,14 +1495,15 @@ html {
   width: 100%;
   height: 100%;
   flex-direction: column;
-  background-color: #262626;
+  background-color: transparent;
+  position: absolute;
   transition: opacity 0.3s;
   align-items: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url('../assets/images/homepage_img1.png');
-  z-index: 10;
+  z-index: 1;
   opacity: 0.5; 
 }
 
@@ -1543,7 +1549,7 @@ html {
 }
 
 
-.img1-card-info {
+.homepage-img1-card-info {
 
   display: flex;
   flex-direction: column;
@@ -1552,7 +1558,7 @@ html {
   width: 100%; /* Ensure full width */
   text-align: center; /* Center text inside */
 
-  position: absolute;
+  position: relative;
   bottom: 0;
   padding: 2rem;
   /*background: rgba(0, 0, 0, 0.8); Debug: make it visible */
@@ -1560,17 +1566,18 @@ html {
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s;
+  z-index: 12;
 }
 
 /*This is important to make the text and button visible on hover */
-.homepage-img1-card:hover .img1-card-info {
+.homepage-img1-card:hover .homepage-img1-card-info {
   bottom: 2rem;
   opacity: 1 !important;
   visibility: visible !important;
   z-index: 12;
 }
 
-.img1-card-info h2 {
+.homepage-img1-card-info h2 {
   font-family: "Playwrite AT", serif;
   font-weight: bold;
   font-size: 2rem;
@@ -1580,14 +1587,37 @@ html {
 }
 
 
-.img1-card-info  button {
-  width: 8rem;
+.homepage-img1-card-info  button {
+  position: absolute; /* Change from relative to absolute */
+  top: 50%; /* Positions it 5% from the top */
+  left: 50%; /* Moves it to the center */
+  transform: translateX(-50%); /* Ensures perfect centering */
+  width: 10rem;
   height: 4rem;
   font-size: 1rem; /* Adjust as needed */
-
-  position: relative;
-  z-index: 2;
+  background-color: grey;
+  text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "Muli", serif;
+  position: absolute;
+  z-index:12;
+  opacity: 0.8;
 }
+
+.homepage-img1-card-info button:hover::before {
+  width: 500%;
+  height: 500%;
+}
+
+/* Border Glow on Hover */
+.homepage-img1-card-info button:hover {
+  border-color: black;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
 
 /* homepage-img2 properties */
 .homepage-img2-card {
