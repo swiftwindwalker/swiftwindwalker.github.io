@@ -127,4 +127,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 500); // Stop the glitch after 0.5s
   }, 3000); // Trigger glitch every 3 seconds
 });*/
-
