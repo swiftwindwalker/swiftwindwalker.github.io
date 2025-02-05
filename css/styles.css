@@ -1384,3 +1384,20 @@ html {
     visibility: hidden;
   }
 }
+
+.catanimation {
+  position: fixed;
+  top: 20%;
+  left: 10%;
+  width: 27%;
+  height: 80vh; /* Use the full height of the viewport */
+  background-size: contain; /* or 'cover' depending on your preference */
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: url('../assets/images/cat_research_animation.gif');
+
+}
