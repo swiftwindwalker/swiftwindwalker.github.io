@@ -3,7 +3,10 @@
     background:url(../assets/images/panda_spritesheet.png);
     width: 116.5px;
     height: 165px;
-    animation:  walk 1s steps(12) 12, forward 10s linear 1 forwards; 
+    opacity: 0;
+    animation: appear 0s linear 8s forwards, 
+               walk 1s steps(12) 12 8s forwards, 
+               forward 10s linear 1 8s forwards;
     transform-origin: bottom left;
     position: absolute;
     bottom: 0;     /* Ensures the runner stays on the ground */
@@ -24,6 +27,7 @@
 @keyframes forward{
     0%{
         transform:translateX(0px);
+        opacity: 1;
 
     }
     90%{

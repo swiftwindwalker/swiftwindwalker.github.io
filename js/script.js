@@ -115,4 +115,16 @@ document.addEventListener('click', function (event) {
   }
 });
 
+/*
+document.addEventListener("DOMContentLoaded", function () {
+  const glitchElement = document.querySelector(".homepage-img3-wrapper");
+
+  setInterval(() => {
+    glitchElement.classList.add("glitch-active");
+
+    setTimeout(() => {
+      glitchElement.classList.remove("glitch-active");
+    }, 500); // Stop the glitch after 0.5s
+  }, 3000); // Trigger glitch every 3 seconds
+});*/
 
