@@ -1545,37 +1545,40 @@ html {
   opacity: 1;
   z-index: 11;
   /*Glitch animation is disabled on hover as it was causing the text and button not to display */
-  /*animation: glitch 0.5s linear infinite;*/
+  animation: glitch 0.5s linear infinite;
 }
 
-
+/* Removing as it wasn't looking good */
+/*
 .homepage-img1-card-info {
-
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center horizontally */
-  justify-content: center; /* Center vertically if needed */
-  width: 100%; /* Ensure full width */
-  text-align: center; /* Center text inside */
+  align-items: center; 
+  justify-content: center; 
+  width: 100%; 
+  text-align: center;
 
   position: relative;
   bottom: 0;
-  padding: 2rem;
+  padding: 2rem; */
   /*background: rgba(0, 0, 0, 0.8); Debug: make it visible */
+  /*
   text-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4);
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s;
   z-index: 12;
-}
+} */
 
 /*This is important to make the text and button visible on hover */
+/*
 .homepage-img1-card:hover .homepage-img1-card-info {
   bottom: 2rem;
   opacity: 1 !important;
   visibility: visible !important;
   z-index: 12;
-}
+} */
+ /*
 
 .homepage-img1-card-info h2 {
   font-family: "Playwrite AT", serif;
@@ -1585,16 +1588,17 @@ html {
   color: #bf152a;
   z-index: 12;
 }
+*/
 
-
+/*
 .homepage-img1-card-info  button {
-  position: absolute; /* Change from relative to absolute */
-  top: 50%; /* Positions it 5% from the top */
-  left: 50%; /* Moves it to the center */
-  transform: translateX(-50%); /* Ensures perfect centering */
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translateX(-50%); 
   width: 10rem;
   height: 4rem;
-  font-size: 1rem; /* Adjust as needed */
+  font-size: 1rem; 
   background-color: grey;
   text-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
   box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.4);
@@ -1605,18 +1609,21 @@ html {
   position: absolute;
   z-index:12;
   opacity: 0.8;
-}
+} */
 
+/*
 .homepage-img1-card-info button:hover::before {
   width: 500%;
   height: 500%;
-}
+} */
+
 
 /* Border Glow on Hover */
+/*
 .homepage-img1-card-info button:hover {
   border-color: black;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-}
+} */
 
 
 /* homepage-img2 properties */
