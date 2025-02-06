@@ -1,0 +1,134 @@
+/* Device compatbility */
+
+
+  /* Mobile (Very Small Screens) */
+  @media (max-width: 480px) {
+
+    .hamburger-menu {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .change .hamburger-menu {
+        right: 17rem;
+      }
+
+      .hamburger-menu span {
+        width: 4rem;
+        height: 4rem;
+      }
+
+      .sidebar {
+        width: 20rem;
+        height: 50vh;
+      }
+
+      .menu-link {
+        font-size: 2rem;
+      }
+  
+    /* Adjust for very small screens */
+    .circle-container {
+      top: 2.5%;
+      left: 5%;
+      width: 8vh;
+      height: 8vh;
+      transform: scale(0.3); /*reduces the size of the rotating circle logo */
+    }
+  
+    .circle {
+      width: 8vw;
+      height: 8vw;
+      max-width: 100vh;
+      max-height: 100vh;
+    }
+  
+    .rotating-text {
+      font-size: 14px;
+    }
+  
+    .banner {
+        top: 32%;
+        left: 35%;
+    }
+    .banner p {
+        position: fixed;
+        top: 25%;
+        font-size: 14px;
+    }
+    .banner button { 
+        position: fixed;
+        top: 33.5%;
+        left: 47.5%;
+        font-size: 10px;
+        width: 15rem;
+        height: 4rem;
+        
+    }
+
+    .rooting-title{
+        left: 35%;
+    }
+
+    .research-title{
+        left: 65%;
+    }
+
+    .rooting-title,
+    .research-title {
+        top: 5%;
+      font-size: 24px;
+    }
+  
+    .homepage-img1-card {
+      top:10%;
+      left:10%;
+  
+      width: 10vh; /* Adjust this to match the image width */
+      height: 10vh;
+  
+    }
+  
+    .homepage-img2-card {
+  
+      top:0%;
+      left:37.5%;
+  
+      width: 10vh; /* Adjust this to match the image width */
+      height: 10vh;
+  
+    }
+  
+    .homepage-img3-card {
+      top:1%;
+      left:10%;
+      width: 10vh; /* Adjust this to match the image width */
+      height: 10vh;
+  
+    }
+  
+    .homepage-img4-card {
+  
+      top:2%;
+      left:10%;
+      width: 10vh; /* Adjust this to match the image width */
+      height: 10vh;
+  
+    }
+
+    .social-media {
+        bottom: 2rem;
+      }
+      
+    .social-media i {
+        font-size: 1.2rem;
+        margin: 1rem;
+        width: 2rem;
+        height: 2rem;
+      }
+
+    #pandawalk{
+        bottom:45%;
+    }
+
+  }
