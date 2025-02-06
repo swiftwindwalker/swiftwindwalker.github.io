@@ -1569,7 +1569,7 @@ html {
   100% { transform: translateX(5px); }
 }
 
-/*
+
 @keyframes glitch {
   0% {
     transform: translate(0);
@@ -1602,8 +1602,6 @@ html {
     filter: hue-rotate(0deg);
   }
 }
-
-*/
 
 
 /* Removing as it wasn't looking good */
@@ -1783,7 +1781,6 @@ html {
 }
 
 /* Stop effect on hover */
-/* Stop effect on hover */
 .homepage-img2-wrapper:hover::before,
 .homepage-img2-wrapper:hover::after,
 .homepage-img2-wrapper:hover {
@@ -1791,25 +1788,26 @@ html {
   animation-play-state: paused;
 }
 
+
 /* homepage-img3 properties */
 .homepage-img3-card {
-  width: 100%; /* Ensure full container width */
-  height: 100%; /* Ensure full container height */
+  width: 100%;
+  height: 100%;
   top: 0%;
   left: 9%;
-  width: 12.35vw; /* Adjust this to match the image width */
+  width: 12.35vw;
   height: 27.55vh;
   box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.4);
   border-radius: 0.5rem;
-  position: relative; /* Ensure children position correctly */
-  overflow: hidden; /* Prevent elements from being cut off */
+  position: relative;
+  overflow: hidden;
   display: flex;
-  opacity: 0; /* Initially hidden */
-  transform: scale(0.8); /* Start smaller */
+  opacity: 0;
+  transform: scale(0.8);
   animation: fadeInGlitch 2s ease-out forwards;
-
 }
 
+/* Homepage image wrapper */
 .homepage-img3-wrapper {
   width: 100%;
   height: 100%;
@@ -1821,22 +1819,63 @@ html {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url('../assets/images/homepage_img3.png');
+  background-image: url('../assets/images/homepage_img3.png'); /* Your image URL */
   z-index: 1;
-  opacity: 0.5; 
+  opacity: 0.5;
+  position: relative;
 }
 
+/* Stop effect on hover */
+.homepage-img3-wrapper:hover::before,
+.homepage-img3-wrapper:hover::after,
 .homepage-img3-wrapper:hover {
-  animation: glitch 0.5s linear infinite;
+  opacity: 1;
+  animation-play-state: paused;
 }
 
-/*
-.glitch-active {
-  animation: glitch 0.5s linear infinite;
+/* Pseudo-element for CSS-only noise effect (grain) */
+.homepage-img3-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle, rgba(0, 0, 0, 0.1) 20%, transparent 20%), 
+    radial-gradient(circle, rgba(0, 0, 0, 0.839) 20%, transparent 20%) 2px 2px,
+    radial-gradient(circle, rgba(0, 0, 0, 0.693) 20%, transparent 20%) 2px 2px;
+  pointer-events: none;
+  opacity: 1; /* Control opacity of the grain effect */
+  background-size: 5px 5px; /* Adjust the size of the "grain" dots */
+  animation: grainShake 0.5s infinite linear; /* Shake effect */
 }
-  */
 
+/* Stop grain shake effect when hovering */
+.homepage-img3-wrapper:hover::before {
+  animation: none; /* Stop grain shake animation on hover */
+}
 
+/* Keyframes for grain shake */
+@keyframes grainShake {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-1px, -1px); /* Slight left-up shake */
+  }
+  50% {
+    transform: translate(1px, 1px); /* Slight right-down shake */
+  }
+  75% {
+    transform: translate(-1px, 1px); /* Slight left-down shake */
+  }
+  100% {
+    transform: translate(0, 0); /* Back to normal position */
+  }
+}
+
+/* Keyframes for fade-in effect (optional) */
 @keyframes fadeInGlitch {
   0% {
     opacity: 0;
@@ -1869,6 +1908,7 @@ html {
     filter: blur(0);
   }
 }
+
 
 /* homepage-img4 properties */
 .homepage-img4-card {
@@ -1908,3 +1948,64 @@ html {
   animation: glitch 0.5s linear infinite;
 }
 
+
+/* Glitch Lines */
+.homepage-img4-wrapper::before,
+.homepage-img4-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%; /* Start off to the left */
+  width: 200%; /* Make sure it spans enough width */
+  height: 100%;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.1) 35%,
+    transparent 35%,
+    rgba(255, 255, 255, 0.1) 65%
+  );
+  mix-blend-mode: screen;
+  opacity: 1;
+}
+
+/* Scrolling effect */
+.homepage-img4-wrapper::before {
+  animation: scrollLinesLeft 2s linear infinite;
+}
+
+.homepage-img4-wrapper::after {
+  animation: scrollLinesRight 3s linear infinite;
+}
+
+/* Line movement scrolling left (Smooth version) */
+@keyframes scrollLinesLeft {
+  0% {
+    transform: translateX(0); /* Start at the left */
+  }
+  50% {
+    transform: translateX(-50%); /* Move half the way left */
+  }
+  100% {
+    transform: translateX(0); /* Return to the starting point */
+  }
+}
+
+/* Line movement scrolling right (Smooth version) */
+@keyframes scrollLinesRight {
+  0% {
+    transform: translateX(0); /* Start at the left */
+  }
+  50% {
+    transform: translateX(50%); /* Move half the way right */
+  }
+  100% {
+    transform: translateX(0); /* Return to the starting point */
+  }
+}
+
+/* Stop effect on hover */
+.homepage-img4-wrapper:hover::before,
+.homepage-img4-wrapper:hover::after,
+.homepage-img4-wrapper:hover {
+  opacity: 1;
+  animation-play-state: paused;
+}
