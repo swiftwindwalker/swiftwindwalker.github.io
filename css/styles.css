@@ -620,7 +620,7 @@ html {
   }
 }
 
-.ar {
+.sidebar {
   width: 30rem;
   height: 100vh;
   position: fixed;
@@ -1725,3 +1725,5 @@ html {
   opacity: 1;
   animation-play-state: paused;
 }
+
+
