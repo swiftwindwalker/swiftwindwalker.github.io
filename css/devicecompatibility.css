@@ -75,10 +75,10 @@
     /* Adjust for very small screens */
     .circle-container {
       top: 2.5%;
-      left: 5%;
+      left: 3%;
       width: 8vh;
       height: 8vh;
-      transform: scale(0.3); /*reduces the size of the rotating circle logo */
+      transform: scale(0.5); /*reduces the size of the rotating circle logo */
     }
   
     .circle {
@@ -89,7 +89,7 @@
     }
   
     .rotating-text {
-      font-size: 14px;
+      font-size: 16px;
     }
   
     .banner {
@@ -98,13 +98,14 @@
     }
     .banner p {
         position: fixed;
-        top: 25%;
+        top: 35%;
+        left: 20%;
         font-size: 14px;
     }
     .banner button { 
         position: fixed;
-        top: 33.5%;
-        left: 47.5%;
+        top: 42.5%;
+        left: 35.5%;
         font-size: 10px;
         width: 15rem;
         height: 4rem;
@@ -127,7 +128,7 @@
   
     .homepage-img1-card {
       top:10%;
-      left:10%;
+      left:25%;
   
       width: 10vh; /* Adjust this to match the image width */
       height: 10vh;
@@ -137,7 +138,7 @@
     .homepage-img2-card {
   
       top:0%;
-      left:37.5%;
+      left:52.5%;
   
       width: 10vh; /* Adjust this to match the image width */
       height: 10vh;
@@ -146,7 +147,7 @@
   
     .homepage-img3-card {
       top:1%;
-      left:10%;
+      left:25%;
       width: 10vh; /* Adjust this to match the image width */
       height: 10vh;
   
@@ -154,8 +155,8 @@
   
     .homepage-img4-card {
   
-      top:2%;
-      left:10%;
+      top:-9%;
+      left:52.5%;
       width: 10vh; /* Adjust this to match the image width */
       height: 10vh;
   
@@ -173,7 +174,7 @@
       }
 
     #pandawalk{
-        bottom:45%;
+        bottom:25%;
     }
 
   }
