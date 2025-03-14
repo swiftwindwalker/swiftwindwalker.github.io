@@ -106,7 +106,7 @@ function render() {
         // 🚀 Boost size on mobile screens
         if (window.innerWidth < 768) {
             console.log("image scaled for mobile");
-            scaleFactor *= 1.5;  // Increase size only on small screens
+            scaleFactor *= 2.0;  // Increase size only on small screens
         }
 
         let imgWidth = img.width * scaleFactor;
