@@ -1,5 +1,24 @@
 /* Author - ravzzy */
 
+
+//Print Viewport Dimensions
+
+function printViewportDimensions() {
+	const width = window.innerWidth;   // Viewport width
+	const height = window.innerHeight; // Viewport height
+	console.log("------VIEWPORT SIZES------")
+	console.log(`Viewport Width: ${width}px`);
+	console.log(`Viewport Height: ${height}px`);
+	console.log("--------------------------")
+}
+
+// Print viewport dimensions when the page loads
+printViewportDimensions();
+
+// Print viewport dimensions whenever the window is resized
+window.addEventListener('resize', printViewportDimensions);
+
+
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
@@ -11,6 +30,7 @@ let loadedImages = 0
 
 // Function to generate image paths for all frames
 function getImagePaths() {
+    console.log("getImagePaths invoked");
     for (let i = 1; i <= FRAMES; i++) {
         imgPaths.push(`imgs/male${i}.png`)
     }
@@ -19,13 +39,15 @@ getImagePaths()
 
 // Function to load images and ensure they're all loaded before rendering
 function getImages() {
+    console.log("getImages invoked");
     imgPaths.forEach((path, index) => {
         const img = new Image()
         img.src = path
         img.onload = () => {
             loadedImages++
             if (loadedImages === imgPaths.length) {
-                render()  // Render first frame when all images are loaded
+                console.log("rendering first frame: "+img.src);
+                //render()  // Render first frame when all images are loaded
             }
         }
         img.style.display = 'block'
@@ -33,12 +55,14 @@ function getImages() {
     })
 }
 getImages()
+console.log("loaded images: "+loadedImages)
 
 // Resize canvas dynamically based on window size
 function resizeCanvas() {
     canvas.height = window.innerHeight
     canvas.width = window.innerWidth
     if (imgs.length === FRAMES) {  // Only render if images are fully loaded
+        console.log ("resize rendering: "+imgs.length);
         render()
     }
 }
@@ -63,6 +87,7 @@ gsap.to(frame, {
         markers: true,  // Optional: remove in production
     },
     onUpdate: () => {
+        console.log("scroll - rendering");
         render()  // Update canvas on scroll
     },
 })
@@ -70,22 +95,29 @@ gsap.to(frame, {
 // Function to render the current frame on the canvas
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    console.log("frame: "+frame.frame);
 
     let img = imgs[frame.frame];
     if (img) {
+        console.log("Image loaded: "+img.src);
         // Calculate the correct scale factor while maintaining aspect ratio
         let scaleFactor = Math.min(canvas.width / img.width, canvas.height / img.height);
 
         // 🚀 Boost size on mobile screens
         if (window.innerWidth < 768) {
+            console.log("image scaled for mobile");
             scaleFactor *= 1.5;  // Increase size only on small screens
         }
 
         let imgWidth = img.width * scaleFactor;
         let imgHeight = img.height * scaleFactor;
 
+        console.log ("Image size: "+imgWidth+ " x "+imgHeight+" px")
+
         let x = (canvas.width - imgWidth) / 2;  // Center horizontally
         let y = canvas.height - imgHeight;      // Align to bottom
+
+        console.log ("x, y: "+x+ " x "+y+" px")
 
         ctx.drawImage(img, x, y, imgWidth, imgHeight);
     }
@@ -94,7 +126,7 @@ function render() {
 
 // Make sure the first image is loaded before rendering
 if (imgs[1]) {
-    imgs[1].onload = render
+    imgs[1].onload = render 
     console.log('First image rendered')
 }
 
@@ -174,20 +206,3 @@ gsap.to(rgb, {
 		roadmap.style.backgroundColor = `rgb(${rgb.r},${rgb.g},${rgb.b})`
 	},
 })
-
-//Print Viewport Dimensions
-
-function printViewportDimensions() {
-	const width = window.innerWidth;   // Viewport width
-	const height = window.innerHeight; // Viewport height
-	console.log("------VIEWPORT SIZES------")
-	console.log(`Viewport Width: ${width}px`);
-	console.log(`Viewport Height: ${height}px`);
-	console.log("--------------------------")
-}
-
-// Print viewport dimensions when the page loads
-printViewportDimensions();
-
-// Print viewport dimensions whenever the window is resized
-window.addEventListener('resize', printViewportDimensions);
