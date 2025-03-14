@@ -58,7 +58,7 @@ gsap.to(frame, {
     snap: 'frame',
     scrollTrigger: {
         start: 'top top',  
-        end: '+=735%',  
+        end: '+=600%',  
         scrub: true,
         markers: true,  // Optional: remove in production
     },
@@ -73,11 +73,17 @@ function render() {
 
     let img = imgs[frame.frame];
     if (img) {
+        // Calculate the correct scale factor while maintaining aspect ratio
         let scaleFactor = Math.min(canvas.width / img.width, canvas.height / img.height);
-        
+
+        // 🚀 Boost size on mobile screens
+        if (window.innerWidth < 768) {
+            scaleFactor *= 1.5;  // Increase size only on small screens
+        }
+
         let imgWidth = img.width * scaleFactor;
         let imgHeight = img.height * scaleFactor;
-        
+
         let x = (canvas.width - imgWidth) / 2;  // Center horizontally
         let y = canvas.height - imgHeight;      // Align to bottom
 
