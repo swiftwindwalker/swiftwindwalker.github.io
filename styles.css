@@ -391,6 +391,10 @@ footer > div:not(.socials) {
 		padding: 0;
 		box-sizing: border-box;
 	}
+
+	canvas {
+		height: 70vh;
+	}
 	
 }@media (orientation: landscape) {
 	.text-spin {
