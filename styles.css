@@ -393,7 +393,7 @@ footer > div:not(.socials) {
 	}
 
 	canvas {
-		height: 70vh;
+		height: 90vh;
 	}
 	
 }@media (orientation: landscape) {
