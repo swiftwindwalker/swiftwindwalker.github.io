@@ -1,3 +1,5 @@
+/* Author - ravzzy */
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
@@ -12,12 +14,14 @@ body {
 	font-family: 'Noto Sans KR', sans-serif;
 	text-transform: uppercase;
 	background-color: #f1f1f1;
+	overflow-x: hidden;
 }
 
 .highlight-red {
 	color: #e61618;
 }
 
+  
 nav {
 	padding: 1em;
 	display: flex;
@@ -37,8 +41,6 @@ nav a {
 	text-decoration: none;
 	margin-inline-start: 0.5em;
 }
-
-
 .left-content, .right-content {
 	font-size: 0.7rem;
 }
@@ -53,8 +55,13 @@ section {
 }
 
 .thin {
-	font-weight: 200;
-	font-size: 0.85rem;
+	font-weight: 300;
+	font-size: 0.875 rem;
+}
+
+.thin-jp {
+	font-weight: 400;
+	font-size: 0.875 rem;
 }
 
 canvas {
@@ -62,8 +69,8 @@ canvas {
 	left: 50%;
 	bottom: 0;
 	transform: translate(-50%, 0);
-	width: 100vw;
-	height: 100vh;
+	/* width: 100%; */
+	height: 70dvh;
 	z-index: -1;
 }
 
@@ -91,34 +98,31 @@ canvas {
 .hero-title span:nth-child(1) {
 	font-weight: 800;
 }
-
 .hero-title span:nth-child(2) {
 	font-weight: 200;
 }
-
 .hero-title span:nth-child(3) {
 	font-weight: 400;
 	color: transparent;
 	-webkit-text-stroke: 1px black;
+	/*font-style: italic;*/
 }
-
 .hero-title span:nth-child(4) {
 	font-weight: 600;
+	/*font-style: italic;*/
 }
-
 .hero-title span:nth-child(5) {
 	font-weight: 100;
 }
-
 .hero-title span:nth-child(6) {
 	font-weight: 700;
 	color: transparent;
 	-webkit-text-stroke: 1px black;
 }
-
 .hero-title span:nth-child(7) {
 	font-weight: 500;
 	color: #e61618;
+
 }
 
 .hero-content {
@@ -181,7 +185,7 @@ body.loading .loader {
 	padding-inline: 2em;
 }
 
-.top>div:not(:last-child) {
+.top > div:not(:last-child) {
 	text-align: center;
 }
 
@@ -217,13 +221,13 @@ body.loading .loader {
 	padding-block-end: 4em;
 }
 
-section>.title {
+section > .title {
 	color: rgb(255, 255, 255);
 	text-align: center;
 	padding: 4em 2em;
 }
 
-.final>.title {
+.final > .title {
 	padding-block-end: 0;
 }
 
@@ -246,6 +250,7 @@ section>.title {
 	background-color: #f1f1f1;
 	width: min(23rem, 100%);
 	height: 13.5rem;
+	transition: transform 0.2s ease-in-out;
 }
 
 .final {
@@ -290,12 +295,11 @@ footer {
 	margin-bottom: 2em;
 }
 
-footer>div:not(.socials) {
+footer > div:not(.socials) {
 	font-size: 5rem;
 	font-weight: 800;
 	color: transparent;
 	-webkit-text-stroke: 1px white;
-	font-style: italic;
 	line-height: 1;
 	margin-block: 2rem;
 }
@@ -339,15 +343,15 @@ footer>div:not(.socials) {
 	display: flex;
 }
 
-.first-line>div {
+.first-line > div {
 	animation: marquee 20s infinite reverse;
 }
 
-.second-line>div {
+.second-line > div {
 	animation: marquee 25s infinite;
 }
 
-.third-line>div {
+.third-line > div {
 	animation: marquee 25s infinite reverse;
 }
 
@@ -355,7 +359,6 @@ footer>div:not(.socials) {
 	from {
 		translate: 0% 0;
 	}
-
 	to {
 		translate: -100% 0;
 	}
@@ -368,17 +371,17 @@ footer>div:not(.socials) {
 }
 
 @media (width > 926px) {
-	footer>div:not(.socials) {
+	footer > div:not(.socials) {
 		margin-inline: auto;
 		width: 100%;
 		max-width: 1600px;
-		font-size: 8rem;
+		font-size: 5rem;
 	}
 }
 
 @media (width > 1486px) {
-	footer>div:not(.socials) {
-		font-size: 12rem;
+	footer > div:not(.socials) {
+		font-size: 5rem;
 	}
 }
 
@@ -389,8 +392,7 @@ footer>div:not(.socials) {
 		box-sizing: border-box;
 	}
 	
-}
-@media (orientation: landscape) {
+}@media (orientation: landscape) {
 	.text-spin {
 		left: -100%;
 		font-size: 8rem;
@@ -402,6 +404,10 @@ footer>div:not(.socials) {
 
 	.btn {
 		margin: 0;
+	}
+
+	canvas {
+		height: 100dvh;
 	}
 
 	.hero {
@@ -418,7 +424,7 @@ footer>div:not(.socials) {
 		margin-bottom: 15em;
 	}
 
-	.hero-content>div {
+	.hero-content > div {
 		width: 40%;
 	}
 
@@ -436,7 +442,7 @@ footer>div:not(.socials) {
 	}
 
 	.cards,
-	.roadmap>.title {
+	.roadmap > .title {
 		width: 100%;
 		max-width: 1200px;
 		margin-inline: auto;
@@ -452,14 +458,13 @@ footer>div:not(.socials) {
 	}
 
 	.fat {
-		font-weight: 800;
-		font-size: 2rem;
+		font-weight: 400;
+		font-size: 1.75rem;
 	}
 
 	.left {
 		translate: 0 -50%;
 	}
-
 	.right {
 		translate: 0 50%;
 	}
@@ -468,13 +473,13 @@ footer>div:not(.socials) {
 		text-align: right;
 	}
 
-	.page>.right,
-	.page>.left {
+	.page > .right,
+	.page > .left {
 		width: 40%;
 	}
 
-	.top>div:last-child,
-	.about>div:last-child {
+	.top > div:last-child,
+	.about > div:last-child {
 		margin-top: 2em;
 		flex-direction: row;
 		justify-content: center;
@@ -489,8 +494,8 @@ footer>div:not(.socials) {
 		font-size: 3.5rem;
 	}
 
-	.top>div:last-child div,
-	.about>div:last-child div {
+	.top > div:last-child div,
+	.about > div:last-child div {
 		width: 40%;
 	}
 
@@ -506,7 +511,7 @@ footer>div:not(.socials) {
 		width: 450px;
 	}
 
-	section>.title {
+	section > .title {
 		padding-block: 5em;
 	}
 
