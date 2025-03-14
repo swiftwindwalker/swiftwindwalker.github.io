@@ -46,7 +46,8 @@ nav a {
 }
 
 section {
-	min-height: 100dvh;
+	min-height:calc(100vh - 60px);
+
 }
 
 .fat {
@@ -68,8 +69,8 @@ canvas {
 	position: fixed;
 	left: 0;                      /* Align to the left edge of the viewport */
 	top: 0;                       /* Align to the top of the viewport */
-	width: 100vw;                 /* Make sure canvas takes full width of the viewport */
-	height: 100vh;                /* Make sure canvas takes full height of the viewport */
+	width: 100%;                 /* Make sure canvas takes full width of the viewport */
+	height: 100%;                /* Make sure canvas takes full height of the viewport */
 	z-index: -1;                  /* Keep canvas in the background */
 }
 
@@ -390,10 +391,6 @@ footer > div:not(.socials) {
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
-	}
-
-	canvas {
-		height: 90vh;
 	}
 	
 }@media (orientation: landscape) {
