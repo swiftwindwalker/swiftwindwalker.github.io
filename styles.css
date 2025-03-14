@@ -105,7 +105,6 @@ canvas {
 
 .hero-title span:nth-child(4) {
 	font-weight: 600;
-	color: #e61618;
 }
 
 .hero-title span:nth-child(5) {
@@ -384,6 +383,19 @@ footer>div:not(.socials) {
 	}
 }
 
+@media (orientation:portrait) {
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	
+	body {
+		background-color: #f1f1f1;
+		overflow-x: hidden;
+	}
+	
+}
 @media (orientation: landscape) {
 	.text-spin {
 		left: -100%;
