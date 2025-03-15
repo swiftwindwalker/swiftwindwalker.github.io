@@ -177,12 +177,26 @@ section {
 	gap: 1em;
 }
 
-.page .left .thin:is(:first-child) {
+.page .left .fat:is(:first-child) {
+	margin-top: 3em;
 	margin-bottom: 1em;
+	font-size: 1.5rem;
+	font-weight: 800;
 }
 
 .page .thin:is(:last-child) {
 	margin-top: 1em;
+	font-size: 1rem;
+	font-weight: 400;
+	text-transform: none;
+
+
+}
+
+body > div:nth-child(5) > section > div.right > div:nth-child(1) {
+	font-size: 1rem;
+	font-weight: 400;
+	text-transform: none;
 }
 
 .loader {
