@@ -19,7 +19,6 @@ const context = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-adjustCanvasForiOS();
 
 console.log("canvas.width: "+canvas.width+","+"canvas.height: "+canvas.height);
 
@@ -177,32 +176,6 @@ ScrollTrigger.create({
     console.log(`Scroll position: ${self.progress}`);
   }
 });
-
-
-// Function to detect if the device is iPhone or iOS
-function isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  }
-
-  function adjustCanvasForiOS() {
-    const canvas = document.getElementById("canvas");
-  
-    // Check if the device is iOS or iPhone
-    if (isIOS()) {
-        console.log("IOS device detected..");
-
-      // Adjust the canvas height for iOS devices (optional - reduce it a bit for UI considerations)
-      canvas.height = window.innerHeight - 60; // You can adjust the '20' based on your needs (e.g., to avoid status bar)
-      canvas.width = window.innerWidth; // Set width to full viewport width
-    } else {
-        console.log("non-IOS device detected..");
-      // For non-iOS devices, set the height to full viewport height
-      canvas.height = window.innerHeight;
-      canvas.width = window.innerWidth;
-    }
-  }
-
-  window.addEventListener('resize', adjustCanvasForiOS);
 
 
 /*
