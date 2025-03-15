@@ -1,96 +1,88 @@
 /* Author - ravzzy */
 
 
-//Print Viewport Dimensions
-
+// ✅ Print Viewport Dimensions (Debugging)
 function printViewportDimensions() {
-	const width = window.innerWidth;   // Viewport width
-	const height = window.innerHeight; // Viewport height
-	console.log("------VIEWPORT SIZES------")
-	console.log(`Viewport Width: ${width}px`);
-	console.log(`Viewport Height: ${height}px`);
-	console.log("--------------------------")
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    console.log("------VIEWPORT SIZES------");
+    console.log(`Viewport Width: ${width}px`);
+    console.log(`Viewport Height: ${height}px`);
+    console.log("--------------------------");
 }
 
-// Print viewport dimensions when the page loads
 printViewportDimensions();
+window.addEventListener("resize", printViewportDimensions);
 
-// Print viewport dimensions whenever the window is resized
-window.addEventListener('resize', printViewportDimensions);
+// ✅ Dynamically set body height for smooth scrolling
+document.body.style.height = `${window.innerHeight * 8}px`; 
 
-document.body.style.height = `${window.innerHeight * 60}px`; // Dynamically scale height
-const canvas = document.getElementById('canvas')
-const ctx = canvas.getContext('2d')
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-const FRAMES = 300
-let imgPaths = []
-let imgs = []  // Declare imgs before using it
-let frame = { frame: 1 }
-let loadedImages = 0
+const FRAMES = 300;
+let imgPaths = [];
+let imgs = [];
+let frame = { frame: 0 };  // Start from frame 0
+let loadedImages = 0;
 
-// Function to generate image paths for all frames
+// ✅ Generate Image Paths
 function getImagePaths() {
-    console.log("getImagePaths invoked");
     for (let i = 1; i <= FRAMES; i++) {
-        imgPaths.push(`imgs/male${i}.png`)
+        imgPaths.push(`imgs/male${i}.png`);
     }
 }
-getImagePaths()
+getImagePaths();
 
-// Function to load images and ensure they're all loaded before rendering
+// ✅ Preload Images
 function getImages() {
-    console.log("getImages invoked");
     imgPaths.forEach((path, index) => {
-        const img = new Image()
-        img.src = path
+        const img = new Image();
+        img.src = path;
         img.onload = () => {
-            loadedImages++
-            if (loadedImages === imgPaths.length) {
-                console.log("rendering first frame: "+img.src);
-                render()  // Render first frame when all images are loaded
+            loadedImages++;
+            if (index === 0) render(); // Render first frame ASAP
+            if (loadedImages === FRAMES) {
+                console.log("✅ All frames loaded.");
             }
-        }
-        img.style.display = 'block'
-        imgs.push(img)
-    })
+        };
+        imgs.push(img);
+    });
 }
-getImages()
-console.log("loaded images: "+loadedImages)
+getImages();
 
-// Resize canvas dynamically based on window size
+// ✅ Resize Canvas Dynamically
 function resizeCanvas() {
-    canvas.height = window.innerHeight
-    canvas.width = window.innerWidth
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     ScrollTrigger.refresh();
 }
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
-// Call resizeCanvas **after** imgs is declared
-resizeCanvas()
+// ✅ GSAP ScrollTrigger Animation
+gsap.registerPlugin(ScrollTrigger);
 
-// Handle window resize event
-window.addEventListener('resize', resizeCanvas)
-
-// Register GSAP ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger)
-
-// Create scroll-triggered animation
 gsap.to(frame, {
     frame: FRAMES - 1,
     snap: "frame",
-    ease: "none",
+    ease: "power1.out",  // 🔥 Smooth transition
     scrollTrigger: {
         trigger: "#canvas",
         start: "top top",
-        end: `+=${window.innerHeight * 8}`,
+        end: `+=${window.innerHeight * 6}`,  // ✅ Control where animation stops
         scrub: 1,
-        markers: true,  // ✅ Keep for debugging, remove in production
+        markers: true,  // Remove in production
         onUpdate: (self) => {
             let progress = self.progress;
+            let newFrame = Math.max(0, Math.round(progress * (FRAMES - 1)));
 
-            // 🛑 Prevent negative frames
-            let newFrame = Math.max(0, Math.round(progress * (FRAMES - 1))); 
+            // ✅ Ensure first frame always stays visible at the start
+            if (progress <= 0.02) {
+                newFrame = 0;
+            }
 
-            // 🚀 Only re-render when frame changes
+            // ✅ Update only if the frame actually changes
             if (newFrame !== frame.frame) {
                 frame.frame = newFrame;
                 render();
@@ -101,57 +93,43 @@ gsap.to(frame, {
     },
 });
 
-
-// Function to render the current frame on the canvas
+// ✅ Render Frame Function
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    console.log("frame: " + frame.frame);
 
     let img = imgs[frame.frame];
 
-    // 🛑 Prevent rendering unloaded images
+    // 🚀 Ensure image is loaded before rendering
     if (!img || img.width === 0 || img.height === 0) {
         console.warn("Skipping frame, image not loaded yet:", frame.frame);
         return;
     }
 
-    console.log("Image loaded: " + img.src);
-
     let scaleFactor = Math.min(canvas.width / img.width, canvas.height / img.height);
     if (window.innerWidth < 768) {
-        console.log("image scaled for mobile");
-        scaleFactor *= 2.0;  // ✅ Keep scale factor 2.0
+        scaleFactor *= 2.0;  // ✅ Keep scale factor 2.0 for mobile
     }
 
     let imgWidth = img.width * scaleFactor;
     let imgHeight = img.height * scaleFactor;
-
-    console.log("Image size: " + imgWidth + " x " + imgHeight + " px");
-
     let x = (canvas.width - imgWidth) / 2;
-    let y = canvas.height - imgHeight;  
-
-    console.log("x, y: " + x + " x " + y + " px");
+    let y = canvas.height - imgHeight;
 
     ctx.drawImage(img, x, y, imgWidth, imgHeight);
 }
 
-
-
-// Make sure the first image is loaded before rendering
-// Ensure first image is loaded before rendering
+// ✅ Force First Frame to Always Load Immediately
 function forceFirstFrame() {
-    if (imgs[1] && imgs[1].complete) {
+    if (imgs[0] && imgs[0].complete) {
         render();
         console.log("✅ First image rendered");
     } else {
         console.log("⏳ Waiting for first image to load...");
-        setTimeout(forceFirstFrame, 50);  // Retry every 50ms
+        setTimeout(forceFirstFrame, 50); // Retry every 50ms
     }
 }
 
-// Call the function after images are loaded
-forceFirstFrame();
+setTimeout(forceFirstFrame, 200);
 
 
 gsap.to('.two', {
