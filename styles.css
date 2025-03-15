@@ -199,6 +199,12 @@ body > div:nth-child(5) > section > div.right > div:nth-child(1) {
 	text-transform: none;
 }
 
+body > div:nth-child(7) > section > div.left > div:nth-child(2) {
+	font-size: 1rem;
+	font-weight: 400;
+	text-transform: none;
+}
+
 .loader {
 	display: none;
 }
