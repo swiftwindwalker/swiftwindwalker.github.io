@@ -11,7 +11,6 @@ function printViewportDimensions() {
 printViewportDimensions();
 window.addEventListener("resize", printViewportDimensions);
 
-console.clear();
 
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
@@ -28,7 +27,7 @@ const currentFrame = index => (
 );
 
 const images = [];
-const airpods = {
+const homeImages = {
   frame: 0
 };
 
@@ -77,9 +76,9 @@ function render() {
   requestAnimationFrame(() => {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    const currentFrameIndex = Math.floor(airpods.frame);
+    const currentFrameIndex = Math.floor(homeImages.frame);
     const nextFrameIndex = Math.min(currentFrameIndex + 1, frameCount - 1);
-    const progress = airpods.frame - currentFrameIndex; // Fractional progress between frames
+    const progress = homeImages.frame - currentFrameIndex; // Fractional progress between frames
 
     if (images[currentFrameIndex] && images[nextFrameIndex]) {
 
@@ -150,7 +149,7 @@ preloadImages().then(() => {
 
   let endscrollmarker = (document.getElementById("canvas").offsetHeight)*3
 
-  gsap.to(airpods, {
+  gsap.to(homeImages, {
     frame: frameCount - 1,
     snap: "frame",
     ease: "none",
@@ -162,7 +161,7 @@ preloadImages().then(() => {
       markers: true // Disable markers in production
     },
     onUpdate: () => {
-     console.log("Current frame value:"+ airpods.frame);
+     console.log("Current frame value:"+ homeImages.frame);
       throttledRender();
     }
   });
@@ -183,6 +182,26 @@ ScrollTrigger.create({
 });
 
 
+
+function handleResize() {
+    // Update canvas size
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    console.log("canvas resized to width: " + canvas.width + ", height: " + canvas.height);
+
+    // Update ScrollTrigger end position
+    gsap.to(homeImages, {
+      scrollTrigger: {
+        end: () => `+=${document.querySelector('.homepage').offsetTop}`, // Update end trigger on resize
+      }
+    });
+    
+    // Re-render the images after the resize
+    render();  // Call the render function to redraw the images
+  }
+  // Listen for window resize events
+  window.addEventListener('resize', handleResize);
+  
 /*
 // ✅ Dynamically set body height for smooth scrolling
 document.body.style.height = `${window.innerHeight * 6}px`; 
