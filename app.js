@@ -18,7 +18,7 @@ printViewportDimensions();
 // Print viewport dimensions whenever the window is resized
 window.addEventListener('resize', printViewportDimensions);
 
-
+document.body.style.height = `${window.innerHeight * 60}px`; // Dynamically scale height
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
@@ -75,21 +75,25 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Create scroll-triggered animation
 gsap.to(frame, {
-    frame: FRAMES - 1,
+    frame: FRAMES - 1,  // Set to last frame
     snap: "frame",
-    ease: "none",  // Removes easing for precise mapping
+    ease: "none",
     scrollTrigger: {
         trigger: "#canvas",
         start: "top top",
-        end: `+=${window.innerHeight * 6}`,  // ✅ Fix: Extend scroll range dynamically
-        scrub: 0.5,  // ✅ Reduce jerkiness
+        end: `+=${window.innerHeight * 8}`,  // 🔥 Increase scroll distance dynamically
+        scrub: 1,  // 🔥 Adjust for smoother animation
         markers: true,  // ✅ Keep for debugging
+        onUpdate: (self) => {
+            // 🌟 Interpolate frames based on GSAP progress
+            let progress = self.progress;
+            frame.frame = Math.round(progress * (FRAMES - 1));
+            render();  // 🔥 Call render only when the frame updates
+            console.log("Scroll Progress:", progress, "Frame:", frame.frame);
+        },
     },
-    onUpdate: () => {
-        console.log("scroll - rendering frame:", frame.frame);
-        render();  // Update frames smoothly
-    }
 });
+
 
 // Function to render the current frame on the canvas
 function render() {

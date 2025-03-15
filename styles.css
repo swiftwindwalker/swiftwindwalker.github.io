@@ -10,9 +10,8 @@
 
 html, body {
     overflow-x: hidden;
-    height: 500vh; /* ✅ Add more scroll height */
+    height: 500vh;  /* 🛠️ Ensure enough space dynamically */
 }
-
 
 body {
 	font-size: 8px;
