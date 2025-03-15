@@ -145,7 +145,7 @@ const throttledRender = throttle(render, 16); // Limit to ~60 FPS
 preloadImages().then(() => {
   console.log("All images preloaded. Starting animation...");
   console.log("canvas height: "+document.getElementById("canvas").offsetHeight)
-  console.log("Homepage offsetTop:", document.querySelector('.homepage').offsetTop);
+  console.log("Homepage offsetTop:", document.querySelector('.four').offsetTop);
 
   let endscrollmarker = (document.getElementById("canvas").offsetHeight)*3
 
@@ -157,7 +157,7 @@ preloadImages().then(() => {
       scrub: 1, // Adjust this value for smoother scrubbing
       start: "top top",
       //end: () => `+=${endscrollmarker}`,
-      end: () => `+=${document.querySelector('.homepage').offsetTop}`, // Use the offsetTop of .homepage     
+      end: () => `+=${document.querySelector('.four').offsetTop}`, // Use the offsetTop of .homepage     
       markers: true // Disable markers in production
     },
     onUpdate: () => {
@@ -192,7 +192,7 @@ function handleResize() {
     // Update ScrollTrigger end position
     gsap.to(homeImages, {
       scrollTrigger: {
-        end: () => `+=${document.querySelector('.homepage').offsetTop}`, // Update end trigger on resize
+        end: () => `+=${document.querySelector('.four').offsetTop}`, // Update end trigger on resize
       }
     });
     

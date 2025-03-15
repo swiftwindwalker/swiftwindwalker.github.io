@@ -74,7 +74,7 @@ nav a {
 }
 
 section {
-	min-height:calc(100vh - 60px);
+	min-height:100dvh;
 
 }
 
