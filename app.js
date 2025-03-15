@@ -145,7 +145,7 @@ const throttledRender = throttle(render, 16); // Limit to ~60 FPS
 preloadImages().then(() => {
   console.log("All images preloaded. Starting animation...");
   console.log("canvas height: "+document.getElementById("canvas").offsetHeight)
-  console.log("Homepage offsetTop:", document.querySelector('.four').offsetTop);
+  //console.log("Homepage offsetTop:", document.querySelector('.four').offsetTop);
 
   let endscrollmarker = (document.getElementById("canvas").offsetHeight)*3
 
@@ -157,8 +157,9 @@ preloadImages().then(() => {
       scrub: 1, // Adjust this value for smoother scrubbing
       start: "top top",
       //end: () => `+=${endscrollmarker}`,
-      end: () => `+=${document.querySelector('.four').offsetTop}`, // Use the offsetTop of .homepage     
-      markers: true // Disable markers in production
+    //  end: () => `+=${document.querySelector('.four').offsetTop}`, // Use the offsetTop of .homepage   
+        end: "bottom bottom",
+    //  markers: true // Disable markers in production
     },
     onUpdate: () => {
      console.log("Current frame value:"+ homeImages.frame);
@@ -192,7 +193,8 @@ function handleResize() {
     // Update ScrollTrigger end position
     gsap.to(homeImages, {
       scrollTrigger: {
-        end: () => `+=${document.querySelector('.four').offsetTop}`, // Update end trigger on resize
+        end: "bottom bottom",
+       // end: () => `+=${document.querySelector('.four').offsetTop}`, // Update end trigger on resize
       }
     });
     
@@ -321,7 +323,7 @@ setTimeout(forceFirstFrame, 200);
 
 */
 
-/*
+
 gsap.to('.two', {
 	scrollTrigger: {
 		trigger: '.two',
@@ -351,7 +353,6 @@ gsap.to('.four', {
 		pin: true,
 	},
 }) 
-    */
 
 gsap.to('.loader-img', {
 	rotation: 360,
