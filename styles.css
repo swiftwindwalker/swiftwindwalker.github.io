@@ -69,7 +69,9 @@ nav a {
 	margin-inline-start: 0.5em;
 }
 .left-content, .right-content {
-	font-size: 0.7rem;
+	font-size: 1rem;
+	text-transform: none;
+
 }
 
 section {
@@ -154,7 +156,12 @@ section {
 }
 
 .hero-content div:nth-child(1) {
-	font-weight: 300;
+	font-weight: 400;
+}
+
+.bold-text {
+	font-weight: 800;
+	font-size: 1.5rem;
 }
 
 .hero-content div:nth-child(2) {
@@ -411,6 +418,12 @@ footer > div:not(.socials) {
 		padding: 0;
 		box-sizing: border-box;
 	}
+
+	.hero-content{
+		gap:40px;
+	}
+
+
 	
 }@media (orientation: landscape) {
 	.text-spin {
