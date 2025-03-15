@@ -75,20 +75,27 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Create scroll-triggered animation
 gsap.to(frame, {
-    frame: FRAMES - 1,  // Set to last frame
+    frame: FRAMES - 1,
     snap: "frame",
     ease: "none",
     scrollTrigger: {
         trigger: "#canvas",
         start: "top top",
-        end: `+=${window.innerHeight * 8}`,  // 🔥 Increase scroll distance dynamically
-        scrub: 1,  // 🔥 Adjust for smoother animation
-        markers: true,  // ✅ Keep for debugging
+        end: `+=${window.innerHeight * 8}`,
+        scrub: 1,
+        markers: true,  // ✅ Keep for debugging, remove in production
         onUpdate: (self) => {
-            // 🌟 Interpolate frames based on GSAP progress
             let progress = self.progress;
-            frame.frame = Math.round(progress * (FRAMES - 1));
-            render();  // 🔥 Call render only when the frame updates
+
+            // 🛑 Prevent negative frames
+            let newFrame = Math.max(0, Math.round(progress * (FRAMES - 1))); 
+
+            // 🚀 Only re-render when frame changes
+            if (newFrame !== frame.frame) {
+                frame.frame = newFrame;
+                render();
+            }
+
             console.log("Scroll Progress:", progress, "Frame:", frame.frame);
         },
     },
