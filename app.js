@@ -145,6 +145,8 @@ const throttledRender = throttle(render, 16); // Limit to ~60 FPS
 // Preload images and then start the animation
 preloadImages().then(() => {
   console.log("All images preloaded. Starting animation...");
+  console.log("canvas height: "+document.getElementById("canvas").offsetHeight)
+  let endscrollmarker = (document.getElementById("canvas").offsetHeight)*3
 
   gsap.to(airpods, {
     frame: frameCount - 1,
@@ -153,8 +155,8 @@ preloadImages().then(() => {
     scrollTrigger: {
       scrub: 1, // Adjust this value for smoother scrubbing
       start: "top top",
-      end: "bottom bottom",  // End 200px below the top of the trigger.
-      //markers: true // Disable markers in production
+      end: () => `+=${endscrollmarker}`,
+      markers: true // Disable markers in production
     },
     onUpdate: () => {
      console.log("Current frame value:"+ airpods.frame);

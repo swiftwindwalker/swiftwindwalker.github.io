@@ -9,6 +9,8 @@
 }
 
 html, body {
+	margin: 0;
+	padding: 0;
     overflow-x: hidden;
 	height: 500vh;
 }
@@ -19,6 +21,18 @@ body {
 	text-transform: uppercase;
 	background-color: #f1f1f1;
 }
+
+
+.homepage {
+	padding: 40px;
+	margin-top: 500vh; /* Push the section down below the canvas */
+	position: relative;
+	height: 100vh; /* Full viewport height */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1; /* To make sure it appears above the canvas */
+  }
 
 .highlight-red {
 	color: #e61618;
