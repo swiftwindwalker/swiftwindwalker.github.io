@@ -23,16 +23,27 @@ body {
 }
 
 
-.homepage {
-	padding: 40px;
-	margin-top: 500vh; /* Push the section down below the canvas */
-	position: relative;
-	height: 100vh; /* Full viewport height */
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 1; /* To make sure it appears above the canvas */
+#canvas {
+	width: 100vw; /* Cover the entire viewport width */
+	height: 100vh; /* Cover the entire viewport height */
+	display: block;
+	position: fixed; /* To prevent it from moving within a flow layout */
+	top: 0;
+	left: 0;
+	z-index: -1;
   }
+
+.homepage {
+  background-color: beige;
+  padding: 40px;
+  position: relative;
+  height: 200vh; /* Full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; /* To make sure it appears above the canvas */
+  top: 300vh; /* Position below the canvas */
+}
 
 .highlight-red {
 	color: #e61618;
@@ -83,15 +94,6 @@ section {
 	font-size: 0.875 rem;
 }	
 
-#canvas {
-	width: 100vw; /* Cover the entire viewport width */
-	height: 100vh; /* Cover the entire viewport height */
-	display: block;
-	position: fixed; /* To prevent it from moving within a flow layout */
-	top: 0;
-	left: 0;
-	z-index: -1;
-  }
 
 .hero {
 	display: flex;
