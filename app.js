@@ -47,7 +47,7 @@ function getImages() {
             loadedImages++
             if (loadedImages === imgPaths.length) {
                 console.log("rendering first frame: "+img.src);
-                //render()  // Render first frame when all images are loaded
+                render()  // Render first frame when all images are loaded
             }
         }
         img.style.display = 'block'
@@ -132,10 +132,19 @@ function render() {
 
 
 // Make sure the first image is loaded before rendering
-if (imgs[1]) {
-    imgs[1].onload = render 
-    console.log('First image rendered')
+// Ensure first image is loaded before rendering
+function forceFirstFrame() {
+    if (imgs[1] && imgs[1].complete) {
+        render();
+        console.log("✅ First image rendered");
+    } else {
+        console.log("⏳ Waiting for first image to load...");
+        setTimeout(forceFirstFrame, 50);  // Retry every 50ms
+    }
 }
+
+// Call the function after images are loaded
+forceFirstFrame();
 
 
 gsap.to('.two', {
