@@ -1,21 +1,142 @@
 /* Author - ravzzy */
 
-
 // ✅ Print Viewport Dimensions (Debugging)
 function printViewportDimensions() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
     console.log("------VIEWPORT SIZES------");
-    console.log(`Viewport Width: ${width}px`);
-    console.log(`Viewport Height: ${height}px`);
+    console.log(`Viewport Width: ${window.innerWidth}px`);
+    console.log(`Viewport Height: ${window.innerHeight}px`);
     console.log("--------------------------");
 }
 
 printViewportDimensions();
 window.addEventListener("resize", printViewportDimensions);
 
+console.clear();
+
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const frameCount = 300;
+const currentFrame = index => (
+  `imgs/male${index}.png`
+);
+
+const images = [];
+const airpods = {
+  frame: 0
+};
+
+// Function to preload images
+function preloadImages() {
+  return Promise.all(
+    Array.from({ length: frameCount }, (_, i) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        const imageUrl = currentFrame(i + 1);
+        console.log(`Loading image: ${imageUrl}`);
+        img.src = imageUrl;
+
+        img.onload = () => {
+          console.log(`Image ${i + 1} loaded successfully.`);
+          resolve(img);
+        };
+
+        img.onerror = () => {
+          console.error(`Failed to load image at ${img.src}. Skipping.`);
+          resolve(null); // Skip this image
+        };
+
+        images.push(img);
+      });
+    })
+  );
+}
+
+// Throttle function to limit render calls
+function throttle(callback, limit) {
+  let waiting = false;
+  return function () {
+    if (!waiting) {
+      callback.apply(this, arguments);
+      waiting = true;
+      setTimeout(() => {
+        waiting = false;
+      }, limit);
+    }
+  };
+}
+
+// Render function with interpolation
+function render() {
+  requestAnimationFrame(() => {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    const currentFrameIndex = Math.floor(airpods.frame);
+    const nextFrameIndex = Math.min(currentFrameIndex + 1, frameCount - 1);
+    const progress = airpods.frame - currentFrameIndex; // Fractional progress between frames
+
+    if (images[currentFrameIndex] && images[nextFrameIndex]) {
+      // Draw the current frame
+      console.log ("image rendered: "+images[currentFrameIndex].src);
+      context.globalAlpha = 1 - progress; // Fade out the current frame
+      context.drawImage(images[currentFrameIndex], 0, 0);
+
+      // Draw the next frame
+      context.globalAlpha = progress; // Fade in the next frame
+      context.drawImage(images[nextFrameIndex], 0, 0);
+
+      // Reset globalAlpha
+      context.globalAlpha = 1;
+    } else {
+      console.warn(`No image available for frame ${currentFrameIndex} or ${nextFrameIndex}.`);
+    }
+  });
+}
+
+// Throttled render function
+const throttledRender = throttle(render, 16); // Limit to ~60 FPS
+
+// Preload images and then start the animation
+preloadImages().then(() => {
+  console.log("All images preloaded. Starting animation...");
+
+  gsap.to(airpods, {
+    frame: frameCount - 1,
+    snap: "frame",
+    ease: "none",
+    scrollTrigger: {
+      scrub: 1, // Adjust this value for smoother scrubbing
+      start: "top top",
+      end: "bottom bottom",  // End 200px below the top of the trigger.
+      markers: true // Disable markers in production
+    },
+    onUpdate: () => {
+     console.log("Current frame value:"+ airpods.frame);
+      throttledRender();
+    }
+  });
+
+  // Render the first frame immediately
+  render();
+}).catch(error => {
+  console.error("Error preloading images:", error);
+});
+
+// Debug scroll position
+ScrollTrigger.create({
+  start: "top top",
+  end: "bottom bottom",
+  onUpdate: (self) => {
+    console.log(`Scroll position: ${self.progress}`);
+  }
+});
+
+/*
 // ✅ Dynamically set body height for smooth scrolling
-document.body.style.height = `${window.innerHeight * 8}px`; 
+document.body.style.height = `${window.innerHeight * 6}px`; 
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -46,7 +167,7 @@ function getImages() {
                 console.log("✅ All frames loaded.");
             }
         };
-        imgs.push(img);
+        imgs[index] = img;
     });
 }
 getImages();
@@ -66,19 +187,19 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.to(frame, {
     frame: FRAMES - 1,
     snap: "frame",
-    ease: "power1.out",  // 🔥 Smooth transition
+    ease: "none",  // 🔥 Smooth transition
     scrollTrigger: {
         trigger: "#canvas",
         start: "top top",
-        end: `+=${window.innerHeight * 6}`,  // ✅ Control where animation stops
-        scrub: 1,
+        end: `+=${window.innerHeight * 5}`,  // ✅ Controls where animation stops
+        scrub: 4,  // 🔥 Adjust for smoother animation
         markers: true,  // Remove in production
         onUpdate: (self) => {
             let progress = self.progress;
             let newFrame = Math.max(0, Math.round(progress * (FRAMES - 1)));
 
             // ✅ Ensure first frame always stays visible at the start
-            if (progress <= 0.02) {
+            if (progress <= 0.01) {
                 newFrame = 0;
             }
 
@@ -128,10 +249,11 @@ function forceFirstFrame() {
         setTimeout(forceFirstFrame, 50); // Retry every 50ms
     }
 }
-
 setTimeout(forceFirstFrame, 200);
 
+*/
 
+/*
 gsap.to('.two', {
 	scrollTrigger: {
 		trigger: '.two',
@@ -160,7 +282,8 @@ gsap.to('.four', {
 		srub: 1,
 		pin: true,
 	},
-})
+}) 
+    */
 
 gsap.to('.loader-img', {
 	rotation: 360,
@@ -169,10 +292,12 @@ gsap.to('.loader-img', {
 	repeatDelay: 0.25,
 })
 
+
 window.addEventListener('load', e => {
 	document.body.classList.remove('loading')
 })
 
+/*
 const rgb = {
 	r: 255,
 	g: 255,
@@ -207,9 +332,4 @@ gsap.to(rgb, {
 		roadmap.style.backgroundColor = `rgb(${rgb.r},${rgb.g},${rgb.b})`
 	},
 })
-
-
-window.addEventListener('resize', () => {
-    console.log("ScrollTrigger refreshed");
-    ScrollTrigger.refresh();
-});
+*/

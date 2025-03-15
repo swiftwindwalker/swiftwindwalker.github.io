@@ -10,7 +10,7 @@
 
 html, body {
     overflow-x: hidden;
-    height: 500vh;  /* 🛠️ Ensure enough space dynamically */
+	height: 500vh;
 }
 
 body {
@@ -53,6 +53,7 @@ section {
 
 }
 
+
 .fat {
 	font-weight: 700;
 	font-size: 1.5rem;
@@ -66,18 +67,17 @@ section {
 .thin-jp {
 	font-weight: 400;
 	font-size: 0.875 rem;
-}
-canvas {
-	background-color: green;
-	position: fixed;
-	left: 0;                      /* Align to the left edge of the viewport */
-	top: 0;                       /* Align to the top of the viewport */
-	width: 100%;                 /* Make sure canvas takes full width of the viewport */
-	height: calc(100vh-60px);                /* Make sure canvas takes full height of the viewport */
-	z-index: -1;                  /* Keep canvas in the background */
-}
+}	
 
-
+#canvas {
+	width: 100vw; /* Cover the entire viewport width */
+	height: 100vh; /* Cover the entire viewport height */
+	display: block;
+	position: fixed; /* To prevent it from moving within a flow layout */
+	top: 0;
+	left: 0;
+	z-index: -1;
+  }
 
 .hero {
 	display: flex;
