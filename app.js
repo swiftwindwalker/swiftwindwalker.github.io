@@ -18,6 +18,7 @@ const context = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+console.log("canvas.width: "+canvas.width+","+"canvas.height: "+canvas.height);
 
 const frameCount = 300;
 const currentFrame = index => (
@@ -79,14 +80,54 @@ function render() {
     const progress = airpods.frame - currentFrameIndex; // Fractional progress between frames
 
     if (images[currentFrameIndex] && images[nextFrameIndex]) {
-      // Draw the current frame
+
       console.log ("image rendered: "+images[currentFrameIndex].src);
+
+      // Get the current image and calculate its aspect ratio
+      const img = images[currentFrameIndex];
+      const aspectRatio = img.width / img.height;
+
+      // Define max width and height
+      let maxWidth = canvas.width * 0.8; // Max width 80% of the canvas width
+      let maxHeight = canvas.height * 0.8; // Max height 80% of the canvas height
+
+            // Adjust for mobile screens (e.g., 50% of canvas width/height for mobile)
+       if (window.innerWidth <= 768) { // For mobile or smaller tablets (768px or below)
+        maxWidth = canvas.width * 2; // 50% of the canvas width for mobile
+        maxHeight = canvas.height * 2; // 50% of the canvas height for mobile
+        }
+
+      // Calculate the new width and height based on aspect ratio
+      let newWidth, newHeight;
+
+      // If the image is wider than tall, scale based on the width
+      if (img.width > maxWidth) {
+        newWidth = maxWidth;
+        newHeight = newWidth / aspectRatio; // Maintain aspect ratio
+      } 
+      // If the image is taller than wide, scale based on the height
+      else if (img.height > maxHeight) {
+        newHeight = maxHeight;
+        newWidth = newHeight * aspectRatio; // Maintain aspect ratio
+      } 
+      // If the image is smaller than the max dimensions, keep original size
+      else {
+        newWidth = img.width;
+        newHeight = img.height;
+      }
+
+      // Calculate the centered position at the bottom of the canvas
+      const x = (canvas.width - newWidth) / 2;  // Center horizontally
+      const y = canvas.height - newHeight;     // Align at the bottom
+
+     // Draw the current frame
+      
       context.globalAlpha = 1 - progress; // Fade out the current frame
-      context.drawImage(images[currentFrameIndex], 0, 0);
+      context.drawImage(images[currentFrameIndex], x, y, newWidth, newHeight);
 
       // Draw the next frame
       context.globalAlpha = progress; // Fade in the next frame
-      context.drawImage(images[nextFrameIndex], 0, 0);
+      context.drawImage(images[nextFrameIndex], x, y, newWidth, newHeight);
 
       // Reset globalAlpha
       context.globalAlpha = 1;
@@ -111,7 +152,7 @@ preloadImages().then(() => {
       scrub: 1, // Adjust this value for smoother scrubbing
       start: "top top",
       end: "bottom bottom",  // End 200px below the top of the trigger.
-      markers: true // Disable markers in production
+      //markers: true // Disable markers in production
     },
     onUpdate: () => {
      console.log("Current frame value:"+ airpods.frame);
