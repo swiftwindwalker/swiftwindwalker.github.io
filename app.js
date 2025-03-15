@@ -61,10 +61,7 @@ console.log("loaded images: "+loadedImages)
 function resizeCanvas() {
     canvas.height = window.innerHeight
     canvas.width = window.innerWidth
-    if (imgs.length === FRAMES) {  // Only render if images are fully loaded
-        console.log ("resize rendering: "+imgs.length);
-        render()
-    }
+    ScrollTrigger.refresh();
 }
 
 // Call resizeCanvas **after** imgs is declared
@@ -79,49 +76,55 @@ gsap.registerPlugin(ScrollTrigger)
 // Create scroll-triggered animation
 gsap.to(frame, {
     frame: FRAMES - 1,
-    snap: 'frame',
+    snap: "frame",
+    ease: "none",  // Removes easing for precise mapping
     scrollTrigger: {
-        start: 'top top',  
-        end: '+=600%',  
-        scrub: true,
-        markers: true,  // Optional: remove in production
+        trigger: "#canvas",
+        start: "top top",
+        end: `+=${window.innerHeight * 6}`,  // ✅ Fix: Extend scroll range dynamically
+        scrub: 0.5,  // ✅ Reduce jerkiness
+        markers: true,  // ✅ Keep for debugging
     },
     onUpdate: () => {
-        console.log("scroll - rendering");
-        render()  // Update canvas on scroll
-    },
-})
+        console.log("scroll - rendering frame:", frame.frame);
+        render();  // Update frames smoothly
+    }
+});
 
 // Function to render the current frame on the canvas
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    console.log("frame: "+frame.frame);
+    console.log("frame: " + frame.frame);
 
     let img = imgs[frame.frame];
-    if (img) {
-        console.log("Image loaded: "+img.src);
-        // Calculate the correct scale factor while maintaining aspect ratio
-        let scaleFactor = Math.min(canvas.width / img.width, canvas.height / img.height);
 
-        // 🚀 Boost size on mobile screens
-        if (window.innerWidth < 768) {
-            console.log("image scaled for mobile");
-            scaleFactor *= 2.0;  // Increase size only on small screens
-        }
-
-        let imgWidth = img.width * scaleFactor;
-        let imgHeight = img.height * scaleFactor;
-
-        console.log ("Image size: "+imgWidth+ " x "+imgHeight+" px")
-
-        let x = (canvas.width - imgWidth) / 2;  // Center horizontally
-        let y = canvas.height - imgHeight;      // Align to bottom
-
-        console.log ("x, y: "+x+ " x "+y+" px")
-
-        ctx.drawImage(img, x, y, imgWidth, imgHeight);
+    // 🛑 Prevent rendering unloaded images
+    if (!img || img.width === 0 || img.height === 0) {
+        console.warn("Skipping frame, image not loaded yet:", frame.frame);
+        return;
     }
+
+    console.log("Image loaded: " + img.src);
+
+    let scaleFactor = Math.min(canvas.width / img.width, canvas.height / img.height);
+    if (window.innerWidth < 768) {
+        console.log("image scaled for mobile");
+        scaleFactor *= 2.0;  // ✅ Keep scale factor 2.0
+    }
+
+    let imgWidth = img.width * scaleFactor;
+    let imgHeight = img.height * scaleFactor;
+
+    console.log("Image size: " + imgWidth + " x " + imgHeight + " px");
+
+    let x = (canvas.width - imgWidth) / 2;
+    let y = canvas.height - imgHeight;  
+
+    console.log("x, y: " + x + " x " + y + " px");
+
+    ctx.drawImage(img, x, y, imgWidth, imgHeight);
 }
+
 
 
 // Make sure the first image is loaded before rendering
@@ -206,3 +209,9 @@ gsap.to(rgb, {
 		roadmap.style.backgroundColor = `rgb(${rgb.r},${rgb.g},${rgb.b})`
 	},
 })
+
+
+window.addEventListener('resize', () => {
+    console.log("ScrollTrigger refreshed");
+    ScrollTrigger.refresh();
+});
