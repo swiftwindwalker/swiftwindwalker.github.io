@@ -9,7 +9,6 @@ async function startTest() {
   const progress = document.getElementById('progress');
   const resultContainer = document.getElementById('result-container');
   const errorBox = document.getElementById('error-box');
-  const shareButtons = document.getElementById('share-buttons');
   const startTestButton = document.getElementById('start-test');
   const detailedResults = document.getElementById('detailed-results');
   const averageDownloadSpeed = document.getElementById('average-download-speed');
@@ -29,7 +28,6 @@ async function startTest() {
   progressBar.classList.remove('hidden');
   resultContainer.classList.add('hidden');
   errorBox.classList.add('hidden');
-  shareButtons.classList.add('hidden');
   errorBox.textContent = "";
   detailedResults.innerHTML = "";
   averageDownloadSpeed.textContent = "Calculating...";
@@ -45,8 +43,8 @@ async function startTest() {
   const fileUrl = `https://speed.cloudflare.com/__down?measId=4620545399793317&bytes=25000000`;
   const proxyUrl = useProxy ? `https://corsproxy.io/?url=${fileUrl}` : fileUrl; // Use a CORS proxy if useProxy is true
 
-  // Total file size in bytes (20 MB)
-  const totalSize = 20971520; // 20 MB in bytes
+  // Total file size in bytes (25 MB)
+  const totalSize = 25000000; // 25 MB in bytes
 
   try {
     let ipInfo;
@@ -136,11 +134,11 @@ async function startTest() {
     averageBandwidth.textContent = `${averageBandwidthValue} MB/s`;
     averageLatency.textContent = `${averageLatencyValue} ms`;
 
-    // Show results and sharing buttons
+    // Show results and hide progress bar
     resultContainer.classList.remove('hidden');
-    shareButtons.classList.remove('hidden');
-    startTestButton.textContent = "Re-test Again";
+    progressBar.classList.add('hidden');
     iterationProgress.classList.add('hidden');
+    showError("Test completed - scroll down for results.");
 
     // Render speed graph
     renderSpeedGraph(results);
@@ -247,69 +245,20 @@ function showError(message) {
 // Copy results to clipboard
 document.getElementById('copy-to-clipboard').addEventListener('click', () => {
   const resultsText = `Network Details:\n` +
-                     `IP Address: ${document.getElementById('ip-address').textContent}\n` +
-                     `ISP: ${document.getElementById('isp').textContent}\n` +
-                     `Location: ${document.getElementById('location').textContent}\n` +
-                     `DNS Server: ${document.getElementById('dns-server').textContent}\n` +
-                     `Browser: ${document.getElementById('browser').textContent}\n` +
-                     `Device: ${document.getElementById('device').textContent}\n\n` +
+                     `IP Address: ${document.querySelector('#detailed-results p:nth-child(2)').textContent.replace('IP Address: ', '')}\n` +
+                     `ISP: ${document.querySelector('#detailed-results p:nth-child(3)').textContent.replace('ISP: ', '')}\n` +
+                     `Location: ${document.querySelector('#detailed-results p:nth-child(4)').textContent.replace('Location: ', '')}\n` +
+                     `DNS Server: ${document.querySelector('#detailed-results p:nth-child(5)').textContent.replace('DNS Server: ', '')}\n` +
+                     `Browser: ${document.querySelector('#detailed-results p:nth-child(6)').textContent.replace('Browser: ', '')}\n` +
+                     `Device: ${document.querySelector('#detailed-results p:nth-child(7)').textContent.replace('Device: ', '')}\n\n` +
                      `Average Download Speed: ${document.getElementById('average-download-speed').textContent}\n` +
                      `Average Bandwidth: ${document.getElementById('average-bandwidth').textContent}\n` +
-                     `Average Latency: ${document.getElementById('average-latency').textContent}`;
+                     `Average Latency: ${document.getElementById('average-latency').textContent}\n\n` +
+                     `Detailed Results:\n` +
+                     document.getElementById('detailed-results').textContent;
   navigator.clipboard.writeText(resultsText).then(() => {
     alert("Results copied to clipboard!");
   });
-});
-
-// Share on X (Twitter)
-document.getElementById('share-twitter').addEventListener('click', () => {
-  const text = `Check out my internet speed test results!\n` +
-               `Network Details:\n` +
-               `IP Address: ${document.getElementById('ip-address').textContent}\n` +
-               `ISP: ${document.getElementById('isp').textContent}\n` +
-               `Location: ${document.getElementById('location').textContent}\n` +
-               `DNS Server: ${document.getElementById('dns-server').textContent}\n` +
-               `Browser: ${document.getElementById('browser').textContent}\n` +
-               `Device: ${document.getElementById('device').textContent}\n\n` +
-               `Average Download Speed: ${document.getElementById('average-download-speed').textContent}\n` +
-               `Average Bandwidth: ${document.getElementById('average-bandwidth').textContent}\n` +
-               `Average Latency: ${document.getElementById('average-latency').textContent}`;
-  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-  window.open(url, '_blank');
-});
-
-// Share on WhatsApp
-document.getElementById('share-whatsapp').addEventListener('click', () => {
-  const text = `Check out my internet speed test results!\n` +
-               `Network Details:\n` +
-               `IP Address: ${document.getElementById('ip-address').textContent}\n` +
-               `ISP: ${document.getElementById('isp').textContent}\n` +
-               `Location: ${document.getElementById('location').textContent}\n` +
-               `DNS Server: ${document.getElementById('dns-server').textContent}\n` +
-               `Browser: ${document.getElementById('browser').textContent}\n` +
-               `Device: ${document.getElementById('device').textContent}\n\n` +
-               `Average Download Speed: ${document.getElementById('average-download-speed').textContent}\n` +
-               `Average Bandwidth: ${document.getElementById('average-bandwidth').textContent}\n` +
-               `Average Latency: ${document.getElementById('average-latency').textContent}`;
-  const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-  window.open(url, '_blank');
-});
-
-// Share on Reddit
-document.getElementById('share-reddit').addEventListener('click', () => {
-  const text = `Check out my internet speed test results!\n` +
-               `Network Details:\n` +
-               `IP Address: ${document.getElementById('ip-address').textContent}\n` +
-               `ISP: ${document.getElementById('isp').textContent}\n` +
-               `Location: ${document.getElementById('location').textContent}\n` +
-               `DNS Server: ${document.getElementById('dns-server').textContent}\n` +
-               `Browser: ${document.getElementById('browser').textContent}\n` +
-               `Device: ${document.getElementById('device').textContent}\n\n` +
-               `Average Download Speed: ${document.getElementById('average-download-speed').textContent}\n` +
-               `Average Bandwidth: ${document.getElementById('average-bandwidth').textContent}\n` +
-               `Average Latency: ${document.getElementById('average-latency').textContent}`;
-  const url = `https://www.reddit.com/submit?title=${encodeURIComponent(text)}`;
-  window.open(url, '_blank');
 });
 
 const resultContainer = document.getElementById('result-container');
