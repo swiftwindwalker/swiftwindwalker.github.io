@@ -27,7 +27,7 @@
     font-size: 3rem;
     border: none;
     cursor: pointer;
-    color: black;
+    color: #e61618;
     background-color: transparent;
     z-index: 200; /* Ensure button is on top */
 }
@@ -43,7 +43,7 @@
     right: -100%;
     width: 100vw;
     height: 100dvh;
-    background-color: #e61618;
+    background-color: rgb(23, 16, 16);;
     color: white;
     display: flex;
     flex-direction: column;
