@@ -19,6 +19,7 @@
   <button class="menu-btn">☰</button>
   <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
   <div class="container">
+    <div class="content-wrapper">
     <!-- Input Container -->
     <div class="input-container">
       <h1>Internet Speed Test</h1>
@@ -28,6 +29,13 @@
       </div>
       <button id="start-test">Start Test</button>
       <div id="iteration-progress" class="iteration-progress hidden"></div>
+          <!-- Progress Bar -->
+    <div class="progress-bar hidden" id="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- Error Box -->
+    <div class="error-box hidden" id="error-box"></div>
     </div>
 
     <!-- Results Container -->
@@ -35,15 +43,7 @@
       <h2>Test Results</h2>
 
       <!-- Network Details -->
-      <div class="network-details">
-        <h3>Network Details</h3>
-        <p><strong>IP Address:</strong> <span id="ip-address">Fetching...</span></p>
-        <p><strong>ISP:</strong> <span id="isp">Fetching...</span></p>
-        <p><strong>Location:</strong> <span id="location">Fetching...</span></p>
-        <p><strong>DNS Server:</strong> <span id="dns-server">Fetching...</span></p>
-        <p><strong>Browser:</strong> <span id="browser">Fetching...</span></p>
-        <p><strong>Device:</strong> <span id="device">Fetching...</span></p>
-      </div>
+      <div class="network-details"></div>
 
       <!-- Detailed Results -->
       <div id="detailed-results"></div>
@@ -69,14 +69,8 @@
         <button id="share-reddit">Share on Reddit</button>
       </div>
     </div>
-
-    <!-- Progress Bar -->
-    <div class="progress-bar hidden" id="progress-bar">
-      <div class="progress" id="progress"></div>
     </div>
 
-    <!-- Error Box -->
-    <div class="error-box hidden" id="error-box"></div>
   </div>
 </body>
 </html>

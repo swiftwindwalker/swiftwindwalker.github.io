@@ -16,6 +16,8 @@ async function startTest() {
   const averageLatency = document.getElementById('average-latency');
   const iterationProgress = document.getElementById('iteration-progress');
 
+  showResults(); // Call this function to ensure it is positioned correctly
+
   // Reset UI
   progressBar.classList.remove('hidden');
   resultContainer.classList.add('hidden');
@@ -293,3 +295,10 @@ document.getElementById('share-reddit').addEventListener('click', () => {
   const url = `https://www.reddit.com/submit?title=${encodeURIComponent(text)}`;
   window.open(url, '_blank');
 });
+
+
+const resultContainer = document.getElementById('result-container');
+function showResults() {
+  resultContainer.classList.add('visible');
+  resultContainer.style.display = "block";
+}
