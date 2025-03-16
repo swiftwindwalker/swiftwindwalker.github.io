@@ -271,13 +271,17 @@ button:hover {
     width: 90vw; /* Adjust width for mobile */
   }
 
+  .result-container {
+    width: 90vw; /* Adjust width for mobile */
+  }
+
   .iterations-row {
     flex-direction: column; /* Stack iterations input and start button vertically on mobile */
     gap: 10px; /* Reduce gap for mobile */
   }
 
-  input,
-  button {
-    width: 100%; /* Full width for mobile */
+  input,button {
+    min-width: 25vw !important;
   }
+
 }
