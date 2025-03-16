@@ -252,13 +252,14 @@ function showError(message) {
 
 // Copy results to clipboard
 document.getElementById('copy-to-clipboard').addEventListener('click', () => {
-  const resultsText = `Network Details:\n` +
+  const resultsText = `Average Result:\n` +
+                      /*`Network Details:\n` +
                      `IP Address: ${document.querySelector('#detailed-results p:nth-child(2)').textContent.replace('IP Address: ', '')}\n` +
                      `ISP: ${document.querySelector('#detailed-results p:nth-child(3)').textContent.replace('ISP: ', '')}\n` +
                      `Location: ${document.querySelector('#detailed-results p:nth-child(4)').textContent.replace('Location: ', '')}\n` +
                      `DNS Server: ${document.querySelector('#detailed-results p:nth-child(5)').textContent.replace('DNS Server: ', '')}\n` +
                      `Browser: ${document.querySelector('#detailed-results p:nth-child(6)').textContent.replace('Browser: ', '')}\n` +
-                     `Device: ${document.querySelector('#detailed-results p:nth-child(7)').textContent.replace('Device: ', '')}\n\n` +
+                     `Device: ${document.querySelector('#detailed-results p:nth-child(7)').textContent.replace('Device: ', '')}\n\n` + */
                      `Average Download Speed: ${document.getElementById('average-download-speed').textContent}\n` +
                      `Average Bandwidth: ${document.getElementById('average-bandwidth').textContent}\n` +
                      `Average Latency: ${document.getElementById('average-latency').textContent}\n\n` +

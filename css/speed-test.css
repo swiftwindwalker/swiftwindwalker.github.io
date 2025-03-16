@@ -122,16 +122,22 @@ body {
 
 .header-text {
   position: absolute; /* Allows precise positioning */
-  top: 20%; /* Places it 5% from the top of the viewport */
+  top: 10%; /* Places it 5% from the top of the viewport */
   left: 50%; /* Moves the left edge to 50% of viewport */
   transform: translateX(-50%); /* Centers it horizontally */
   text-align: center; /* Ensures text inside is centered */
-  width: 100%; /* Optional: Makes sure it spans full width */
+  width: 80%; /* Optional: Makes sure it spans full width */
 }
 
 h1 {
   margin-bottom: 20px;
   font-size: 1.3rem;
+}
+
+.header-text p {
+  font-size: 0.9rem;
+  text-transform: none;
+
 }
 
 h2, h3 {
