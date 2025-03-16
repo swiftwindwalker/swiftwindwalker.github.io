@@ -1,4 +1,7 @@
+import { handleLayout } from './onload.js';  // Import the function
+
 // Fetch sidebar HTML dynamically and insert it into the page
+
 fetch('navbar.html')
     .then(response => response.text())
     .then(data => {
@@ -11,6 +14,12 @@ fetch('navbar.html')
     .catch(error => {
         console.error('Error loading navbar:', error);
     });
+
+	// Delay execution by 100ms
+	setTimeout(() => {
+		console.log("calling handlelayout function from navbar.js")
+		handleLayout();
+	}, 500);
 
 
 //Shuffle text effect for nav bar

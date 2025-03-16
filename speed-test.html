@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/sidebar.css">
+	<link rel="stylesheet" href="./css/navbar.css">
+  <link rel="stylesheet" href="./css/speed-test.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <script type="module" src="./js/onload.js" defer></script>
+  <script type="module" src="./js/navbar.js" defer></script>
+	<script type="module" src="./js/sidebar.js" defer></script>
+  <script src="./js/speed-test.js" defer></script>
+  <title>Internet Speed Test</title>
+
+</head>
+<body>
+  <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
+	<button class="menu-btn">☰</button>
+	<div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
+  <div class="container">
+    <h1>Internet Speed Test</h1>
+    <div class="form-group">
+      <label for="file-size">Select File Size for Test:</label>
+      <select id="file-size">
+        <option value="20MB">20 MB</option>
+        <option value="50MB">50 MB</option>
+        <option value="200MB">200 MB</option>
+        <option value="512MB">512 MB</option>
+      </select>
+    </div>
+    <button id="start-test">Start Test</button>
+
+    <div class="progress-bar hidden" id="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="results hidden" id="results">
+      <h2>Test Results</h2>
+      <p><strong>Download Speed:</strong> <span id="download-speed">Calculating...</span></p>
+      <p><strong>Bandwidth:</strong> <span id="bandwidth">Calculating...</span></p>
+      <p><strong>Latency:</strong> <span id="latency">Calculating...</span></p>
+      <p><strong>IP Address:</strong> <span id="ip-address">Fetching...</span></p>
+      <p><strong>DNS Server:</strong> <span id="dns-server">Fetching...</span></p>
+      <p><strong>ISP:</strong> <span id="isp">Fetching...</span></p>
+
+      <div class="speed-rating" id="speed-rating"></div>
+      <div class="rocket-icon" id="rocket-icon"></div>
+
+      <div class="share-buttons">
+        <button id="copy-to-clipboard">Copy to Clipboard</button>
+        <button id="share-twitter">Share on X</button>
+        <button id="share-whatsapp">Share on WhatsApp</button>
+        <button id="share-reddit">Share on Reddit</button>
+      </div>
+    </div>
+
+    <!-- Error Box -->
+    <div class="error-box hidden" id="error-box"></div>
+  </div>
+</body>
+</html>

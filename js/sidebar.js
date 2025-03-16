@@ -1,4 +1,7 @@
+import { handleLayout } from './onload.js';  // Import the function
+
 // Fetch sidebar HTML dynamically and insert it into the page
+
 fetch('sidebar.html')
     .then(response => response.text())
     .then(data => {
@@ -88,7 +91,11 @@ fetch('sidebar.html')
         console.error('Error loading sidebar:', error);
     });
 
-
+    // Delay execution by 100ms
+    setTimeout(() => {
+        console.log("calling handlelayout function from sidebar.js")
+        handleLayout();
+    }, 100);
 
       
 
