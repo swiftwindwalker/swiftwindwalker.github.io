@@ -228,6 +228,17 @@ button:hover {
   font-weight: bold;
 }
 
+#copy-to-clipboard {
+  display: inline-block; /* Ensure it is visible */
+  margin: 10px 0; /* Add some spacing */
+  padding: 10px 20px; /* Make it look like a button */
+  background-color: #00ff88; /* Green background */
+  color: #000; /* Black text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 /* Mobile Layout */
 @media (max-width: 768px) {
   .container {

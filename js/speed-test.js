@@ -15,6 +15,7 @@ async function startTest() {
   const averageBandwidth = document.getElementById('average-bandwidth');
   const averageLatency = document.getElementById('average-latency');
   const iterationProgress = document.getElementById('iteration-progress');
+  const copyToClipboardButton = document.getElementById('copy-to-clipboard'); // Ensure this exists
 
   // Check if iterations exceed the limit
   if (iterations > 10) {
@@ -35,6 +36,9 @@ async function startTest() {
   averageLatency.textContent = "Calculating...";
   iterationProgress.classList.remove('hidden');
   iterationProgress.textContent = "";
+
+  // Ensure the copy-to-clipboard button is hidden initially
+  //copyToClipboardButton.classList.add('hidden');
 
   // Array to store results of each iteration
   const results = [];
@@ -136,9 +140,13 @@ async function startTest() {
 
     // Show results and hide progress bar
     resultContainer.classList.remove('hidden');
-    progressBar.classList.add('hidden');
+    progressBar.classList.add('hidden'); // Hide progress bar
+    progress.style.width = "0%"; // Reset progress bar width
     iterationProgress.classList.add('hidden');
     showError("Test completed - scroll down for results.");
+
+    // Show the Copy to Clipboard button
+    //copyToClipboardButton.classList.remove('hidden');
 
     // Render speed graph
     renderSpeedGraph(results);
