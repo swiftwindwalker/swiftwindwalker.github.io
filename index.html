@@ -5,6 +5,8 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" href="./css/styles.css" />
+	<link rel="stylesheet" href="./css/sidebar.css">
+	<link rel="stylesheet" href="./css/navbar.css">
 	<title>Ravzzy</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
@@ -14,6 +16,8 @@
 		integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/ScrollToPlugin.min.js"></script>
+	<script src="./js/navbar.js" defer></script>
+	<script src="./js/sidebar.js" defer></script>
 	<script src="./js/app.js" defer></script>
 	<link rel="shortcut icon" href="./imgs/favicon.png" type="image/x-icon" />
 </head>
@@ -22,11 +26,14 @@
 	<div class="loader">
 		<img src="./imgs/loading.png" class="loader-img" alt="Loading" loading="eager" />
 	</div>
-	<nav>
+	<div id="navbar-container"></div> <!-- Navbar will be inserted here via js-->
+	<button class="menu-btn">☰</button>
+	<div id="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
+	<!--<nav>
 		<h1></h1>
-		<!--<h1><span class="highlight-red">RAVZZY</span>'s Digital Garage</h1>-->
+		<h1><span class="highlight-red">RAVZZY</span>'s Digital Garage</h1>
 		<div>Designed by <a href="https://ravzzy.com">Ravzzy</a></div>
-	</nav>
+	</nav>-->
 	<canvas id="canvas"> </canvas>
 	<!--<section id="homepage" class ="homepage">
 		<h1>Welcome to the New Section!</h1>

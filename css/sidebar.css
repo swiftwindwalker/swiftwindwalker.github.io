@@ -1,0 +1,122 @@
+.menu-btn {
+    display: none;
+}
+
+.sidebar-menu-btn {
+    display: none;
+}
+
+.menu-items {
+    display: none;
+}
+
+.sidebar {
+    height: 0vh;
+}
+
+@media (orientation: portrait) {
+
+    .menu-btn, .sidebar-menu-btn, .menu-items {
+        display: block;
+    }
+
+.menu-btn {
+    position: fixed;
+	top: -0.5rem;
+	right: 1rem;
+    font-size: 3rem;
+    border: none;
+    cursor: pointer;
+    color: black;
+    background-color: transparent;
+    z-index: 200; /* Ensure button is on top */
+}
+
+/* Hide menu button when sidebar opens */
+/*.sidebar.open ~ .menu-btn {
+    display: none;
+}*/
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    right: -100%;
+    width: 100vw;
+    height: 100dvh;
+    background-color: #e61618;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: right 0.5s ease-in-out;
+    z-index: 20;
+}
+
+/* Show sidebar */
+.sidebar.open {
+    right: 0;
+}
+
+/* Close button INSIDE the sidebar */
+.sidebar-close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 5rem;
+    font-size: 6rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: block; /* Always visible when sidebar is open */
+}
+
+/* Menu Items */
+.menu-items {
+    position: absolute;
+    top: 10%; /* Position the menu 20% from the top */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    justify-content: start; /* Center the menu items vertically */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the menu items horizontally */
+    width: 100%;
+    /*height: 100%; *//* Fill the height of the sidebar */
+}
+
+.menu-link {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    text-align: center;
+	font-size: 2rem;
+	font-weight: 800;
+    width: 100%; /* Make each menu item take up the full width */
+    border-top: 0.5px solid white;
+    border-bottom: 0.5px solid white;
+    display: block;
+    transform: scaleY(0);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+/* Expanding menu links */
+.sidebar.show-menu .menu-link {
+    transform: scaleY(1);
+    opacity: 1;
+}
+
+.sidebar.show-menu .menu-link:nth-child(1) { transition-delay: 0.2s; }
+.sidebar.show-menu .menu-link:nth-child(2) { transition-delay: 0.4s; }
+.sidebar.show-menu .menu-link:nth-child(3) { transition-delay: 0.6s; }
+.sidebar.show-menu .menu-link:nth-child(4) { transition-delay: 0.8s; }
+.sidebar.show-menu .menu-link:nth-child(5) { transition-delay: 1.0s; }
+
+
+/* Hover effect */
+.menu-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+}

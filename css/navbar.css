@@ -1,0 +1,144 @@
+nav {
+	padding: 1em;
+	display: flex;
+	justify-content: space-between;
+}
+
+nav div {
+	font-size: 1.5rem;
+	font-weight: 300;
+}
+
+nav a {
+	/* Navbar links */
+	/*background-color: var(--nav-bg-color);*/
+	color: var(--footer-text-color);
+	background-color: transparent;
+	/*padding: 0.25em 0.75em;*/
+	/*border-radius: 5em;*/
+	/*color: #f1f1f1;*/
+	text-decoration: none;
+	margin-inline-start: 0.5em;
+}
+
+.navbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	/*background: rgba(255, 255, 255, 0.1); */
+	/* Transparent */
+	/* backdrop-filter: blur(10px); */
+	/* Glass effect */
+	padding: 1.2vw 1.2vw;
+	display: flex;
+	justify-content: flex-end;
+	/* Moves everything to the right */
+	align-items: center;
+	opacity: 0;
+	z-index: 10;
+}
+
+/* Navigation Menu */
+.nav-menu {
+	list-style: none;
+	padding: 0;
+	margin-right: 4rem;
+	display: flex;
+	gap: 0.1vw;
+}
+
+.nav-menu li {
+	position: relative;
+}
+
+.nav-menu li:hover>a {
+	color: #e61618 !important;
+	/* Change this to any color you like */
+}
+
+/* Menu Items */
+.nav-menu a {
+	text-decoration: none;
+	/*background-color: var(--nav-bg-color);*/
+	background-color: transparent;
+	/* Ensure text color updates */
+	/*color: white;*/
+	font-size: 0.7rem;
+	font-weight: 500;
+	/*padding: 0.7vw 1vw;
+	transition: background 0.3s, color 0.3s;*/
+	padding: 0.5rem;
+	/* Removes padding */
+	transition: color 0.3s;
+	/* Just transition the color */
+}
+
+/* Hover Effect */
+.nav-menu a:hover {
+	/*background: var(--nav-hover-color);*/
+	/* Adjust hover background */
+	color: var(--nav-bg-color);
+	/* Use dynamic color */
+	/*background: rgba(0, 0, 0, 0.06);
+	color: black;*/
+	border-radius: 5em;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	/*background: transparent;*/
+	/*background: var(--nav-bg-color); /* Dynamic Background */
+	/*	backdrop-filter: blur(10px);*/
+	list-style: none;
+	padding: 1.2vw 0;
+	min-width: 2vw;
+	border-radius: 0.5vw;
+}
+
+/* Show Dropdown on Hover */
+.dropdown:hover .dropdown-menu {
+	display: block;
+}
+
+/* Dropdown Items */
+.dropdown-menu li {
+	text-align: left;
+}
+
+.dropdown-menu a {
+	display: block;
+	padding: 0.7vw 1.4vw;
+	color: var(--nav-text-color);
+	/*color: white;*/
+	transition: background 0.3s, color 0.3s;
+}
+
+/* Change color on hover */
+.dropdown-menu a:hover {
+	background: var(--nav-hover-color);
+	/* Dynamic Hover */
+	color: var(--nav-bg-color);
+	/* Use dynamic color */
+	/*background: rgba(0, 0, 0, 0.06);
+	color: black;*/
+}
+
+.shuffle-text span {
+	display: inline-block;
+	position: relative;
+}
+
+
+@media (orientation: portrait) {
+
+    .navbar {
+		display: none;
+		/* Completely hides the navbar on mobile */
+	}
+    
+}
