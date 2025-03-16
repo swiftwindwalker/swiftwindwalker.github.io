@@ -1,142 +1,158 @@
  /* General Styles */
  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
 
-  html, body {
-    height: 100%; /* Ensure full viewport height */
-    max-height: 200%    ;
-    margin: 0; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f1f1f1;
-    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+ html,
+ body {
+   height: 100%;
+   /* Ensure full viewport height */
+   margin: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;   /* Enable vertical scrolling if content overflows */
 
-}
+ }
 
-.container {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    padding: 30px;
-    width: 40vw; /* Set explicit width */
-    max-width: 600px; /* Prevent it from being too large */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    text-align: center;
-        /* Center it but allow scrolling */
-}
+ body {
+  background: linear-gradient(135deg, #f1f1f1, #c5ccd6);
+   font-size: 8px;
+   font-family: 'Noto Sans KR', sans-serif;
+   text-transform: uppercase;
+ }
 
 
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-  }
+ .container {
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+   background: rgba(255, 255, 255, 0.1);
+   backdrop-filter: blur(10px);
+   border-radius: 15px;
+   padding: 30px;
+   width: 60vw;
+   height: auto;
+   /* Set explicit width */
+   /* Prevent it from being too large */
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+   text-align: center;
+   /* Center it but allow scrolling */
+ }
 
-  .form-group {
-    margin-bottom: 20px;
-  }
 
-  label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-  }
+ h1 {
+   text-align: center;
+   margin-bottom: 20px;
+   font-size: 1.3rem;
+ }
 
-  select, button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
+ .form-group {
+   margin-bottom: 20px;
+ }
 
-  select:hover, button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.02);
-  }
+ label {
+   display: block;
+   margin-bottom: 10px;
+   font-size: 0.7rem;
+ }
 
-  .progress-bar {
-    width: 100%;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    margin: 20px 0;
-    overflow: hidden;
-  }
+ select,
+ button {
+   width: 100%;
+  font-weight: 500;
+   padding: 10px;
+   border: none;
+   border-radius: 5px;
+   font-size: 1rem;
+   background: rgba(230, 22, 24, 0.8);
+   color: black;
+   cursor: pointer;
+   transition: background 0.3s ease, transform 0.2s ease;
+ }
 
-  .progress {
-    height: 100%;
-    background: #00ff88;
-    width: 0;
-    transition: width 0.3s ease;
-  }
+ select:hover,
+ button:hover {
+   background: rgba(230, 22, 24, 1);
+   transform: scale(1.02);
+ }
 
-  .results {
-    margin-top: 30px;
-  }
+ .progress-bar {
+   width: 100%;
+   height: 20px;
+   background: rgba(255, 255, 255, 0.2);
+   border-radius: 10px;
+   margin: 20px 0;
+   overflow: hidden;
+ }
 
-  .results h2 {
-    margin-bottom: 15px;
-    font-size: 1.8rem;
-  }
 
-  .results p {
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-  }
+ .progress {
+   height: 100%;
+   background: #00ff88;
+   width: 0;
+   transition: width 0.3s ease;
+ }
 
-  .share-buttons {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-  }
+ .results {
+   margin-top: 30px;
+ }
 
-  .share-buttons button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
+ .results h2 {
+   margin-bottom: 15px;
+   font-size: 1rem;
+ }
 
-  .share-buttons button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.05);
-  }
+ .results p {
+   margin-bottom: 10px;
+   font-size: 0.8rem;
+ }
 
-  .hidden {
-    display: none;
-  }
+ .share-buttons {
+   display: flex;
+   justify-content: space-around;
+   margin-top: 20px;
+   gap: 10px;
+ }
 
-  .speed-rating {
-    margin-top: 10px;
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
+ .share-buttons button {
+   padding: 10px 20px;
+   border: solid white;
+   border-radius: 5px;
+   font-size: 1rem;
+   background: rgba(105, 249, 69, 0.8);
+   color: #fff;
+   cursor: pointer;
+   transition: background 0.3s ease, transform 0.2s ease;
+ }
 
-  .rocket-icon {
-    font-size: 2rem;
-    margin-top: 10px;
-  }
+ .share-buttons button:hover {
+   background: rgba(105, 249, 69, 1);
+   transform: scale(1.05);
+ }
 
-  .error-box {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(255, 0, 0, 0.2);
-    border: 1px solid rgba(255, 0, 0, 0.5);
-    border-radius: 5px;
-    color: #f1f1f1;
-    font-size: 1rem;
-    text-align: center;
-  }
+ .hidden {
+   display: none;
+ }
+
+ .speed-rating {
+   margin-top: 10px;
+   font-size: 0.8rem;
+   font-weight: bold;
+ }
+
+ .rocket-icon {
+   font-size: 0.8rem;
+   margin-top: 10px;
+ }
+
+ .error-box {
+   margin-top: 20px;
+   padding: 15px;
+   background: rgba(230, 22, 24, 0.8);
+   border: 1px solid rgba(230, 22, 24, 1);
+   border-radius: 5px;
+   color: #f1f1f1;
+   font-size: 0.8rem;
+   text-align: center;
+ }
