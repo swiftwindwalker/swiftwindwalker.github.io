@@ -193,6 +193,7 @@ section {
 
 }
 
+
 body > div:nth-child(5) > section > div.right > div:nth-child(1) {
 	font-size: 1rem;
 	font-weight: 400;
@@ -204,6 +205,16 @@ body > div:nth-child(7) > section > div.left > div:nth-child(2) {
 	font-weight: 400;
 	text-transform: none;
 }
+
+body > div:nth-child(7) > section > div.right > div:nth-child(1) {
+	margin-top: 1em;
+	font-size: 1rem;
+	font-weight: 400;
+	text-transform: none;
+}
+
+
+
 
 .social-handle {
     position: fixed; /* Fix it to the screen */
