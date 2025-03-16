@@ -108,6 +108,8 @@ async function startTest() {
         <p><strong>Latency:</strong> ${latency} ms</p>
       `;
       detailedResults.appendChild(iterationResult);
+      await delay(5000); // 5000 milliseconds = 5 seconds
+
     }
 
     // Calculate averages
@@ -302,3 +304,8 @@ function showResults() {
   resultContainer.classList.add('visible');
   resultContainer.style.display = "block";
 }
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
