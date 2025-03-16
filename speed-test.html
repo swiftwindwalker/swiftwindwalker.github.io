@@ -15,29 +15,38 @@
   <title>Internet Speed Test</title>
 </head>
 <body>
+  <div class="header-text">
+    <h1>Internet Speed Test</h1>
+  </div>
   <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
   <button class="menu-btn">☰</button>
   <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
   <div class="container">
     <div class="content-wrapper">
-    <!-- Input Container -->
-    <div class="input-container">
-      <h1>Internet Speed Test</h1>
-      <div class="form-group">
-        <label for="iterations">Number of Iterations:</label>
-        <input type="number" id="iterations" min="1" max="10" value="1">
+      <!-- Input Container -->
+      <div class="input-container">
+        
+        <!-- Row for Iterations & Start Button -->
+        <div class="iterations-row">
+          <div class="form-group">
+            <label for="iterations">Iterations ( < 10 ):</label>
+            <input type="number" id="iterations" min="1" max="10" value="1">
+          </div>
+          <button id="start-test">START</button>
+        </div>
+        <div id="iteration-progress" class="iteration-progress hidden"></div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar hidden" id="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+    
+        <!-- Error Box -->
+        <div class="error-box hidden" id="error-box"></div>
+    
       </div>
-      <button id="start-test">Start Test</button>
-      <div id="iteration-progress" class="iteration-progress hidden"></div>
-          <!-- Progress Bar -->
-    <div class="progress-bar hidden" id="progress-bar">
-      <div class="progress" id="progress"></div>
     </div>
-
-    <!-- Error Box -->
-    <div class="error-box hidden" id="error-box"></div>
-    </div>
-
+  
     <!-- Results Container -->
     <div class="result-container hidden" id="result-container">
       <h2>Test Results</h2>
@@ -62,7 +71,7 @@
       </div>
 
       <!-- Sharing Buttons -->
-      <button id="copy-to-clipboard">Copy Results to Clipboard</button>
+      <button id="copy-to-clipboard">Copy to Clipboard</button>
     </div>
     </div>
 
