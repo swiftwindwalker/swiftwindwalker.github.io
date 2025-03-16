@@ -46,6 +46,8 @@ nav a {
 	margin-right: 4rem;
 	display: flex;
 	gap: 0.1vw;
+	opacity: 0;
+
 }
 
 .nav-menu li {

@@ -16,9 +16,9 @@
 
 @media (orientation: portrait) {
 
-    .menu-btn, .sidebar-menu-btn, .menu-items {
+   /* .menu-btn, .sidebar-menu-btn, .menu-items {
         display: block;
-    }
+    }*/
 
 .menu-btn {
     position: fixed;
