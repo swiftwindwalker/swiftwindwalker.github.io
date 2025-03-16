@@ -29,11 +29,12 @@ async function startTest() {
   // Array to store results of each iteration
   const results = [];
 
-  // File URL
-  const fileUrl = `https://github.com/swiftwindwalker/speed-test/blob/main/20MB.zip?raw=true`; // Use raw file URL
+  // File URL with CORS proxy
+  const fileUrl = `https://github.com/swiftwindwalker/speed-test/blob/main/20MB.zip?raw=true`;
+  const proxyUrl = `https://corsproxy.io/?url=${fileUrl}`; // Use a CORS proxy
 
   // Total file size in bytes (20 MB)
-  const totalSize = 20 * 1024 * 1024;
+  const totalSize = 20971520; // 20 MB in bytes
 
   try {
     // Fetch IP, DNS, geo-location, browser, and device info
@@ -55,7 +56,7 @@ async function startTest() {
 
     for (let i = 1; i <= iterations; i++) {
       const startTime = Date.now();
-      const response = await fetch(fileUrl);
+      const response = await fetch(proxyUrl);
       if (!response.ok) {
         throw new Error(`Failed to download file: ${response.status} ${response.statusText}`);
       }
