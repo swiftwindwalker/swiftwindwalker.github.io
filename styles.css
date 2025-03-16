@@ -209,7 +209,7 @@ body > div:nth-child(7) > section > div.left > div:nth-child(2) {
     position: fixed; /* Fix it to the screen */
     bottom: 20px; /* Distance from the bottom of the page */
     right: 20px; /* Distance from the right of the page */
-    display: flex;
+    display: none; /* Hide initially */
     justify-content: space-around;
     align-items: center;
     gap: 4px;
@@ -232,6 +232,8 @@ body > div:nth-child(7) > section > div.left > div:nth-child(2) {
 .social-handle i:hover {
     color: #ff2759; /* Hover color */
     border-color: #ff2759; /* Hover border color */
+	transform: scale(1.4); /* Increase the size by 20% */
+    z-index: 20; /* Ensure the hovered icon is on top */
 }
 
 

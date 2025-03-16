@@ -402,3 +402,8 @@ gsap.to(rgb, {
 	},
 })
 */
+
+window.onload = function() {
+  const socialHandle = document.querySelector('.social-handle');
+  socialHandle.style.display = 'flex';  // Show the social handle icons once the page has loaded
+};
