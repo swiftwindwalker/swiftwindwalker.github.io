@@ -1,6 +1,7 @@
 document.getElementById('start-test').addEventListener('click', startTest);
 
 let speedChart; // Chart instance for speed graph
+const useProxy = false; // Set this flag to true if using a proxy
 
 async function startTest() {
   const iterations = parseInt(document.getElementById('iterations').value);
@@ -15,6 +16,12 @@ async function startTest() {
   const averageBandwidth = document.getElementById('average-bandwidth');
   const averageLatency = document.getElementById('average-latency');
   const iterationProgress = document.getElementById('iteration-progress');
+
+  // Check if iterations exceed the limit
+  if (iterations > 10) {
+    showError("Error: Iterations cannot exceed 10. Please enter a value less than or equal to 10.");
+    return; // Stop execution if iterations are invalid
+  }
 
   showResults(); // Call this function to ensure it is positioned correctly
 
@@ -34,21 +41,29 @@ async function startTest() {
   // Array to store results of each iteration
   const results = [];
 
-  // File URL with CORS proxy
-  const fileUrl = `https://github.com/swiftwindwalker/speed-test/blob/main/20MB.zip?raw=true`;
-  const proxyUrl = `https://corsproxy.io/?url=${fileUrl}`; // Use a CORS proxy
+  // File URL with or without CORS proxy
+  const fileUrl = `https://speed.cloudflare.com/__down?measId=4620545399793317&bytes=25000000`;
+  const proxyUrl = useProxy ? `https://corsproxy.io/?url=${fileUrl}` : fileUrl; // Use a CORS proxy if useProxy is true
 
   // Total file size in bytes (20 MB)
   const totalSize = 20971520; // 20 MB in bytes
 
   try {
-    // Fetch IP, DNS, geo-location, browser, and device info with a timeout
-    const ipInfo = await Promise.race([
-      fetch('https://ipinfo.io/178.239.163.82/json?token=a3a7c63579cb2c').then(response => response.json()),
-      new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 30000)), // 30-second timeout
-    ]).catch(() => {
-      return { ip: "Information not available - retry", org: "Information not available - retry", city: "Information not available - retry", region: "Information not available - retry", country: "Information not available - retry", hostname: "Information not available - retry" };
-    });
+    let ipInfo;
+    if (useProxy) {
+      // Fetch IP, DNS, geo-location, browser, and device info with a timeout
+      ipInfo = await Promise.race([
+        fetch('https://ipinfo.io/178.239.163.82/json?token=a3a7c63579cb2c').then(response => response.json()),
+        new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 30000)), // 30-second timeout
+      ]).catch(() => {
+        return { ip: "Information not available - retry", org: "Information not available - retry", city: "Information not available - retry", region: "Information not available - retry", country: "Information not available - retry", hostname: "Information not available - retry" };
+      });
+    } else {
+      // Fetch IP, DNS, geo-location, browser, and device info without a proxy
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      ipInfo = { ip: data.ip, org: "Unknown", city: "Unknown", region: "Unknown", country: "Unknown", hostname: "Unknown" };
+    }
 
     const browserInfo = getBrowserInfo();
     const deviceInfo = getDeviceInfo();
@@ -69,7 +84,7 @@ async function startTest() {
       iterationProgress.textContent = `Running iteration ${i} of ${iterations}`;
 
       const startTime = Date.now();
-      const response = await fetch(proxyUrl);
+      const response = await fetch(proxyUrl, { cache: "reload" });
       if (!response.ok) {
         throw new Error(`Failed to download file: ${response.status} ${response.statusText}`);
       }
@@ -109,7 +124,6 @@ async function startTest() {
       `;
       detailedResults.appendChild(iterationResult);
       await delay(5000); // 5000 milliseconds = 5 seconds
-
     }
 
     // Calculate averages
@@ -298,7 +312,6 @@ document.getElementById('share-reddit').addEventListener('click', () => {
   window.open(url, '_blank');
 });
 
-
 const resultContainer = document.getElementById('result-container');
 function showResults() {
   resultContainer.classList.add('visible');
@@ -308,4 +321,3 @@ function showResults() {
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
