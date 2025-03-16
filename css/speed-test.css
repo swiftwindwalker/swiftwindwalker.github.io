@@ -1,158 +1,176 @@
- /* General Styles */
- * {
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
- }
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
- html,
- body {
-   height: 100%;
-   /* Ensure full viewport height */
-   margin: 0;
-   display: flex;
-   justify-content: center;
-   align-items: center;   /* Enable vertical scrolling if content overflows */
-
- }
-
- body {
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(135deg, #f1f1f1, #c5ccd6);
-   font-size: 8px;
-   font-family: 'Noto Sans KR', sans-serif;
-   text-transform: uppercase;
- }
+  font-size: 8px;
+  font-family: 'Noto Sans KR', sans-serif;
+  text-transform: uppercase;
+}
 
-
- .container {
+.container {
   padding-top: 2vh;
   padding-bottom: 2vh;
-   background: rgba(255, 255, 255, 0.1);
-   backdrop-filter: blur(10px);
-   border-radius: 15px;
-   padding: 30px;
-   width: 60vw;
-   height: auto;
-   /* Set explicit width */
-   /* Prevent it from being too large */
-   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-   text-align: center;
-   /* Center it but allow scrolling */
- }
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 30px;
+  width: 80vw;
+  max-width: 1200px;
+  height: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
- h1 {
-   text-align: center;
-   margin-bottom: 20px;
-   font-size: 1.3rem;
- }
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
- .form-group {
-   margin-bottom: 20px;
- }
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
 
- label {
-   display: block;
-   margin-bottom: 10px;
-   font-size: 0.7rem;
- }
+.form-group {
+  margin-bottom: 20px;
+}
 
- select,
- button {
-   width: 100%;
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.7rem;
+}
+
+select,
+button {
+  width: 100%;
   font-weight: 500;
-   padding: 10px;
-   border: none;
-   border-radius: 5px;
-   font-size: 1rem;
-   background: rgba(230, 22, 24, 0.8);
-   color: black;
-   cursor: pointer;
-   transition: background 0.3s ease, transform 0.2s ease;
- }
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: rgba(230, 22, 24, 0.8);
+  color: black;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
 
- select:hover,
- button:hover {
-   background: rgba(230, 22, 24, 1);
-   transform: scale(1.02);
- }
+select:hover,
+button:hover {
+  background: rgba(230, 22, 24, 1);
+  transform: scale(1.02);
+}
 
- .progress-bar {
-   width: 100%;
-   height: 20px;
-   background: rgba(255, 255, 255, 0.2);
-   border-radius: 10px;
-   margin: 20px 0;
-   overflow: hidden;
- }
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  margin: 20px 0;
+  overflow: hidden;
+}
 
+.progress {
+  height: 100%;
+  background: #00ff88;
+  width: 0;
+  transition: width 0.3s ease;
+}
 
- .progress {
-   height: 100%;
-   background: #00ff88;
-   width: 0;
-   transition: width 0.3s ease;
- }
+.result-container h2 {
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
 
- .results {
-   margin-top: 30px;
- }
+.result-container p {
+  margin-bottom: 10px;
+  font-size: 0.8rem;
+}
 
- .results h2 {
-   margin-bottom: 15px;
-   font-size: 1rem;
- }
+.share-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  gap: 10px;
+}
 
- .results p {
-   margin-bottom: 10px;
-   font-size: 0.8rem;
- }
+.share-buttons button {
+  padding: 10px 20px;
+  border: solid white;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: rgba(105, 249, 69, 0.8);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
 
- .share-buttons {
-   display: flex;
-   justify-content: space-around;
-   margin-top: 20px;
-   gap: 10px;
- }
+.share-buttons button:hover {
+  background: rgba(105, 249, 69, 1);
+  transform: scale(1.05);
+}
 
- .share-buttons button {
-   padding: 10px 20px;
-   border: solid white;
-   border-radius: 5px;
-   font-size: 1rem;
-   background: rgba(105, 249, 69, 0.8);
-   color: #fff;
-   cursor: pointer;
-   transition: background 0.3s ease, transform 0.2s ease;
- }
+.hidden {
+  display: none;
+}
 
- .share-buttons button:hover {
-   background: rgba(105, 249, 69, 1);
-   transform: scale(1.05);
- }
+.speed-rating {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
 
- .hidden {
-   display: none;
- }
+.rocket-icon {
+  font-size: 0.8rem;
+  margin-top: 10px;
+}
 
- .speed-rating {
-   margin-top: 10px;
-   font-size: 0.8rem;
-   font-weight: bold;
- }
+.error-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(230, 22, 24, 0.8);
+  border: 1px solid rgba(230, 22, 24, 1);
+  border-radius: 5px;
+  color: #f1f1f1;
+  font-size: 0.8rem;
+  text-align: center;
+}
 
- .rocket-icon {
-   font-size: 0.8rem;
-   margin-top: 10px;
- }
+/* Mobile Layout */
+@media (max-width: 768px) {
+  .container {
+    width: 90vw;
+    padding: 20px;
+  }
 
- .error-box {
-   margin-top: 20px;
-   padding: 15px;
-   background: rgba(230, 22, 24, 0.8);
-   border: 1px solid rgba(230, 22, 24, 1);
-   border-radius: 5px;
-   color: #f1f1f1;
-   font-size: 0.8rem;
-   text-align: center;
- }
+  .input-container {
+    order: 2; /* Move input container to the bottom */
+  }
+
+  .result-container {
+    order: 1; /* Move result container to the top */
+  }
+}
