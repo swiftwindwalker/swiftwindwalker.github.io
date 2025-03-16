@@ -37,7 +37,7 @@ async function startTest() {
 
   // Start download test
   const startTime = Date.now();
-  const fileUrl = `https://link.testfile.org/${fileSize}.zip`;
+  const fileUrl = `https://fsn1-speed.hetzner.com/${fileSize}.bin`;
 
   try {
     const response = await fetch(fileUrl);
