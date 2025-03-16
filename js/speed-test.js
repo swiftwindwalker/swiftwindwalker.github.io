@@ -37,7 +37,7 @@ async function startTest() {
 
   // Start download test
   const startTime = Date.now();
-  const fileUrl = `http://ipv4.download.thinkbroadband.com/${fileSize}.zip`;
+  const fileUrl = `https://link.testfile.org/${fileSize}.zip`;
 
   try {
     const response = await fetch(fileUrl);
