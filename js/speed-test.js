@@ -37,7 +37,7 @@ async function startTest() {
 
   try {
     // Fetch IP, DNS, geo-location, browser, and device info
-    const ipInfo = await fetch('https://ipinfo.io/json?token=YOUR_API_TOKEN').then(response => response.json());
+    const ipInfo = await fetch('https://ipinfo.io/178.239.163.82/json?token=a3a7c63579cb2c').then(response => response.json());
     const browserInfo = getBrowserInfo();
     const deviceInfo = getDeviceInfo();
 
