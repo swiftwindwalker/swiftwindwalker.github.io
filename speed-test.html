@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="./css/navbar.css">
   <link rel="stylesheet" href="./css/speed-test.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js for graphs -->
   <script type="module" src="./js/onload.js" defer></script>
   <script type="module" src="./js/navbar.js" defer></script>
   <script type="module" src="./js/sidebar.js" defer></script>
@@ -22,28 +23,42 @@
     <div class="input-container">
       <h1>Internet Speed Test</h1>
       <div class="form-group">
-        <label for="file-size">Select File Size for Test:</label>
-        <select id="file-size">
-          <option value="100MB">100 MB</option>
-          <option value="1GB">1 GB</option>
-          <option value="10GB">10 GB</option>
-        </select>
+        <label for="iterations">Number of Iterations:</label>
+        <input type="number" id="iterations" min="1" max="10" value="1">
       </div>
       <button id="start-test">Start Test</button>
     </div>
 
-    <!-- Result Container -->
+    <!-- Results Container -->
     <div class="result-container hidden" id="result-container">
       <h2>Test Results</h2>
-      <p><strong>Download Speed:</strong> <span id="download-speed">Calculating...</span></p>
-      <p><strong>Bandwidth:</strong> <span id="bandwidth">Calculating...</span></p>
-      <p><strong>Latency:</strong> <span id="latency">Calculating...</span></p>
-      <p><strong>IP Address:</strong> <span id="ip-address">Fetching...</span></p>
-      <p><strong>DNS Server:</strong> <span id="dns-server">Fetching...</span></p>
-      <p><strong>ISP:</strong> <span id="isp">Fetching...</span></p>
 
-      <div class="speed-rating" id="speed-rating"></div>
-      <div class="rocket-icon" id="rocket-icon"></div>
+      <!-- Network Details -->
+      <div class="network-details">
+        <h3>Network Details</h3>
+        <p><strong>IP Address:</strong> <span id="ip-address">Fetching...</span></p>
+        <p><strong>ISP:</strong> <span id="isp">Fetching...</span></p>
+        <p><strong>Location:</strong> <span id="location">Fetching...</span></p>
+        <p><strong>DNS Server:</strong> <span id="dns-server">Fetching...</span></p>
+        <p><strong>Browser:</strong> <span id="browser">Fetching...</span></p>
+        <p><strong>Device:</strong> <span id="device">Fetching...</span></p>
+      </div>
+
+      <!-- Detailed Results -->
+      <div id="detailed-results"></div>
+
+      <!-- Average Results -->
+      <div class="average-result">
+        <h3>Average Results</h3>
+        <p><strong>Average Download Speed:</strong> <span id="average-download-speed">Calculating...</span></p>
+        <p><strong>Average Bandwidth:</strong> <span id="average-bandwidth">Calculating...</span></p>
+        <p><strong>Average Latency:</strong> <span id="average-latency">Calculating...</span></p>
+      </div>
+
+      <!-- Graph Container -->
+      <div class="graph-container">
+        <canvas id="speed-chart"></canvas>
+      </div>
 
       <!-- Sharing Buttons -->
       <div class="share-buttons hidden" id="share-buttons">

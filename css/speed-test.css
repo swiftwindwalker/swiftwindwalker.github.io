@@ -54,6 +54,12 @@ h1 {
   font-size: 1.3rem;
 }
 
+h2, h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
 .form-group {
   margin-bottom: 20px;
 }
@@ -64,7 +70,7 @@ label {
   font-size: 0.7rem;
 }
 
-select,
+input,
 button {
   width: 100%;
   font-weight: 500;
@@ -78,7 +84,7 @@ button {
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
-select:hover,
+input:hover,
 button:hover {
   background: rgba(230, 22, 24, 1);
   transform: scale(1.02);
@@ -100,14 +106,37 @@ button:hover {
   transition: width 0.3s ease;
 }
 
-.result-container h2 {
-  margin-bottom: 15px;
-  font-size: 1rem;
+.network-details,
+.average-result {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.result-container p {
+.network-details p,
+.average-result p {
   margin-bottom: 10px;
   font-size: 0.8rem;
+}
+
+.detailed-results {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.detailed-results h3 {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.detailed-results p {
+  margin-bottom: 5px;
+  font-size: 0.8rem;
+}
+
+.graph-container {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 20px;
 }
 
 .share-buttons {
@@ -137,17 +166,6 @@ button:hover {
   display: none;
 }
 
-.speed-rating {
-  margin-top: 10px;
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-.rocket-icon {
-  font-size: 0.8rem;
-  margin-top: 10px;
-}
-
 .error-box {
   margin-top: 20px;
   padding: 15px;
@@ -164,13 +182,5 @@ button:hover {
   .container {
     width: 90vw;
     padding: 20px;
-  }
-
-  .input-container {
-    order: 2; /* Move input container to the bottom */
-  }
-
-  .result-container {
-    order: 1; /* Move result container to the top */
   }
 }
