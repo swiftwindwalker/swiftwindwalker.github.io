@@ -14,6 +14,7 @@ async function startTest() {
   const averageDownloadSpeed = document.getElementById('average-download-speed');
   const averageBandwidth = document.getElementById('average-bandwidth');
   const averageLatency = document.getElementById('average-latency');
+  const iterationProgress = document.getElementById('iteration-progress');
 
   // Reset UI
   progressBar.classList.remove('hidden');
@@ -25,6 +26,8 @@ async function startTest() {
   averageDownloadSpeed.textContent = "Calculating...";
   averageBandwidth.textContent = "Calculating...";
   averageLatency.textContent = "Calculating...";
+  iterationProgress.classList.remove('hidden');
+  iterationProgress.textContent = "";
 
   // Array to store results of each iteration
   const results = [];
@@ -37,8 +40,14 @@ async function startTest() {
   const totalSize = 20971520; // 20 MB in bytes
 
   try {
-    // Fetch IP, DNS, geo-location, browser, and device info
-    const ipInfo = await fetch('https://ipinfo.io/178.239.163.82/json?token=a3a7c63579cb2c').then(response => response.json());
+    // Fetch IP, DNS, geo-location, browser, and device info with a timeout
+    const ipInfo = await Promise.race([
+      fetch('https://ipinfo.io/178.239.163.82/json?token=a3a7c63579cb2c').then(response => response.json()),
+      new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 30000)), // 30-second timeout
+    ]).catch(() => {
+      return { ip: "Information not available - retry", org: "Information not available - retry", city: "Information not available - retry", region: "Information not available - retry", country: "Information not available - retry", hostname: "Information not available - retry" };
+    });
+
     const browserInfo = getBrowserInfo();
     const deviceInfo = getDeviceInfo();
 
@@ -55,6 +64,8 @@ async function startTest() {
     detailedResults.innerHTML = ipDetails;
 
     for (let i = 1; i <= iterations; i++) {
+      iterationProgress.textContent = `Running iteration ${i} of ${iterations}`;
+
       const startTime = Date.now();
       const response = await fetch(proxyUrl);
       if (!response.ok) {
@@ -111,6 +122,7 @@ async function startTest() {
     resultContainer.classList.remove('hidden');
     shareButtons.classList.remove('hidden');
     startTestButton.textContent = "Re-test Again";
+    iterationProgress.classList.add('hidden');
 
     // Render speed graph
     renderSpeedGraph(results);
@@ -118,6 +130,7 @@ async function startTest() {
     console.error("Error during download test:", error);
     showError(`Error during download test: ${error.message}`);
     startTestButton.textContent = "Re-test Again";
+    iterationProgress.classList.add('hidden');
   }
 }
 

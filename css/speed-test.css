@@ -39,6 +39,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .result-container {
@@ -46,6 +47,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow-y: auto; /* Allow scrolling if content overflows */
+  max-height: 70vh; /* Limit height to prevent overlapping */
 }
 
 h1 {
@@ -175,6 +178,12 @@ button:hover {
   color: #f1f1f1;
   font-size: 0.8rem;
   text-align: center;
+}
+
+.iteration-progress {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 
 /* Mobile Layout */
