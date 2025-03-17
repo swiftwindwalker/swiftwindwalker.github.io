@@ -243,6 +243,76 @@ button:hover {
   background: #00cc66;
 }
 
+
+.social-handle {
+	position: fixed;
+	/* Fix it to the screen */
+	bottom: 20px;
+	/* Distance from the bottom of the page */
+	right: 20px;
+	/* Distance from the right of the page */
+	display: block;
+	/* Hide initially */
+	justify-content: space-around;
+	align-items: center;
+	gap: 4px;
+	z-index: 10;
+	/* Ensure it's on top of other content */
+}
+
+.social-handle a {
+	display: inline-block;
+}
+
+.social-handle i {
+	font-size: 15px;
+	color: #333;
+	/* Default color for icons */
+	border: 0.5px solid #000;
+	border-radius: 50%;
+	padding: 4px;
+	transition: all 0.3s ease;
+}
+
+.social-handle i:hover {
+	color: #ff2759;
+	/* Hover color */
+	border-color: #ff2759;
+	/* Hover border color */
+	transform: scale(1.4);
+	/* Increase the size by 20% */
+	z-index: 20;
+	/* Ensure the hovered icon is on top */
+}
+
+
+/* Specific color for each icon */
+.fa-facebook {
+	color: #3b5998 !important;
+	/* Facebook blue */
+}
+
+.fa-twitter {
+	color: #1da1f2 !important;
+	/* Twitter blue */
+}
+
+.fa-instagram {
+	color: #e4405f !important;
+	/* Instagram pinkish red */
+}
+
+.fa-youtube {
+	color: #ff0000 !important;
+	/* YouTube red */
+}
+
+.fa-linkedin {
+	color: #0077b5 !important;
+	/* LinkedIn blue */
+}
+
+
 /* Mobile Layout */
 @media (max-width: 768px) {
 
@@ -296,4 +366,21 @@ button:hover {
   .header-text p {
     font-size: 0.8rem;
   }
+
+  .error-box {
+    display: block;
+    text-align: center; /* Centers the text inside */
+    margin: 20px auto; /* Centers the div */
+    width: fit-content; /* Adjust width to fit content */
+    padding: 10px 20px; /* Add some spacing */
+  }
+  
+  .social-handle {
+    flex-direction: column;
+  }
+
+  .result-container {
+    margin-top: 20vh;
+  }
 }
+
