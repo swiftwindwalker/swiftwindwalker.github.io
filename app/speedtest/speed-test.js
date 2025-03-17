@@ -2,7 +2,6 @@ document.getElementById('start-test').addEventListener('click', startTest);
 document.getElementById('toggle-unit').addEventListener('click', toggleUnit);
 document.getElementById('copy-to-clipboard').addEventListener('click', copyResultsToClipboard);
 
-
 let speedChart;
 let useProxy = false;
 let currentUnit = 'Mbps'; // Default unit
@@ -10,8 +9,6 @@ let peakSpeed = 0;
 
 async function startTest() {
   const iterations = parseInt(document.getElementById('iterations').value);
-  //const progressBar = document.getElementById('progress-bar');
-  //const progress = document.getElementById('progress');
   const resultContainer = document.getElementById('result-container');
   const errorBox = document.getElementById('error-box');
   const startTestButton = document.getElementById('start-test');
@@ -19,8 +16,6 @@ async function startTest() {
   const averageDownloadSpeed = document.getElementById('average-download-speed');
   const averageBandwidth = document.getElementById('average-bandwidth');
   const averageLatency = document.getElementById('average-latency');
-  //const iterationProgress = document.getElementById('iteration-progress');
-  //const liveSpeedElement = document.getElementById('current-speed');
   const peakSpeedElement = document.getElementById('peak-speed');
 
   if (iterations > 10) {
@@ -29,18 +24,14 @@ async function startTest() {
   }
 
   showResults();
-  //progressBar.classList.remove('hidden');
   resultContainer.classList.add('hidden');
-  errorBox.classList.add('hidden');
+  errorBox.classList.remove('hidden');
   errorBox.textContent = "Starting test...";
   detailedResults.innerHTML = "";
   averageDownloadSpeed.textContent = "Calculating...";
   averageBandwidth.textContent = "Calculating...";
   averageLatency.textContent = "Calculating...";
-  //iterationProgress.classList.remove('hidden');
- // iterationProgress.textContent = "";
   document.getElementById('live-speed').classList.remove('hidden');
-  //liveSpeedElement.textContent = "0";
   peakSpeedElement.textContent = "0";
   peakSpeed = 0;
 
@@ -71,6 +62,13 @@ async function startTest() {
     for (let i = 1; i <= iterations; i++) {
       errorBox.textContent = `Running iteration ${i} of ${iterations}`;
 
+      // Measure latency
+      const latency = await measureLatency();
+      if (latency === null) {
+        showError("Failed to measure latency. Please check your internet connection.");
+        continue; // Skip this iteration if latency measurement fails
+      }
+
       const startTime = Date.now();
       let response = await fetch(proxyUrl, { cache: "reload" });
 
@@ -91,24 +89,18 @@ async function startTest() {
         const liveSpeed = calculateSpeed(startTime, currentTime, receivedLength);
         const smoothedSpeed = movingAverage(speeds, liveSpeed);
 
-        //liveSpeedElement.textContent = smoothedSpeed.toFixed(2);
         updateSpeedometer(smoothedSpeed); // Update speedometer
-
 
         if (smoothedSpeed > peakSpeed) {
           peakSpeed = smoothedSpeed;
           peakSpeedElement.textContent = peakSpeed.toFixed(2);
         }
-
-        const percentComplete = (receivedLength / totalSize) * 100;
-        //progress.style.width = `${percentComplete}%`;
       }
 
       const endTime = Date.now();
       const duration = (endTime - startTime) / 1000;
       const speed = (totalSize * 8) / duration / 1024 / 1024;
       const bandwidth = (totalSize / duration / 1024 / 1024).toFixed(2);
-      const latency = (duration * 1000).toFixed(2);
 
       results.push({ speed, bandwidth, latency });
 
@@ -123,28 +115,37 @@ async function startTest() {
       await delay(5000);
     }
 
+    // Calculate averages
     const averageSpeed = (results.reduce((sum, result) => sum + result.speed, 0) / iterations).toFixed(2);
     const averageBandwidthValue = (results.reduce((sum, result) => sum + parseFloat(result.bandwidth), 0) / iterations).toFixed(2);
-    const averageLatencyValue = (results.reduce((sum, result) => sum + parseFloat(result.latency), 0) / iterations).toFixed(2);
+    const averageLatencyValue = (results.reduce((sum, result) => sum + result.latency, 0) / iterations).toFixed(2);
 
     averageDownloadSpeed.textContent = `${averageSpeed} Mbps`;
     averageBandwidth.textContent = `${averageBandwidthValue} MB/s`;
     averageLatency.textContent = `${averageLatencyValue} ms`;
 
     resultContainer.classList.remove('hidden');
-    //progressBar.classList.add('hidden');
-    //progress.style.width = "0%";
-    //iterationProgress.classList.add('hidden');
     errorBox.textContent = "Test completed - scroll down for results.";
 
     renderSpeedGraph(results);
   } catch (error) {
     console.error("Error during download test:", error);
-    errorBox.textContent =`Error during download test: ${error.message}`;
+    errorBox.textContent = `Error during download test: ${error.message}`;
     startTestButton.textContent = "Re-test Again";
-    //iterationProgress.classList.add('hidden');
   } finally {
     document.getElementById('live-speed').classList.add('hidden');
+  }
+}
+
+async function measureLatency() {
+  const startTime = Date.now();
+  try {
+    await fetch('https://www.google.com', { method: "GET", mode:"no-cors" });
+    const endTime = Date.now();
+    return endTime - startTime; // Latency in milliseconds
+  } catch (error) {
+    console.error("Error measuring latency:", error);
+    return null; // Return null if the request fails
   }
 }
 
@@ -226,18 +227,35 @@ function getBrowserInfo() {
   let browserName = "Unknown";
   let browserVersion = "Unknown";
 
-  if (userAgent.includes("Firefox")) {
-    browserName = "Firefox";
-    browserVersion = userAgent.match(/Firefox\/(\d+)/)[1];
-  } else if (userAgent.includes("Edg")) {
-    browserName = "Microsoft Edge";
-    browserVersion = userAgent.match(/Edg\/(\d+)/)[1];
-  } else if (userAgent.includes("Chrome")) {
-    browserName = "Chrome";
-    browserVersion = userAgent.match(/Chrome\/(\d+)/)[1];
-  } else if (userAgent.includes("Safari")) {
-    browserName = "Safari";
-    browserVersion = userAgent.match(/Version\/(\d+)/)[1];
+  try {
+    if (userAgent.includes("Firefox")) {
+      browserName = "Firefox";
+      const versionMatch = userAgent.match(/Firefox\/(\d+)/);
+      if (versionMatch && versionMatch[1]) {
+        browserVersion = versionMatch[1];
+      }
+    } else if (userAgent.includes("Edg")) {
+      browserName = "Microsoft Edge";
+      const versionMatch = userAgent.match(/Edg\/(\d+)/);
+      if (versionMatch && versionMatch[1]) {
+        browserVersion = versionMatch[1];
+      }
+    } else if (userAgent.includes("Chrome")) {
+      browserName = "Chrome";
+      const versionMatch = userAgent.match(/Chrome\/(\d+)/);
+      if (versionMatch && versionMatch[1]) {
+        browserVersion = versionMatch[1];
+      }
+    } else if (userAgent.includes("Safari")) {
+      browserName = "Safari";
+      const versionMatch = userAgent.match(/Version\/(\d+)/);
+      if (versionMatch && versionMatch[1]) {
+        browserVersion = versionMatch[1];
+      }
+    }
+  } catch (error) {
+    console.error("Error detecting browser info:", error);
+    // Fallback to default values ("Unknown")
   }
 
   return { name: browserName, version: browserVersion };
@@ -328,9 +346,9 @@ function copyResultsToClipboard() {
   });
 }
 
-  function updateSpeedometer(speed) {
-    const speedometerValue = document.getElementById('speedometer-value');
-    const speedometerUnit = document.getElementById('speedometer-unit');
-    speedometerValue.textContent = speed.toFixed(2);
-    speedometerUnit.textContent = currentUnit;
-  }
+function updateSpeedometer(speed) {
+  const speedometerValue = document.getElementById('speedometer-value');
+  const speedometerUnit = document.getElementById('speedometer-unit');
+  speedometerValue.textContent = speed.toFixed(2);
+  speedometerUnit.textContent = currentUnit;
+}

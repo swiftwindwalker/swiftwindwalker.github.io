@@ -314,12 +314,11 @@ button:hover {
 
 /* Donate Me Section */
 .donate-me {
+  width: 80%;
   text-align: center;
-  margin: 40px 0;
-  padding: 20px;
   padding-bottom: 2vh;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto; /* Centers it horizontally */
+
 }
 
 .donate-me h3 {
@@ -329,7 +328,7 @@ button:hover {
 }
 
 .donate-me p {
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-transform: none;
   color: #555;
   margin-bottom: 20px;
@@ -345,6 +344,13 @@ button:hover {
   transform: scale(1.1);
 }
 
+.footer {
+  margin-top: 5vh;
+  height: 7vh;
+  font-weight: 400;
+  font-size: 0.7rem;
+  text-align: center;
+}
 
 /* Mobile Layout */
 @media (max-width: 768px) {
@@ -419,5 +425,16 @@ button:hover {
   .result-container {
     margin-top: 20vh;
   }
+
+
+.donate-me h3 {
+  font-size: 1.2rem;
+
+}
+
+.donate-me p {
+  font-size: 1rem;
+}
+
 }
 
