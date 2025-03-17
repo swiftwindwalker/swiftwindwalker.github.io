@@ -62,8 +62,8 @@ async function startTest() {
   console.log ("is this a mobile device? "+isMobileDevice());
 
   if (isMobileDevice()) {
-    fileUrl = `https://speed.cloudflare.com/__down?measId=4620545399793317&bytes=25000000`;
-   // fileUrl = `https://speed.cloudflare.com/__down?measId=7795217352823337&bytes=10000000`; // URL for mobile devices
+    //fileUrl = `https://speed.cloudflare.com/__down?measId=4620545399793317&bytes=25000000`;
+   fileUrl = `https://speed.cloudflare.com/__down?measId=7795217352823337&bytes=10000000`; // URL for mobile devices
   } else {
     fileUrl = `https://speed.cloudflare.com/__down?measId=4620545399793317&bytes=25000000`; // URL for desktop devices
   }
