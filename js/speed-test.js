@@ -54,7 +54,7 @@ async function startTest() {
 
   let fileUrl;
 
-  console.log ("is this a mobile device? "+isMobileDevice);
+  console.log ("is this a mobile device? "+isMobileDevice());
 
   if (isMobileDevice()) {
     fileUrl = `https://speed.cloudflare.com/__down?measId=7795217352823337&bytes=10000000`; // URL for mobile devices
@@ -84,10 +84,30 @@ async function startTest() {
       console.log("proxy disabled");
 
       // Fetch IP, DNS, geo-location, browser, and device info without a proxy
-      const response = await fetch('https://api.ipify.org?format=json');
-      console.log("API response: "+response)
-      const data = await response.json();
-      console.log("API data: "+data);
+     // const response = await fetch('https://api.ipify.org?format=json');
+      //console.log("API response: "+response)
+      //
+     // console.log("API data: "+data);
+
+      let ipresponse
+      const ipurl = 'https://api.ipify.org?format=json';
+      if (isMobileDevice()){
+        console.log("mobile device - fetch IP");
+        const desktopUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
+        ipresponse = await fetch(ipurl, {
+          headers: {
+            "User-Agent": desktopUserAgent, // Override User-Agent
+          },
+        });        
+        console.log("mobile response: "+ipresponse);
+
+      } else {
+        console.log("desktop device - fetch IP: "+proxyUrl);
+        ipresponse = await fetch('https://api.ipify.org?format=json');
+        console.log("desktop response: "+ipresponse);
+
+      }
+      const data = await ipresponse.json();
 
       ipInfo = { ip: data.ip, org: "Unknown", city: "Unknown", region: "Unknown", country: "Unknown", hostname: "Unknown" };
     }
@@ -113,7 +133,7 @@ async function startTest() {
 
       const startTime = Date.now();
       let response
-      if (isMobileDevice){
+      if (isMobileDevice()){
         console.log("mobile device fetch: "+proxyUrl);
         const desktopUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
          response = await fetch(proxyUrl, {
@@ -326,5 +346,8 @@ function delay(ms) {
 }
 
 function isMobileDevice() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  return (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+    (navigator.maxTouchPoints > 0 && /Mac|Windows/.test(navigator.platform) === false)
+  );
 }
