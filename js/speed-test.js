@@ -4,6 +4,7 @@ let speedChart; // Chart instance for speed graph
 const useProxy = false; // Set this flag to true if using a proxy
 
 async function startTest() {
+  console.log ("startTest - executed");
   const iterations = parseInt(document.getElementById('iterations').value);
   const progressBar = document.getElementById('progress-bar');
   const progress = document.getElementById('progress');
@@ -19,13 +20,19 @@ async function startTest() {
 
   // Check if iterations exceed the limit
   if (iterations > 10) {
+    console.log ("Iterations cannot exceed 10");
+
     showError("Error: Iterations cannot exceed 10. Please enter a value less than or equal to 10.");
     return; // Stop execution if iterations are invalid
   }
 
+  console.log ("iterations count: "+iterations);
+
   showResults(); // Call this function to ensure it is positioned correctly
 
   // Reset UI
+  console.log ("reset the UI");
+
   progressBar.classList.remove('hidden');
   resultContainer.classList.add('hidden');
   errorBox.classList.add('hidden');
@@ -47,6 +54,8 @@ async function startTest() {
 
   let fileUrl;
 
+  console.log ("is this a mobile device? "+isMobileDevice);
+
   if (isMobileDevice()) {
     fileUrl = `https://speed.cloudflare.com/__down?measId=7795217352823337&bytes=10000000`; // URL for mobile devices
   } else {
@@ -55,12 +64,15 @@ async function startTest() {
 
   const proxyUrl = useProxy ? `https://corsproxy.io/?url=${fileUrl}` : fileUrl; // Use a CORS proxy if useProxy is true
 
+  console.log("url to be used: "+proxyUrl);
+
   // Total file size in bytes (25 MB)
   const totalSize = 25000000; // 25 MB in bytes
 
   try {
     let ipInfo;
     if (useProxy) {
+      console.log("proxy enabled");
       // Fetch IP, DNS, geo-location, browser, and device info with a timeout
       ipInfo = await Promise.race([
         fetch('https://ipinfo.io/178.239.163.82/json?token=a3a7c63579cb2c').then(response => response.json()),
@@ -69,9 +81,14 @@ async function startTest() {
         return { ip: "Information not available - retry", org: "Information not available - retry", city: "Information not available - retry", region: "Information not available - retry", country: "Information not available - retry", hostname: "Information not available - retry" };
       });
     } else {
+      console.log("proxy disabled");
+
       // Fetch IP, DNS, geo-location, browser, and device info without a proxy
       const response = await fetch('https://api.ipify.org?format=json');
+      console.log("API response: "+response)
       const data = await response.json();
+      console.log("API data: "+data);
+
       ipInfo = { ip: data.ip, org: "Unknown", city: "Unknown", region: "Unknown", country: "Unknown", hostname: "Unknown" };
     }
 
@@ -92,6 +109,7 @@ async function startTest() {
 
     for (let i = 1; i <= iterations; i++) {
       iterationProgress.textContent = `Running iteration ${i} of ${iterations}`;
+      console.log(iterationProgress.textContent);
 
       const startTime = Date.now();
       let response
@@ -104,12 +122,12 @@ async function startTest() {
             "User-Agent": desktopUserAgent, // Override User-Agent
           },
         });        
-        confirm.log("mobile response: "+response)
+        console.log("mobile response: "+response)
 
       } else {
         console.log("desktop device fetch: "+proxyUrl);
         response = await fetch(proxyUrl, { cache: "reload" });
-        confirm.log("desktop response: "+response)
+        console.log("desktop response: "+response)
 
       }
 
@@ -298,6 +316,7 @@ document.getElementById('copy-to-clipboard').addEventListener('click', () => {
 
 const resultContainer = document.getElementById('result-container');
 function showResults() {
+  console.log ("show result container");
   resultContainer.classList.add('visible');
   resultContainer.style.display = "block";
 }
