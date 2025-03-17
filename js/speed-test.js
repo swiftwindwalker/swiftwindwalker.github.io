@@ -114,7 +114,6 @@ async function startTest() {
         console.log("mobile device fetch: "+proxyUrl);
         const desktopUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
          response = await fetch(proxyUrl, {
-          cache: "reload",
           headers: {
             "User-Agent": desktopUserAgent, // Override User-Agent
           },
