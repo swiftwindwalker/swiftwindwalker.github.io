@@ -77,21 +77,24 @@ async function startTest() {
 
   try {
       let ipInfo;
+
+      // Fetch IP, DNS, geo-location, browser, and device info without a proxy
+      //const ipresp = await fetch('https://api.ipify.org?format=json');
+      //console.log("API response: "+ipresp.ip)
+      
+     // console.log("API data: "+data);
+
       console.log("fetching ip, dns and other information");
       // Fetch IP, DNS, geo-location, browser, and device info with a timeout
       ipInfo = await Promise.race([
-        fetch('https://ipinfo.io/178.239.163.82/json?token=a3a7c63579cb2c').then(response => response.json()),
+        fetch('https://ipinfo.io?token=a3a7c63579cb2c').then(response => response.json()),
         new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 30000)), // 30-second timeout
       ]).catch(() => {
         return { ip: "Information not available - retry", org: "Information not available - retry", city: "Information not available - retry", region: "Information not available - retry", country: "Information not available - retry", hostname: "Information not available - retry" };
       });
 
 
-      // Fetch IP, DNS, geo-location, browser, and device info without a proxy
-     // const response = await fetch('https://api.ipify.org?format=json');
-      //console.log("API response: "+response)
-      //
-     // console.log("API data: "+data);
+
 
     ipInfo = { ip: ipInfo.ip, org: ipInfo.org, city: ipInfo.city, region: ipInfo.region, country: ipInfo.country, hostname: ipInfo.hostname};
 
