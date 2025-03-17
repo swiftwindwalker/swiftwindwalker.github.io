@@ -118,11 +118,10 @@ async function startTest() {
       let response
       if (isMobileDevice()){
         console.log("mobile device fetch: "+proxyUrl);
-        const desktopUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/537.36";
          response = await fetch(proxyUrl, {
-          headers: {mode: "no-cors",  // Bypass CORS restrictions
-            "User-Agent": desktopUserAgent, // Override User-Agent
-          },
+          method: "GET",
+          mode: "cors", // Ensure CORS is enabled on the server
+         
         });        
         console.log("mobile response: "+response)
 
@@ -230,6 +229,7 @@ function getBrowserInfo() {
 // Get device info
 function getDeviceInfo() {
   const userAgent = navigator.userAgent;
+  console.log("actual useragent: "+userAgent)
   let deviceType = "Desktop";
   let os = "Unknown";
 
