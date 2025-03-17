@@ -118,9 +118,9 @@ async function startTest() {
       let response
       if (isMobileDevice()){
         console.log("mobile device fetch: "+proxyUrl);
-        const desktopUserAgent = "Mozilla/5.0";
+        const desktopUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/537.36";
          response = await fetch(proxyUrl, {
-          headers: {
+          headers: {mode: "no-cors",  // Bypass CORS restrictions
             "User-Agent": desktopUserAgent, // Override User-Agent
           },
         });        
