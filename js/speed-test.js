@@ -44,7 +44,15 @@ async function startTest() {
   const results = [];
 
   // File URL with or without CORS proxy
-  const fileUrl = `https://speed.cloudflare.com/__down?measId=4620545399793317&bytes=25000000`;
+
+  let fileUrl;
+
+  if (isMobileDevice()) {
+    fileUrl = `https://ipv6-c174-fra002-ix.1.oca.nflxvideo.net/speedtest/range/0-26214400?c=gb&n=215568&v=119&e=1742220090&t=rWAzLzry_Xa1Y9drOMTzioGcG8BDWW-8nVIxIA`; // URL for mobile devices
+  } else {
+    fileUrl = `https://speed.cloudflare.com/__down?measId=4620545399793317&bytes=25000000`; // URL for desktop devices
+  }
+
   const proxyUrl = useProxy ? `https://corsproxy.io/?url=${fileUrl}` : fileUrl; // Use a CORS proxy if useProxy is true
 
   // Total file size in bytes (25 MB)
@@ -253,18 +261,18 @@ function showError(message) {
 // Copy results to clipboard
 document.getElementById('copy-to-clipboard').addEventListener('click', () => {
   const resultsText = `Average Result:\n` +
-                      /*`Network Details:\n` +
-                     `IP Address: ${document.querySelector('#detailed-results p:nth-child(2)').textContent.replace('IP Address: ', '')}\n` +
-                     `ISP: ${document.querySelector('#detailed-results p:nth-child(3)').textContent.replace('ISP: ', '')}\n` +
-                     `Location: ${document.querySelector('#detailed-results p:nth-child(4)').textContent.replace('Location: ', '')}\n` +
-                     `DNS Server: ${document.querySelector('#detailed-results p:nth-child(5)').textContent.replace('DNS Server: ', '')}\n` +
-                     `Browser: ${document.querySelector('#detailed-results p:nth-child(6)').textContent.replace('Browser: ', '')}\n` +
-                     `Device: ${document.querySelector('#detailed-results p:nth-child(7)').textContent.replace('Device: ', '')}\n\n` + */
-                     `Average Download Speed: ${document.getElementById('average-download-speed').textContent}\n` +
-                     `Average Bandwidth: ${document.getElementById('average-bandwidth').textContent}\n` +
-                     `Average Latency: ${document.getElementById('average-latency').textContent}\n\n` +
-                     `Detailed Results:\n` +
-                     document.getElementById('detailed-results').textContent;
+    /*`Network Details:\n` +
+   `IP Address: ${document.querySelector('#detailed-results p:nth-child(2)').textContent.replace('IP Address: ', '')}\n` +
+   `ISP: ${document.querySelector('#detailed-results p:nth-child(3)').textContent.replace('ISP: ', '')}\n` +
+   `Location: ${document.querySelector('#detailed-results p:nth-child(4)').textContent.replace('Location: ', '')}\n` +
+   `DNS Server: ${document.querySelector('#detailed-results p:nth-child(5)').textContent.replace('DNS Server: ', '')}\n` +
+   `Browser: ${document.querySelector('#detailed-results p:nth-child(6)').textContent.replace('Browser: ', '')}\n` +
+   `Device: ${document.querySelector('#detailed-results p:nth-child(7)').textContent.replace('Device: ', '')}\n\n` + */
+    `Average Download Speed: ${document.getElementById('average-download-speed').textContent}\n` +
+    `Average Bandwidth: ${document.getElementById('average-bandwidth').textContent}\n` +
+    `Average Latency: ${document.getElementById('average-latency').textContent}\n\n` +
+    `Detailed Results:\n` +
+    document.getElementById('detailed-results').textContent;
   navigator.clipboard.writeText(resultsText).then(() => {
     alert("Results copied to clipboard!");
   });
@@ -278,4 +286,8 @@ function showResults() {
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
