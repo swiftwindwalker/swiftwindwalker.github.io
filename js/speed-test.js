@@ -94,7 +94,15 @@ async function startTest() {
       iterationProgress.textContent = `Running iteration ${i} of ${iterations}`;
 
       const startTime = Date.now();
-      const response = await fetch(proxyUrl, { cache: "reload" });
+      let response
+      if (isMobileDevice){
+        response = await fetch(proxyUrl);
+
+      } else {
+        response = await fetch(proxyUrl, { cache: "reload" });
+
+      }
+
       if (!response.ok) {
         throw new Error(`Failed to download file: ${response.status} ${response.statusText}`);
       }
