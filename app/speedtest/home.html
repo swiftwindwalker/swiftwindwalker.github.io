@@ -10,7 +10,9 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script type="module" src="/js/onload.js" defer></script>
   <script type="module" src="/js/navbar.js" defer></script>
   <script type="module" src="/js/sidebar.js" defer></script>
@@ -49,7 +51,7 @@
         <div class="iterations-row">
           <div class="form-group">
             <label for="iterations" class="label-iterations">Iterations ( Max 10):</label>
-                <input type="number" id="iterations" min="1" max="10" value="1">
+            <input type="number" id="iterations" min="1" max="10" value="1">
           </div>
           <button id="start-test">START</button>
         </div>
@@ -60,7 +62,7 @@
       </div>
 
       <!-- Progress Bar -->
-     <!-- <div id="iteration-progress" class="iteration-progress hidden"></div>
+      <!-- <div id="iteration-progress" class="iteration-progress hidden"></div>
       <div class="progress-bar hidden" id="progress-bar">
         <div class="progress" id="progress"></div>
       </div>-->
@@ -80,7 +82,7 @@
         </a>
         <a href="https://www.youtube.com/ravzzy" target="_blank">
           <i class="fa-brands fa-youtube"></i>
-        </a>			
+        </a>
       </div>
       <!-- Results Container -->
       <div class="result-container hidden" id="result-container">
@@ -100,10 +102,19 @@
       </div>
     </div>
   </div>
+  <!-- Donate Me Section -->
+  <div class="donate-me">
+    <h3>Support My Work</h3>
+    <p>If you find this tool useful, consider donating to support its development and maintenance. Thank you! ❤️</p>
+    <a href="https://www.paypal.me/erravz" target="_blank">
+      <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate with PayPal" />
+    </a>
+  </div>
 </body>
 <script>
-	window.onbeforeunload = function () {
-		window.scrollTo(0, 0);
-	};
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+  };
 </script>
+
 </html>

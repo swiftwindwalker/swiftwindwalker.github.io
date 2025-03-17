@@ -312,6 +312,39 @@ button:hover {
 	/* LinkedIn blue */
 }
 
+/* Donate Me Section */
+.donate-me {
+  text-align: center;
+  margin: 40px 0;
+  padding: 20px;
+  padding-bottom: 2vh;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.donate-me h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.donate-me p {
+  font-size: 1rem;
+  text-transform: none;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.donate-me img {
+  width: 100px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.donate-me img:hover {
+  transform: scale(1.1);
+}
+
 
 /* Mobile Layout */
 @media (max-width: 768px) {
@@ -331,6 +364,10 @@ button:hover {
   .input-container {
     width: 90vw;
     padding: 10px;
+  }
+
+  #speedometer-value {
+    font-size: 5rem;
   }
 
   .iterations-row {
