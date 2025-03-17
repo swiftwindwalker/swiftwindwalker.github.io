@@ -10,8 +10,8 @@ let peakSpeed = 0;
 
 async function startTest() {
   const iterations = parseInt(document.getElementById('iterations').value);
-  const progressBar = document.getElementById('progress-bar');
-  const progress = document.getElementById('progress');
+  //const progressBar = document.getElementById('progress-bar');
+  //const progress = document.getElementById('progress');
   const resultContainer = document.getElementById('result-container');
   const errorBox = document.getElementById('error-box');
   const startTestButton = document.getElementById('start-test');
@@ -19,26 +19,26 @@ async function startTest() {
   const averageDownloadSpeed = document.getElementById('average-download-speed');
   const averageBandwidth = document.getElementById('average-bandwidth');
   const averageLatency = document.getElementById('average-latency');
-  const iterationProgress = document.getElementById('iteration-progress');
+  //const iterationProgress = document.getElementById('iteration-progress');
   //const liveSpeedElement = document.getElementById('current-speed');
   const peakSpeedElement = document.getElementById('peak-speed');
 
   if (iterations > 10) {
-    showError("Error: Iterations cannot exceed 10.");
+    errorBox.textContent = "Error: Iterations cannot exceed 10.";
     return;
   }
 
   showResults();
-  progressBar.classList.remove('hidden');
+  //progressBar.classList.remove('hidden');
   resultContainer.classList.add('hidden');
   errorBox.classList.add('hidden');
-  errorBox.textContent = "";
+  errorBox.textContent = "Starting test...";
   detailedResults.innerHTML = "";
   averageDownloadSpeed.textContent = "Calculating...";
   averageBandwidth.textContent = "Calculating...";
   averageLatency.textContent = "Calculating...";
-  iterationProgress.classList.remove('hidden');
-  iterationProgress.textContent = "";
+  //iterationProgress.classList.remove('hidden');
+ // iterationProgress.textContent = "";
   document.getElementById('live-speed').classList.remove('hidden');
   //liveSpeedElement.textContent = "0";
   peakSpeedElement.textContent = "0";
@@ -69,7 +69,8 @@ async function startTest() {
     detailedResults.innerHTML = ipDetails;
 
     for (let i = 1; i <= iterations; i++) {
-      iterationProgress.textContent = `Running iteration ${i} of ${iterations}`;
+      errorBox.textContent = `Running iteration ${i} of ${iterations}`;
+
       const startTime = Date.now();
       let response = await fetch(proxyUrl, { cache: "reload" });
 
@@ -100,7 +101,7 @@ async function startTest() {
         }
 
         const percentComplete = (receivedLength / totalSize) * 100;
-        progress.style.width = `${percentComplete}%`;
+        //progress.style.width = `${percentComplete}%`;
       }
 
       const endTime = Date.now();
@@ -131,17 +132,17 @@ async function startTest() {
     averageLatency.textContent = `${averageLatencyValue} ms`;
 
     resultContainer.classList.remove('hidden');
-    progressBar.classList.add('hidden');
-    progress.style.width = "0%";
-    iterationProgress.classList.add('hidden');
-    showError("Test completed - scroll down for results.");
+    //progressBar.classList.add('hidden');
+    //progress.style.width = "0%";
+    //iterationProgress.classList.add('hidden');
+    errorBox.textContent = "Test completed - scroll down for results.";
 
     renderSpeedGraph(results);
   } catch (error) {
     console.error("Error during download test:", error);
-    showError(`Error during download test: ${error.message}`);
+    errorBox.textContent =`Error during download test: ${error.message}`;
     startTestButton.textContent = "Re-test Again";
-    iterationProgress.classList.add('hidden');
+    //iterationProgress.classList.add('hidden');
   } finally {
     document.getElementById('live-speed').classList.add('hidden');
   }
@@ -161,57 +162,44 @@ function movingAverage(speeds, newSpeed, windowSize = 5) {
 
 function toggleUnit() {
   const unitToggleButton = document.getElementById('toggle-unit');
-  const speedUnit = document.getElementById('speed-unit');
-  const peakSpeedUnit = document.getElementById('peak-speed-unit');
   const speedometerUnit = document.getElementById('speedometer-unit');
-  const currentSpeedElement = document.getElementById('current-speed');
-  const peakSpeedElement = document.getElementById('peak-speed');
+  const peakSpeedUnit = document.getElementById('peak-speed-unit');
   const speedometerValue = document.getElementById('speedometer-value');
+  const peakSpeedElement = document.getElementById('peak-speed');
 
   if (currentUnit === 'Mbps') {
     // Switch to MB/s
     currentUnit = 'MB/s';
     unitToggleButton.textContent = 'Switch to Mbps';
 
-    // Convert current speed to MB/s
-    const currentSpeedMbps = parseFloat(currentSpeedElement.textContent);
-    const currentSpeedMBs = (currentSpeedMbps / 8).toFixed(2);
-    currentSpeedElement.textContent = currentSpeedMBs;
+    // Convert speedometer value to MB/s
+    const speedometerMbps = parseFloat(speedometerValue.textContent);
+    const speedometerMBs = (speedometerMbps / 8).toFixed(2);
+    speedometerValue.textContent = speedometerMBs;
 
     // Convert peak speed to MB/s
     const peakSpeedMbps = parseFloat(peakSpeedElement.textContent);
     const peakSpeedMBs = (peakSpeedMbps / 8).toFixed(2);
     peakSpeedElement.textContent = peakSpeedMBs;
-
-    // Convert speedometer value to MB/s
-    const speedometerMbps = parseFloat(speedometerValue.textContent);
-    const speedometerMBs = (speedometerMbps / 8).toFixed(2);
-    speedometerValue.textContent = speedometerMBs;
   } else {
     // Switch to Mbps
     currentUnit = 'Mbps';
     unitToggleButton.textContent = 'Switch to MB/s';
 
-    // Convert current speed to Mbps
-    const currentSpeedMBs = parseFloat(currentSpeedElement.textContent);
-    const currentSpeedMbps = (currentSpeedMBs * 8).toFixed(2);
-    currentSpeedElement.textContent = currentSpeedMbps;
+    // Convert speedometer value to Mbps
+    const speedometerMBs = parseFloat(speedometerValue.textContent);
+    const speedometerMbps = (speedometerMBs * 8).toFixed(2);
+    speedometerValue.textContent = speedometerMbps;
 
     // Convert peak speed to Mbps
     const peakSpeedMBs = parseFloat(peakSpeedElement.textContent);
     const peakSpeedMbps = (peakSpeedMBs * 8).toFixed(2);
     peakSpeedElement.textContent = peakSpeedMbps;
-
-    // Convert speedometer value to Mbps
-    const speedometerMBs = parseFloat(speedometerValue.textContent);
-    const speedometerMbps = (speedometerMBs * 8).toFixed(2);
-    speedometerValue.textContent = speedometerMbps;
   }
 
   // Update unit labels
-  speedUnit.textContent = currentUnit;
-  peakSpeedUnit.textContent = currentUnit;
   speedometerUnit.textContent = currentUnit;
+  peakSpeedUnit.textContent = currentUnit;
 }
 
 function showError(message) {
@@ -318,31 +306,27 @@ function renderSpeedGraph(results) {
 }
 
 function copyResultsToClipboard() {
-    const resultsText = `
-      Network Details:
-      IP Address: ${document.querySelector('.network-details p:nth-child(1)').textContent.replace('IP Address: ', '')}
-      ISP: ${document.querySelector('.network-details p:nth-child(2)').textContent.replace('ISP: ', '')}
-      Location: ${document.querySelector('.network-details p:nth-child(3)').textContent.replace('Location: ', '')}
-      DNS Server: ${document.querySelector('.network-details p:nth-child(4)').textContent.replace('DNS Server: ', '')}
-      Browser: ${document.querySelector('.network-details p:nth-child(5)').textContent.replace('Browser: ', '')}
-      Device: ${document.querySelector('.network-details p:nth-child(6)').textContent.replace('Device: ', '')}
-  
-      Average Results:
-      Average Download Speed: ${document.getElementById('average-download-speed').textContent}
-      Average Bandwidth: ${document.getElementById('average-bandwidth').textContent}
-      Average Latency: ${document.getElementById('average-latency').textContent}
-  
-      Detailed Results:
-      ${document.getElementById('detailed-results').textContent}
-    `;
-  
-    navigator.clipboard.writeText(resultsText).then(() => {
-      alert("Results copied to clipboard!");
-    }).catch(() => {
-      alert("Failed to copy results. Please try again.");
-    });
-  }
+  const networkDetails = document.querySelector('.network-details').innerText;
+  const averageResults = document.querySelector('.average-result').innerText;
+  const detailedResults = document.getElementById('detailed-results').innerText;
 
+  const resultsText = `
+    Network Details:
+    ${networkDetails}
+
+    Average Results:
+    ${averageResults}
+
+    Detailed Results:
+    ${detailedResults}
+  `;
+
+  navigator.clipboard.writeText(resultsText).then(() => {
+    alert("Results copied to clipboard!");
+  }).catch(() => {
+    alert("Failed to copy results. Please try again.");
+  });
+}
 
   function updateSpeedometer(speed) {
     const speedometerValue = document.getElementById('speedometer-value');
