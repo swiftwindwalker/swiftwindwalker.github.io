@@ -48,7 +48,7 @@ async function startTest() {
   let fileUrl;
 
   if (isMobileDevice()) {
-    fileUrl = `https://ipv6-c174-fra002-ix.1.oca.nflxvideo.net/speedtest/range/0-26214400?c=gb&n=215568&v=119&e=1742220090&t=rWAzLzry_Xa1Y9drOMTzioGcG8BDWW-8nVIxIA`; // URL for mobile devices
+    fileUrl = `https://ipv6-c008-bom001-bhartiairtel-isp.1.oca.nflxvideo.net/speedtest/range/0-26214399?c=in&n=134450&v=86&e=1742221875&t=AJxhzX4ZMyKO31dWUlFczhjNlc1YXyhDtEylAQ`; // URL for mobile devices
   } else {
     fileUrl = `https://speed.cloudflare.com/__down?measId=4620545399793317&bytes=25000000`; // URL for desktop devices
   }
