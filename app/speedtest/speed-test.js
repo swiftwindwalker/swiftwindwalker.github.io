@@ -163,23 +163,55 @@ function toggleUnit() {
   const unitToggleButton = document.getElementById('toggle-unit');
   const speedUnit = document.getElementById('speed-unit');
   const peakSpeedUnit = document.getElementById('peak-speed-unit');
+  const speedometerUnit = document.getElementById('speedometer-unit');
   const currentSpeedElement = document.getElementById('current-speed');
   const peakSpeedElement = document.getElementById('peak-speed');
+  const speedometerValue = document.getElementById('speedometer-value');
 
   if (currentUnit === 'Mbps') {
+    // Switch to MB/s
     currentUnit = 'MB/s';
     unitToggleButton.textContent = 'Switch to Mbps';
-    currentSpeedElement.textContent = (parseFloat(currentSpeedElement.textContent) / 8).toFixed(2);
-    peakSpeedElement.textContent = (parseFloat(peakSpeedElement.textContent) / 8).toFixed(2);
+
+    // Convert current speed to MB/s
+    const currentSpeedMbps = parseFloat(currentSpeedElement.textContent);
+    const currentSpeedMBs = (currentSpeedMbps / 8).toFixed(2);
+    currentSpeedElement.textContent = currentSpeedMBs;
+
+    // Convert peak speed to MB/s
+    const peakSpeedMbps = parseFloat(peakSpeedElement.textContent);
+    const peakSpeedMBs = (peakSpeedMbps / 8).toFixed(2);
+    peakSpeedElement.textContent = peakSpeedMBs;
+
+    // Convert speedometer value to MB/s
+    const speedometerMbps = parseFloat(speedometerValue.textContent);
+    const speedometerMBs = (speedometerMbps / 8).toFixed(2);
+    speedometerValue.textContent = speedometerMBs;
   } else {
+    // Switch to Mbps
     currentUnit = 'Mbps';
     unitToggleButton.textContent = 'Switch to MB/s';
-    currentSpeedElement.textContent = (parseFloat(currentSpeedElement.textContent) * 8).toFixed(2);
-    peakSpeedElement.textContent = (parseFloat(peakSpeedElement.textContent) * 8).toFixed(2);
+
+    // Convert current speed to Mbps
+    const currentSpeedMBs = parseFloat(currentSpeedElement.textContent);
+    const currentSpeedMbps = (currentSpeedMBs * 8).toFixed(2);
+    currentSpeedElement.textContent = currentSpeedMbps;
+
+    // Convert peak speed to Mbps
+    const peakSpeedMBs = parseFloat(peakSpeedElement.textContent);
+    const peakSpeedMbps = (peakSpeedMBs * 8).toFixed(2);
+    peakSpeedElement.textContent = peakSpeedMbps;
+
+    // Convert speedometer value to Mbps
+    const speedometerMBs = parseFloat(speedometerValue.textContent);
+    const speedometerMbps = (speedometerMBs * 8).toFixed(2);
+    speedometerValue.textContent = speedometerMbps;
   }
 
+  // Update unit labels
   speedUnit.textContent = currentUnit;
   peakSpeedUnit.textContent = currentUnit;
+  speedometerUnit.textContent = currentUnit;
 }
 
 function showError(message) {

@@ -27,7 +27,7 @@
   <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
   <button class="menu-btn">☰</button>
   <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
-    <div class="container">
+  <div class="container">
     <div class="content-wrapper">
       <!-- Input Container -->
       <div class="input-container">
@@ -45,26 +45,26 @@
         <!-- Iterations Row -->
         <div class="iterations-row">
           <div class="form-group">
-            <label for="iterations">Iterations (< 10):</label>
+            <label for="iterations">Iterations ( Max 10):</label>
                 <input type="number" id="iterations" min="1" max="10" value="1">
           </div>
           <button id="start-test">START</button>
         </div>
-
-        <!-- Progress Bar -->
-        <div id="iteration-progress" class="iteration-progress hidden"></div>
-        <div class="progress-bar hidden" id="progress-bar">
-          <div class="progress" id="progress"></div>
-        </div>
-
-        <!-- Error Box -->
-        <div class="error-box hidden" id="error-box"></div>
-
         <!-- Unit Toggle -->
         <div class="unit-toggle">
           <button id="toggle-unit">Switch to MB/s</button>
         </div>
       </div>
+
+      <!-- Progress Bar -->
+      <div id="iteration-progress" class="iteration-progress hidden"></div>
+      <div class="progress-bar hidden" id="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+
+      <!-- Error Box -->
+      <div class="error-box hidden" id="error-box"></div>
+
       <!-- Results Container -->
       <div class="result-container hidden" id="result-container">
         <h2>Test Results</h2>
