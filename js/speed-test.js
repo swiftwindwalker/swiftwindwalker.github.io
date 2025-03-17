@@ -70,9 +70,8 @@ async function startTest() {
   const totalSize = 25000000; // 25 MB in bytes
 
   try {
-    let ipInfo;
-    if (useProxy) {
-      console.log("proxy enabled");
+      let ipInfo;
+      console.log("fetching ip, dns and other information");
       // Fetch IP, DNS, geo-location, browser, and device info with a timeout
       ipInfo = await Promise.race([
         fetch('https://ipinfo.io/178.239.163.82/json?token=a3a7c63579cb2c').then(response => response.json()),
@@ -80,8 +79,7 @@ async function startTest() {
       ]).catch(() => {
         return { ip: "Information not available - retry", org: "Information not available - retry", city: "Information not available - retry", region: "Information not available - retry", country: "Information not available - retry", hostname: "Information not available - retry" };
       });
-    } else {
-      console.log("proxy disabled");
+
 
       // Fetch IP, DNS, geo-location, browser, and device info without a proxy
      // const response = await fetch('https://api.ipify.org?format=json');
@@ -89,28 +87,7 @@ async function startTest() {
       //
      // console.log("API data: "+data);
 
-      let ipresponse
-      const ipurl = 'https://api.ipify.org?format=json';
-      if (isMobileDevice()){
-        console.log("mobile device - fetch IP");
-        const desktopUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
-        ipresponse = await fetch(ipurl, {
-          headers: {
-            "User-Agent": desktopUserAgent, // Override User-Agent
-          },
-        });        
-        console.log("mobile response: "+ipresponse);
-
-      } else {
-        console.log("desktop device - fetch IP: "+proxyUrl);
-        ipresponse = await fetch('https://api.ipify.org?format=json');
-        console.log("desktop response: "+ipresponse);
-
-      }
-      const data = await ipresponse.json();
-
-      ipInfo = { ip: data.ip, org: "Unknown", city: "Unknown", region: "Unknown", country: "Unknown", hostname: "Unknown" };
-    }
+    ipInfo = { ip: ipInfo.ip, org: ipInfo.org, city: ipInfo.city, region: ipInfo.region, country: ipInfo.country, hostname: ipInfo.hostname};
 
     const browserInfo = getBrowserInfo();
     const deviceInfo = getDeviceInfo();
