@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/app/speedtest/speed-test.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="/js/onload.js" defer></script>
+  <script type="module" src="/js/navbar.js" defer></script>
+  <script type="module" src="/js/sidebar.js" defer></script>
+  <script src="/app/speedtest/speed-test.js" defer></script>
+  <title>Internet Speed Test</title>
+</head>
+
+<body>
+  <div class="header-text">
+    <h1>Internet Speed Test</h1>
+    <p>Ditch the bloated, ad-ridden speed tests! My lightweight, ultra-fast browser-based tool gives you instant,
+      accurate results without slowing you down. No clutter, no waiting—just pure speed testing, the way it should be!
+      🔥</p>
+  </div>
+  <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
+  <button class="menu-btn">☰</button>
+  <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
+    <div class="container">
+    <div class="content-wrapper">
+      <!-- Input Container -->
+      <div class="input-container">
+        <!-- Speedometer Animation -->
+        <div class="speedometer">
+          <div class="speedometer-display">
+            <span id="speedometer-value">0</span>
+            <span id="speedometer-unit">Mbps</span>
+          </div>
+        </div>
+        <!-- Live Speed and Peak Speed -->
+        <div class="live-speed hidden" id="live-speed">
+          <p><strong>Peak Speed:</strong> <span id="peak-speed">0</span> <span id="peak-speed-unit">Mbps</span></p>
+        </div>
+        <!-- Iterations Row -->
+        <div class="iterations-row">
+          <div class="form-group">
+            <label for="iterations">Iterations (< 10):</label>
+                <input type="number" id="iterations" min="1" max="10" value="1">
+          </div>
+          <button id="start-test">START</button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="iteration-progress" class="iteration-progress hidden"></div>
+        <div class="progress-bar hidden" id="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+
+        <!-- Error Box -->
+        <div class="error-box hidden" id="error-box"></div>
+
+        <!-- Unit Toggle -->
+        <div class="unit-toggle">
+          <button id="toggle-unit">Switch to MB/s</button>
+        </div>
+      </div>
+      <!-- Results Container -->
+      <div class="result-container hidden" id="result-container">
+        <h2>Test Results</h2>
+        <div class="network-details"></div>
+        <div id="detailed-results"></div>
+        <div class="average-result">
+          <h3>Average Results</h3>
+          <p><strong>Average Download Speed:</strong> <span id="average-download-speed">Calculating...</span></p>
+          <p><strong>Average Bandwidth:</strong> <span id="average-bandwidth">Calculating...</span></p>
+          <p><strong>Average Latency:</strong> <span id="average-latency">Calculating...</span></p>
+        </div>
+        <div class="graph-container">
+          <canvas id="speed-chart"></canvas>
+        </div>
+        <button id="copy-to-clipboard">Copy Results</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

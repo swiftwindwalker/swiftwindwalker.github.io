@@ -1,8 +1,8 @@
-import { handleLayout } from './onload.js';  // Import the function
+import { handleLayout } from '/js/onload.js';  // Import the function
 
 // Fetch sidebar HTML dynamically and insert it into the page
 
-fetch('sidebar.html')
+fetch('/html/sidebar.html')
     .then(response => response.text())
     .then(data => {
         document.getElementById('sidebar-container').innerHTML = data;
