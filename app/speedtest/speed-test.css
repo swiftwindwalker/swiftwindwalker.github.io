@@ -215,9 +215,15 @@ body {
 }
 
 #detailed-results p {
+  text-transform: none !important;
   font-size: 1rem;
   margin-bottom: 5px;
   color: #555;
+}
+
+#average-download-speed, #average-bandwidth, #average-latency, #peak-speed-unit {
+  text-transform: none !important;
+
 }
 
 .result-container.visible {
