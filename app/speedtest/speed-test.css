@@ -16,6 +16,10 @@ body {
   text-transform: uppercase;
 }
 
+.hidden {
+  display: none;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -257,6 +261,14 @@ button:hover {
   background: #00cc66;
 }*/
 
+.form-group {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
 
 .social-handle {
 	position: fixed;
@@ -369,6 +381,10 @@ button:hover {
 /* Mobile Layout */
 @media (max-width: 768px) {
 
+  .hidden {
+    display: none;
+  }
+
   .menu-btn{
     right: -2rem !important;;
   }
@@ -397,11 +413,6 @@ button:hover {
   }
 
   .form-class {
-    text-align: center;
-  }
-
-  .label-iterations {
-    display: block;
     text-align: center;
   }
 

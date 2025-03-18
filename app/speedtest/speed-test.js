@@ -8,18 +8,32 @@ let currentUnit = 'Mbps'; // Default unit
 let peakSpeed = 0;
 
 async function startTest() {
-  const iterations = parseInt(document.getElementById('iterations').value);
+  const iterationsInput = document.getElementById('iterations');
+  const iterationsLabel = document.getElementById('iterations-label');
+
+  const startTestButton = document.getElementById('start-test');
   const resultContainer = document.getElementById('result-container');
   const errorBox = document.getElementById('error-box');
-  const startTestButton = document.getElementById('start-test');
   const detailedResults = document.getElementById('detailed-results');
   const averageDownloadSpeed = document.getElementById('average-download-speed');
   const averageBandwidth = document.getElementById('average-bandwidth');
   const averageLatency = document.getElementById('average-latency');
   const peakSpeedElement = document.getElementById('peak-speed');
 
+  // Hide Start Test button and Iterations input
+  iterationsInput.classList.add('hidden');
+  iterationsLabel.classList.add('hidden');
+  startTestButton.classList.add('hidden');
+
+  const iterations = parseInt(iterationsInput.value);
+
   if (iterations > 10) {
     errorBox.textContent = "Error: Iterations cannot exceed 10.";
+    errorBox.classList.remove('hidden');
+    // Show Start Test button and Iterations input on error
+    iterationsInput.classList.remove('hidden');
+    iterationsLabel.classList.remove('hidden');
+    startTestButton.classList.remove('hidden');
     return;
   }
 
@@ -133,6 +147,10 @@ async function startTest() {
     errorBox.textContent = `Error during download test: ${error.message}`;
     startTestButton.textContent = "Re-test Again";
   } finally {
+    // Show Start Test button and Iterations input on completion or error
+    iterationsInput.classList.remove('hidden');
+    iterationsLabel.classList.remove('hidden');
+    startTestButton.classList.remove('hidden');
     document.getElementById('live-speed').classList.add('hidden');
   }
 }
