@@ -140,7 +140,9 @@ async function startTest() {
 async function measureLatency() {
   const startTime = Date.now();
   try {
-    await fetch('https://www.google.com', { method: "GET", mode:"no-cors" });
+    await fetch('https://www.google.com', { method: "GET", mode:"no-cors", headers: {
+      "Cache-Control": "no-cache"  // Prevents caching
+    }});
     const endTime = Date.now();
     return endTime - startTime; // Latency in milliseconds
   } catch (error) {
