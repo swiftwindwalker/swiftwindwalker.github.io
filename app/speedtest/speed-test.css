@@ -100,7 +100,7 @@ body {
 .live-speed.hidden {
   display: none;
 }
-
+/*
 .unit-toggle {
   margin-top: 10px;
 }
@@ -112,7 +112,7 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
+}*/
 
 /* Speedometer Animation */
 .speedometer {
@@ -235,6 +235,7 @@ button:hover {
   transform: scale(1.05);
 }
 
+/*
 #toggle-unit {
   background: #00ff88;
   color: #333;
@@ -242,7 +243,7 @@ button:hover {
 
 #toggle-unit:hover {
   background: #00cc66;
-}
+}*/
 
 
 .social-handle {
@@ -424,7 +425,7 @@ button:hover {
   }
 
   .result-container {
-    margin-top: 20vh;
+    margin-top: 37vh;
   }
 
 
@@ -438,4 +439,3 @@ button:hover {
 }
 
 }
-

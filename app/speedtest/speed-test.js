@@ -1,5 +1,5 @@
 document.getElementById('start-test').addEventListener('click', startTest);
-document.getElementById('toggle-unit').addEventListener('click', toggleUnit);
+//document.getElementById('toggle-unit').addEventListener('click', toggleUnit);
 document.getElementById('copy-to-clipboard').addEventListener('click', copyResultsToClipboard);
 
 let speedChart;
@@ -163,6 +163,7 @@ function movingAverage(speeds, newSpeed, windowSize = 5) {
   return speeds.reduce((sum, speed) => sum + speed, 0) / speeds.length;
 }
 
+/*
 function toggleUnit() {
   const unitToggleButton = document.getElementById('toggle-unit');
   const speedometerUnit = document.getElementById('speedometer-unit');
@@ -204,6 +205,7 @@ function toggleUnit() {
   speedometerUnit.textContent = currentUnit;
   peakSpeedUnit.textContent = currentUnit;
 }
+  */
 
 function showError(message) {
   const errorBox = document.getElementById('error-box');
