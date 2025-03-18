@@ -7,6 +7,14 @@
   <link rel="stylesheet" href="./css/styles.css" />
   <link rel="stylesheet" href="./css/sidebar.css">
   <link rel="stylesheet" href="./css/navbar.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-VS2WHLJQNE');
+  </script>
   <script type="module" src="./js/onload.js" defer></script>
   <script type="module" src="./js/navbar.js" defer></script>
   <script type="module" src="./js/sidebar.js" defer></script>
@@ -19,7 +27,9 @@
       padding: 0;
       box-sizing: border-box;
     }
-    body, html {
+
+    body,
+    html {
       min-height: 100vh;
       max-height: 100vh;
       overflow-x: hidden;
@@ -123,16 +133,17 @@
 
 <body>
   <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
-	<button class="menu-btn">☰</button>
-	<div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
+  <button class="menu-btn">☰</button>
+  <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
   <div class="container">
     <h1>Work in Progress</h1>
-    <p>Great things take time, and trust us, this will be worth the wait! While we work our magic, we’ll zip you over to our homepage—stay excited!.</p>
-        <div class="loader"></div>
-       <!-- <div class="progress-bar">
+    <p>Great things take time, and trust us, this will be worth the wait! While we work our magic, we’ll zip you over to
+      our homepage—stay excited!.</p>
+    <div class="loader"></div>
+    <!-- <div class="progress-bar">
           <div class="progress"></div>
         </div>-->
-        <!--<p>Estimated completion: <span id="progress-text">75%</span></p> -->
+    <!--<p>Estimated completion: <span id="progress-text">75%</span></p> -->
   </div>
   <script>
     // Redirect to /index.html after 10 seconds
