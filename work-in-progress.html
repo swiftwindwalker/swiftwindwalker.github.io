@@ -127,14 +127,19 @@
 	<div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
   <div class="container">
     <h1>Work in Progress</h1>
-    <p>We're working hard to bring you something amazing soon, so stay tuned! Meanwhile do check the homepage.</p>
+    <p>We're working hard to bring you something amazing soon, so stay tuned! Meanwhile we will auto-redirect you to our homepage for you to check it out.</p>
         <div class="loader"></div>
        <!-- <div class="progress-bar">
           <div class="progress"></div>
         </div>-->
         <!--<p>Estimated completion: <span id="progress-text">75%</span></p> -->
   </div>
-
+  <script>
+    // Redirect to /index.html after 10 seconds
+    setTimeout(() => {
+      window.location.href = "/index.html";
+    }, 10000); // 10 seconds = 10000 milliseconds
+  </script>
   <script>
     // Simulate progress text update
     /* const progressText = document.getElementById('progress-text');
