@@ -138,6 +138,7 @@ body {
 }
 
 #speedometer-unit {
+  text-transform: none !important;
   font-size: 1.5rem;
   margin-left: 5px;
 }
