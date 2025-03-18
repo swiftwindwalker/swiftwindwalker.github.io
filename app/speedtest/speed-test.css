@@ -51,7 +51,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40vw;
+  width: 100%;                  /* Take up full width on all devices */
+  max-width: 600px;              /* Set a max-width to avoid stretching too much */
+  margin: 0 auto;                /* Center the container horizontally */
+
   border-radius: 10px;
   gap: 10px;
 }
@@ -117,6 +120,9 @@ body {
 /* Speedometer Animation */
 .speedometer {
   /*margin-top: 20px;*/
+  display: flex;
+  justify-content: center;    /* Horizontally center */
+  align-items: center;      
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
@@ -416,7 +422,7 @@ button:hover {
     display: block;
     text-align: center; /* Centers the text inside */
     margin: 20px auto; /* Centers the div */
-    width: fit-content; /* Adjust width to fit content */
+    width: 70%; /* Adjust width to fit content */
     padding: 10px 20px; /* Add some spacing */
   }
   
