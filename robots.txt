@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /private/
+Disallow: /wp-admin/  # If using WordPress
+Disallow: /tmp/
+Disallow: /cgi-bin/
+
+# Allow all search engines to crawl the site
+Allow: /
+
+# Sitemap location (update this if your sitemap has a different URL)
+Sitemap: https://ravzzy.com/sitemap.xml
