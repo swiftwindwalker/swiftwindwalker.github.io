@@ -31,8 +31,27 @@ const homeImages = {
   frame: 0
 };
 
+// Get loading screen elements
+const loaderOverlay = document.querySelector('.loader-overlay');
+const loaderPercentage = document.querySelector('.loader-percentage');
+const loaderText = document.querySelector('.loader-text');
+const loaderImg = document.querySelector('.loader-img');
+
+let loadedImagesCount = 0;
+
+// Function to update loading progress
+function updateLoadingProgress() {
+  const progress = Math.floor((loadedImagesCount / frameCount) * 100);
+  loaderPercentage.textContent = `${progress}%`;
+  
+  // Update text when almost done
+  if (progress >= 90) {
+      loaderText.textContent = "Almost there, you are. Patience, just a little more, you must have.";
+  }
+}
 // Function to preload images
 function preloadImages() {
+
   return Promise.all(
     Array.from({ length: frameCount }, (_, i) => {
       return new Promise((resolve) => {
@@ -43,10 +62,14 @@ function preloadImages() {
 
         img.onload = () => {
         //  console.log(`Image ${i + 1} loaded successfully.`);
-          resolve(img);
+        loadedImagesCount++;
+        updateLoadingProgress();
+        resolve(img);
         };
 
         img.onerror = () => {
+          loadedCount++; // Still count it even if error
+          updateLoadingProgress();
           console.error(`Failed to load image at ${img.src}. Skipping.`);
           resolve(null); // Skip this image
         };
@@ -56,6 +79,7 @@ function preloadImages() {
     })
   );
 }
+
 
 // Throttle function to limit render calls
 function throttle(callback, limit) {
@@ -141,8 +165,22 @@ function render() {
 // Throttled render function
 const throttledRender = throttle(render, 16); // Limit to ~60 FPS
 
+
 // Preload images and then start the animation
 preloadImages().then(() => {
+
+      // Complete loading
+      loaderPercentage.textContent = "100%";
+      loaderText.textContent = "When ready, you are, do it, you must.";
+
+    // Hide loading screen
+    document.body.classList.add('loaded');
+    setTimeout(() => {
+      loaderOverlay.style.display = 'none';
+      document.body.classList.remove('loading');
+    }, 500);
+
+    
   console.log("All images preloaded. Starting animation...");
   console.log("canvas height: "+document.getElementById("canvas").offsetHeight)
   //console.log("Homepage offsetTop:", document.querySelector('.four').offsetTop);
@@ -171,6 +209,13 @@ preloadImages().then(() => {
   render();
 }).catch(error => {
   console.error("Error preloading images:", error);
+    // Ensure loading screen hides even if error occurs
+    loaderPercentage.textContent = "Error";
+    loaderText.textContent = "Loading incomplete";
+    setTimeout(() => {
+        loaderOverlay.style.display = 'none';
+        document.body.classList.remove('loading');
+    }, 2000);
 });
 
 // Debug scroll position
@@ -354,6 +399,7 @@ gsap.to('.four', {
 	},
 }) 
 
+/*
 gsap.to('.loader-img', {
 	rotation: 360,
 	duration: 1.5,
@@ -365,6 +411,7 @@ gsap.to('.loader-img', {
 window.addEventListener('load', e => {
 	document.body.classList.remove('loading')
 })
+*/
 
 /*
 const rgb = {

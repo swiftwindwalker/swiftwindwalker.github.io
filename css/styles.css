@@ -24,6 +24,57 @@ body {
 }
 
 
+.loader-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #f1f1f1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	z-index: 9999;
+	transition: opacity 0.5s ease-out;
+  }
+  
+  .loader-content {
+	text-align: center;
+  }
+  
+  .loader-text {
+	text-transform: none;
+	color: black;
+	font-size: 1rem;
+	margin-bottom: 1rem;
+	font-family: sans-serif;
+  }
+  
+  .loader-percentage {
+	color: #e61618;
+	font-size: 1rem;
+	margin-bottom: 2rem;
+	font-family: sans-serif;
+  }
+  
+  .loader-img {
+	width: 80px;
+	height: 80px;
+  }
+  
+  body.loading #navbar-container,
+  body.loading #sidebar-container,
+  body.loading .social-handle,
+  body.loading .menu-btn {
+	display: none !important;
+  }
+  
+  body.loaded .loader-overlay {
+	opacity: 0;
+	pointer-events: none;
+  }
+
 #canvas {
 	width: 100vw;
 	/* Cover the entire viewport width */
@@ -298,7 +349,7 @@ body>div:nth-child(7)>section>div.right>div:nth-child(1) {
 	/* LinkedIn blue */
 }
 
-
+/*
 .loader {
 	display: none;
 }
@@ -314,6 +365,8 @@ body.loading .loader {
 .loader img {
 	width: 10em;
 }
+
+*/
 
 .avatars {
 	overflow-x: hidden;
@@ -533,6 +586,14 @@ footer>div:not(.socials) {
 		padding: 0;
 		box-sizing: border-box;
 	}
+
+	.loader-text {
+		font-size: 0.8rem;
+	  }
+	  
+	  .loader-percentage {
+		font-size: 0.8rem;
+	  }
 
 	.hero-content {
 		gap: 40px;
