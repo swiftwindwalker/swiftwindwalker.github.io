@@ -45,7 +45,7 @@ function updateLoadingProgress() {
   loaderPercentage.textContent = `${progress}%`;
   
   // Update text when almost done
-  if (progress >= 90) {
+  if (progress >= 50) {
       loaderText.textContent = "Almost there, you are. Patience, just a little more, you must have.";
   }
 }
