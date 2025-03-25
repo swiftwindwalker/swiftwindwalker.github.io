@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-VS2WHLJQNE');
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="module" src="/js/onload.js" defer></script>
+    <script type="module" src="/js/navbar.js" defer></script>
+    <script type="module" src="/js/sidebar.js" defer></script>
+    <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
+
+    <title>My Projects</title>
+    <style>
+        :root {
+            --primary-color: #6e48aa;
+            --primary-light: #9d50bb;
+            --secondary-color: #4776e6;
+            --accent-color: #4ecdc4;
+            --background: #f8f9ff;
+            --card-bg: #ffffff;
+            --text-color: #2d3436;
+            --text-light: #636e72;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Special centering for exactly 2 tiles */
+        .projects-grid.two-tiles {
+            grid-template-columns: repeat(2, minmax(300px, 350px));
+            justify-content: center;
+        }
+
+        .project-tile {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-tile:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        .project-content {
+            padding: 1.8rem;
+        }
+
+        .project-title {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .project-description {
+            text-align: justify;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.2;
+        }
+
+        .project-icon {
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .footer {
+            text-transform: uppercase;
+            margin-top: 5vh;
+            height: 5vh;
+            font-weight: 400;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+        .nav-menu a {
+            text-transform: uppercase;
+            font-size:0.7rem;
+        }
+
+
+        .social-handle {
+            position: fixed;
+            /* Fix it to the screen */
+            bottom: 20px;
+            /* Distance from the bottom of the page */
+            right: 20px;
+            /* Distance from the right of the page */
+            display: block;
+            /* Hide initially */
+            justify-content: space-around;
+            align-items: center;
+            gap: 4px;
+            z-index: 10;
+            /* Ensure it's on top of other content */
+        }
+
+        .social-handle a {
+            display: inline-block;
+        }
+
+        .social-handle i {
+            font-size: 15px;
+            color: #333;
+            /* Default color for icons */
+            border: 0.5px solid #000;
+            border-radius: 50%;
+            padding: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .social-handle i:hover {
+            color: #ff2759;
+            /* Hover color */
+            border-color: #ff2759;
+            /* Hover border color */
+            transform: scale(1.4);
+            /* Increase the size by 20% */
+            z-index: 20;
+            /* Ensure the hovered icon is on top */
+        }
+
+
+        /* Specific color for each icon */
+        .fa-facebook {
+            color: #3b5998 !important;
+            /* Facebook blue */
+        }
+
+        .fa-twitter {
+            color: #1da1f2 !important;
+            /* Twitter blue */
+        }
+
+        .fa-instagram {
+            color: #e4405f !important;
+            /* Instagram pinkish red */
+        }
+
+        .fa-youtube {
+            color: #ff0000 !important;
+            /* YouTube red */
+        }
+
+        .fa-linkedin {
+            color: #0077b5 !important;
+            /* LinkedIn blue */
+        }
+
+        
+
+        @media (max-width: 900px) {
+            .projects-grid.two-tiles {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .project-icon {
+                height: 120px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
+    <button class="menu-btn">☰</button>
+    <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
+    <div class="container">
+        <header>
+            <h1>My Projects</h1>
+            <p class="subtitle">A collection of tools and applications I've built. Click on any project to explore it.
+            </p>
+        </header>
+
+        <div class="projects-grid two-tiles">
+            <!-- Project Tile 1 -->
+            <a href="/app/speedtest/home.html" class="project-tile">
+                <div class="project-icon">
+                    <span>🔧</span>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Anonymous Browser-Based Speed Test (No Ads)</h3>
+                    <p class="project-description">A lightweight, privacy-focused internet speed test that runs directly
+                        in your browser without tracking, ads, or requiring personal data. Measures download, upload,
+                        and latency quickly and accurately. No sign-ups, no distractions.</p>
+                </div>
+            </a>
+
+            <!-- Project Tile 2 -->
+            <a href="/app/remove-background/home.html" class="project-tile">
+                <div class="project-icon">
+                    <span>📊</span>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">GhostCut AI</h3>
+                    <p class="project-description">A fast, AI-powered tool that removes backgrounds from images
+                        instantly—no downloads, accounts, or watermarks. Just upload, edit, and download in seconds.</p>
+                </div>
+            </a>
+
+            <!-- When adding more tiles, remove the "two-tiles" class from projects-grid -->
+            <!-- <a href="LINK_TO_PROJECT_3" class="project-tile">...</a> -->
+        </div>
+    </div>
+
+    <div class="social-handle">
+        <a href="https://www.instagram.com/swiftwindwalker" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/motoravzzy" target="_blank">
+            <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/motoravzzy" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/ravzzy" target="_blank">
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+    </div>
+    <div class="footer"> &copy;2025 ravzzy</div>
+
+    <script>
+        // Automatically remove the two-tiles class when more projects are added
+        document.addEventListener('DOMContentLoaded', function () {
+            const grid = document.querySelector('.projects-grid');
+            if (grid.children.length > 2) {
+                grid.classList.remove('two-tiles');
+            }
+        });
+    </script>
+    <script>
+        window.onbeforeunload = function () {
+          window.scrollTo(0, 0);
+        };
+      </script>
+</body>
+
+</html>
