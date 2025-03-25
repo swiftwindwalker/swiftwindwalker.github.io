@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Background Remover</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <title>GhostCut AI - Bg Remover</title>
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/navbar.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-VS2WHLJQNE');
+    </script>
+    <script type="module" src="/js/onload.js" defer></script>
+    <script type="module" src="/js/navbar.js" defer></script>
+    <script type="module" src="/js/sidebar.js" defer></script>
+    <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
     <style>
         :root {
             --primary: #4361ee;
@@ -26,13 +44,13 @@
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.5;
@@ -44,100 +62,101 @@
             overflow-y: auto !important;
 
         }
-        
+
         .container {
-            max-width: 1200px;
+            max-width: 95vw;
+            margin-top:3vh !important;
             margin: 0 auto;
             background: white;
             border-radius: 12px;
             box-shadow: var(--shadow-lg);
-           /* overflow: hidden;*/
+            /* overflow: hidden;*/
         }
-        
+
         header {
             background-color: white;
-            padding: 2rem;
             border-bottom: 1px solid var(--gray-200);
             text-align: center;
         }
-        
+
         h1 {
+            color: #e61618;
             font-size: 1.75rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
-            color: var(--gray-900);
+            /*color: var(--gray-900);*/
         }
-        
+
         .subtitle {
             color: var(--gray-500);
             font-size: 1rem;
             max-width: 600px;
             margin: 0 auto;
         }
-        
+
         .content {
             padding: 2rem;
         }
-        
+
         .upload-section {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 2rem;
         }
-        
+
         #dropZone {
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
             border: 2px dashed var(--gray-300);
             border-radius: 8px;
             padding: 3rem 2rem;
             text-align: center;
-           /* cursor: pointer;*/
+            /* cursor: pointer;*/
             transition: all 0.2s ease;
             background-color: var(--gray-50);
             margin-bottom: 1.5rem;
             position: relative;
         }
-        
+
         #dropZone:hover {
             border-color: var(--primary);
             background-color: var(--primary-light);
         }
-        
+
         #dropZone.active {
             border-color: var(--primary);
             background-color: var(--primary-light);
         }
-        
+
         .dropzone-content {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        
+
         .dropzone-icon {
             width: 48px;
             height: 48px;
             margin-bottom: 1rem;
             color: var(--gray-400);
         }
-        
+
         .dropzone-text {
             font-size: 1rem;
             color: var(--gray-600);
             margin-bottom: 0.5rem;
         }
-        
+
         .dropzone-hint {
             font-size: 0.875rem;
             color: var(--gray-400);
         }
-        
+
         #fileInput {
             display: none;
         }
-        
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -147,63 +166,63 @@
             font-weight: 500;
             border-radius: 8px;
             border: none;
-           /* cursor: pointer;*/
+            /* cursor: pointer;*/
             transition: all 0.2s ease;
             text-decoration: none;
         }
-        
+
         .btn-primary {
             background-color: var(--primary);
             color: white;
             box-shadow: var(--shadow);
         }
-        
+
         .btn-primary:hover {
             background-color: #3a56d4;
             transform: translateY(-1px);
             box-shadow: var(--shadow-md);
         }
-        
+
         .btn-primary:disabled {
             background-color: var(--gray-300);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
-        
+
         .btn-secondary {
             background-color: white;
             color: var(--gray-700);
             border: 1px solid var(--gray-300);
         }
-        
+
         .btn-secondary:hover {
             background-color: var(--gray-100);
         }
-        
+
         .btn-icon {
             margin-right: 0.5rem;
         }
-        
+
         .results-section {
             display: none;
             margin-top: 2rem;
         }
-        
+
         .results-title {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
             text-align: center;
         }
-        
+
         .image-comparison {
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
             justify-content: center;
         }
-        
+
         .image-container {
             flex: 1;
             min-width: 300px;
@@ -211,45 +230,45 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         .image-label {
             font-weight: 500;
             color: var(--gray-700);
             margin-bottom: 0.75rem;
             text-align: center;
         }
-        
+
         .image-wrapper {
             border-radius: 8px;
             border: 1px solid var(--gray-200);
             overflow: hidden;
-            background: 
+            background:
                 linear-gradient(45deg, var(--gray-200) 25%, transparent 25%, transparent 75%, var(--gray-200) 75%),
                 linear-gradient(45deg, var(--gray-200) 25%, transparent 25%, transparent 75%, var(--gray-200) 75%);
             background-size: 20px 20px;
             background-position: 0 0, 10px 10px;
         }
-        
+
         .result-image {
             width: 100%;
             height: auto;
             display: block;
         }
-        
+
         .action-buttons {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
             justify-content: center;
         }
-        
+
         .loading-container {
             display: none;
             flex-direction: column;
             align-items: center;
             padding: 2rem;
         }
-        
+
         .loading-spinner {
             width: 48px;
             height: 48px;
@@ -259,16 +278,18 @@
             animation: spin 1s linear infinite;
             margin-bottom: 1rem;
         }
-        
+
         .loading-text {
             color: var(--gray-600);
             font-weight: 500;
         }
-        
+
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
-        
+
         .error-container {
             display: none;
             background-color: #fef2f2;
@@ -278,16 +299,16 @@
             margin: 1rem 0;
             border: 1px solid #fee2e2;
         }
-        
+
         .error-title {
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
-        
+
         .error-message {
             font-size: 0.875rem;
         }
-        
+
         .info-container {
             background-color: #eff6ff;
             color: var(--gray-700);
@@ -297,36 +318,36 @@
             border: 1px solid #dbeafe;
             font-size: 0.875rem;
         }
-        
+
         .info-title {
             font-weight: 600;
             margin-bottom: 0.5rem;
             color: var(--primary);
         }
-        
+
         .status-container {
-            overflow-y: auto; /* Enables vertical scrolling */
+            overflow-y: auto;
+            /* Enables vertical scrolling */
             background-color: #ecfdf5;
             color: var(--gray-700);
-            padding: 1rem;
-            max-height: 50vh;
+            max-height: 20vh;
             border-radius: 8px;
             margin: 1rem 0;
             border: 1px solid #d1fae5;
-            font-size: 0.875rem;
+            font-size: 0.7rem;
             display: none;
         }
-        
+
         .status-title {
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.7rem;
             color: var(--success);
         }
-        
+
         .status-message {
             font-size: 0.875rem;
         }
-        
+
         .uploaded-image {
             align-items: center;
             text-align: center;
@@ -337,7 +358,7 @@
             margin-top: 1rem;
             display: none;
         }
-        
+
         .status-log {
             display: none;
             margin-top: 0.5rem;
@@ -351,87 +372,228 @@
             border-radius: 4px;
             border: 1px solid var(--gray-200);
         }
-        
-        footer {
+
+        footer-msg {
             text-align: center;
             padding: 2rem;
             color: var(--gray-500);
             font-size: 0.875rem;
             border-top: 1px solid var(--gray-200);
         }
-        
+
+
+        .footer {
+            margin-top: 1vh;
+            height: 5vh;
+            font-weight: 400;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+
+
+        .social-handle {
+            position: fixed;
+            /* Fix it to the screen */
+            bottom: 20px;
+            /* Distance from the bottom of the page */
+            right: 20px;
+            /* Distance from the right of the page */
+            display: block;
+            /* Hide initially */
+            justify-content: space-around;
+            align-items: center;
+            gap: 4px;
+            z-index: 10;
+            /* Ensure it's on top of other content */
+        }
+
+        .social-handle a {
+            display: inline-block;
+        }
+
+        .social-handle i {
+            font-size: 15px;
+            color: #333;
+            /* Default color for icons */
+            border: 0.5px solid #000;
+            border-radius: 50%;
+            padding: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .social-handle i:hover {
+            color: #ff2759;
+            /* Hover color */
+            border-color: #ff2759;
+            /* Hover border color */
+            transform: scale(1.4);
+            /* Increase the size by 20% */
+            z-index: 20;
+            /* Ensure the hovered icon is on top */
+        }
+
+
+        /* Specific color for each icon */
+        .fa-facebook {
+            color: #3b5998 !important;
+            /* Facebook blue */
+        }
+
+        .fa-twitter {
+            color: #1da1f2 !important;
+            /* Twitter blue */
+        }
+
+        .fa-instagram {
+            color: #e4405f !important;
+            /* Instagram pinkish red */
+        }
+
+        .fa-youtube {
+            color: #ff0000 !important;
+            /* YouTube red */
+        }
+
+        .fa-linkedin {
+            color: #0077b5 !important;
+            /* LinkedIn blue */
+        }
+
+        /* Donate Me Section */
+        .donate-me {
+            position: relative;
+            margin-top: 10vh !important;
+            width: 80%;
+            text-align: center;
+            padding-bottom: 0vh;
+            margin: 0 auto;
+            /* Centers it horizontally */
+
+        }
+
+        .donate-me h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .donate-me p {
+            font-size: 0.8rem;
+            text-transform: none;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .donate-me img {
+            width: 100px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .donate-me img:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-menu a {
+            text-transform: uppercase;
+            font-size:0.7rem;
+        }
+
+
         @media (max-width: 768px) {
             body {
                 padding: 1rem;
             }
-            
+
             .container {
                 border-radius: 8px;
             }
-            
+
             header {
                 padding: 1.5rem;
             }
-            
+
             .content {
                 padding: 1.5rem;
             }
-            
+
             .image-comparison {
                 flex-direction: column;
             }
-            
+
             .image-container {
                 max-width: 100%;
+            }
+
+            .status-title, .status-message{
+                text-align: center;
+            }
+
+            footer-msg{
+                font-size: 0.7rem;
+            }
+
+            li {
+                font-size: 0.7rem;
             }
         }
     </style>
 </head>
+
 <body>
+    <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
+    <button class="menu-btn">☰</button>
+    <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
     <div class="container">
         <header>
-            <h1>AI Background Remover</h1>
-            <p class="subtitle">Upload any image to instantly remove the background with AI-powered technology</p>
+            <h1>GhostCut AI</h1>
+            <p class="subtitle">Effortlessly Remove Backgrounds with AI Anyonymously- Try It Now and Enhance Your Images Instantly! </p>
         </header>
-        
+
         <div class="content">
             <div class="upload-section">
                 <div id="dropZone">
                     <div class="dropzone-content" id="dropzoneContent">
-                        <svg class="dropzone-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        <svg class="dropzone-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                            </path>
                         </svg>
-                        <p class="dropzone-text" id="dropzoneText">Drag & drop your image here</p>
-                        <p class="dropzone-hint" id="dropzoneHint">or click to browse files (JPEG, PNG)</p>
+                        <!--<p class="dropzone-text" id="dropzoneText">Drag & drop your image here</p> -->
+                        <p class="dropzone-hint" id="dropzoneHint">Click to browse files (JPEG, PNG)</p>
                     </div>
                     <img id="uploadedImage" class="uploaded-image">
                 </div>
                 <input type="file" id="fileInput" accept="image/*">
-                
+
                 <button id="processBtn" class="btn btn-primary disabled">
-                    <svg class="btn-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    <svg class="btn-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                        </path>
                     </svg>
                     Remove Background
                 </button>
             </div>
-    
+
             <div class="status-container" id="statusDisplay">
                 <p class="status-title">Status</p>
                 <p class="status-message" id="statusMessage"></p>
                 <div class="status-log" id="statusLog"></div>
             </div>
-            
+
             <div class="error-container" id="errorDisplay">
                 <p class="error-title">Error</p>
                 <p class="error-message" id="errorMessage"></p>
             </div>
-            
+
             <div class="loading-container" id="loading">
                 <div class="loading-spinner"></div>
                 <p class="loading-text" id="loadingText">Processing your image...</p>
             </div>
-            
+
             <div class="results-section" id="resultsSection">
                 <h3 class="results-title">Your Results</h3>
                 <div class="image-comparison">
@@ -448,14 +610,18 @@
                         </div>
                         <div class="action-buttons">
                             <a id="downloadBtn" class="btn btn-primary" download="background-removed.png">
-                                <svg class="btn-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                <svg class="btn-icon" width="20" height="20" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                 </svg>
                                 Download
                             </a>
                             <button id="newImageBtn" class="btn btn-secondary">
-                                <svg class="btn-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                <svg class="btn-icon" width="20" height="20" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                 </svg>
                                 New Image
                             </button>
@@ -472,378 +638,408 @@
                 <li>For best results, use images with good contrast between subject and background</li>
             </ul>
         </div>
-        
-        <footer>
-            <p>AI Background Remover uses TensorFlow.js for in-browser processing. No images are uploaded to any server.</p>
-        </footer>
-    </div>
 
+        <footer-msg>
+            <p>AI Background Remover uses TensorFlow for in-browser processing. No images are uploaded to any server.
+            </p>
+        </footer-msg>
+    </div>
+    <div class="social-handle">
+        <a href="https://www.instagram.com/swiftwindwalker" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/motoravzzy" target="_blank">
+            <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/motoravzzy" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/ravzzy" target="_blank">
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+    </div>
+    <div class="donate-me">
+        <h3>Support My Work</h3>
+        <p>If you find this tool useful, consider donating to support its development and maintenance. Thank you! ❤️</p>
+        <a href="https://www.paypal.me/erravz" target="_blank">
+            <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate with PayPal" />
+        </a>
+    </div>
+    <div class="footer"> &copy;2025 ravzzy</div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
     <script>
-    // DOM Elements
-    const elements = {
-        dropZone: document.getElementById('dropZone'),
-        dropzoneContent: document.getElementById('dropzoneContent'),
-        dropzoneText: document.getElementById('dropzoneText'),
-        dropzoneHint: document.getElementById('dropzoneHint'),
-        fileInput: document.getElementById('fileInput'),
-        originalImage: document.getElementById('originalImage'),
-        resultImage: document.getElementById('resultImage'),
-        uploadedImage: document.getElementById('uploadedImage'),
-        downloadBtn: document.getElementById('downloadBtn'),
-        processBtn: document.getElementById('processBtn'),
-        loading: document.getElementById('loading'),
-        loadingText: document.getElementById('loadingText'),
-        errorDisplay: document.getElementById('errorDisplay'),
-        errorMessage: document.getElementById('errorMessage'),
-        statusDisplay: document.getElementById('statusDisplay'),
-        statusMessage: document.getElementById('statusMessage'),
-        statusLog: document.getElementById('statusLog'),
-        resultsSection: document.getElementById('resultsSection'),
-        newImageBtn: document.getElementById('newImageBtn')
-    };
+        // DOM Elements
+        const elements = {
+            dropZone: document.getElementById('dropZone'),
+            dropzoneContent: document.getElementById('dropzoneContent'),
+            dropzoneText: document.getElementById('dropzoneText'),
+            dropzoneHint: document.getElementById('dropzoneHint'),
+            fileInput: document.getElementById('fileInput'),
+            originalImage: document.getElementById('originalImage'),
+            resultImage: document.getElementById('resultImage'),
+            uploadedImage: document.getElementById('uploadedImage'),
+            downloadBtn: document.getElementById('downloadBtn'),
+            processBtn: document.getElementById('processBtn'),
+            loading: document.getElementById('loading'),
+            loadingText: document.getElementById('loadingText'),
+            errorDisplay: document.getElementById('errorDisplay'),
+            errorMessage: document.getElementById('errorMessage'),
+            statusDisplay: document.getElementById('statusDisplay'),
+            statusMessage: document.getElementById('statusMessage'),
+            statusLog: document.getElementById('statusLog'),
+            resultsSection: document.getElementById('resultsSection'),
+            newImageBtn: document.getElementById('newImageBtn')
+        };
 
-    let model;
-    let isModelLoaded = false;
-    let currentImage = null;
+        let model;
+        let isModelLoaded = false;
+        let currentImage = null;
 
-    // Helper Functions
-    function showError(message) {
-        console.error(message);
-        elements.errorMessage.textContent = message;
-        elements.errorDisplay.style.display = 'block';
-        hideStatus();
-       // addToStatusLog("❌ " + message);
-    }
+        // Helper Functions
+        function showError(message) {
+            console.info(message);
+            elements.errorMessage.textContent = message;
+            elements.errorDisplay.style.display = 'block';
+            hideStatus();
+            // addToStatusLog("❌ " + message);
+        }
 
-    function hideError() {
-        elements.errorDisplay.style.display = 'none';
-    }
+        function hideError() {
+            elements.errorDisplay.style.display = 'none';
+        }
 
-   function showStatus(message) {
-        console.log(message);
-        elements.statusMessage.textContent = "";  // Clears the previous message
-        elements.statusMessage.textContent = message;
-        elements.statusDisplay.style.display = 'block';
-        // Force UI update
-        setTimeout(() => {}, 0);
-        hideError();
-       // addToStatusLog("ℹ️ " + message);
-    } 
+        function showStatus(message) {
+            console.log(message);
+            elements.statusMessage.textContent = "";  // Clears the previous message
+            elements.statusMessage.textContent = message;
+            elements.statusDisplay.style.display = 'block';
+            // Force UI update
+            setTimeout(() => { }, 0);
+            hideError();
+            // addToStatusLog("ℹ️ " + message);
+        }
 
-   /* function addToStatusLog(message) {
-        const logEntry = document.createElement('div');
-        logEntry.textContent = message;
-        elements.statusLog.appendChild(logEntry);
-        elements.statusLog.scrollTop = elements.statusLog.scrollHeight;
-    }*/
-    
-    function hideStatus() {
-        elements.statusDisplay.style.display = 'none';
-    }
+        /* function addToStatusLog(message) {
+             const logEntry = document.createElement('div');
+             logEntry.textContent = message;
+             elements.statusLog.appendChild(logEntry);
+             elements.statusLog.scrollTop = elements.statusLog.scrollHeight;
+         }*/
 
-    function showLoading(message) {
-        elements.loadingText.innerHTML = ""; 
-        elements.loadingText.textContent = message;
-        elements.loading.style.display = 'flex';
-        elements.loading.style.visibility = 'visible';
-        // Force UI update
-        setTimeout(() => {}, 0);
-       // addToStatusLog("⏳ " + message);
-       hideError();
-    }
+        function hideStatus() {
+            elements.statusDisplay.style.display = 'none';
+        }
 
-    function hideLoading() {
-        elements.loading.style.display = 'none';
-    }
+        function showLoading(message) {
+            elements.loadingText.innerHTML = "";
+            elements.loadingText.textContent = message;
+            elements.loading.style.display = 'flex';
+            elements.loading.style.visibility = 'visible';
+            // Force UI update
+            setTimeout(() => { }, 0);
+            // addToStatusLog("⏳ " + message);
+            hideError();
+        }
 
-    function showResults() {
-        elements.resultsSection.style.display = 'block';
-    }
+        function hideLoading() {
+            elements.loading.style.display = 'none';
+        }
 
-    function hideResults() {
-        elements.resultsSection.style.display = 'none';
-    }
+        function showResults() {
+            elements.resultsSection.style.display = 'block';
+        }
 
-    function hideProcessButton(){
-        console.log("hideProcessButton");
-        elements.processBtn.disabled = true;
-    }
+        function hideResults() {
+            elements.resultsSection.style.display = 'none';
+        }
 
-    function showProcessButton(){
-        console.log("showProcessButton");
-        elements.processBtn.disabled = false;
-    }
+        function hideProcessButton() {
+            console.log("hideProcessButton");
+            elements.processBtn.disabled = true;
+        }
 
-    function resetUI() {
-        hideError();
-        hideLoading();
-        hideResults();
-        hideStatus();
-        showProcessButton();
-        elements.statusLog.innerHTML = '';
-    }
+        function showProcessButton() {
+            console.log("showProcessButton");
+            elements.processBtn.disabled = false;
+        }
 
-    function updateDropzoneForUploadedImage() {
-        elements.dropzoneContent.style.display = 'none';
-        elements.uploadedImage.style.display = 'flex';
-        elements.dropZone.style.padding = '1rem';
-       /* elements.dropZone.style.cursor = 'default';*/
-    }
+        function resetUI() {
+            hideError();
+            hideLoading();
+            hideResults();
+            hideStatus();
+            showProcessButton();
+            elements.statusLog.innerHTML = '';
+        }
 
-    function resetDropzone() {
-        elements.dropzoneContent.style.display = 'flex';
-        elements.uploadedImage.style.display = 'none';
-        elements.dropZone.style.padding = '3rem 2rem';
-       /* elements.dropZone.style.cursor = 'pointer';*/
-    }
+        function updateDropzoneForUploadedImage() {
+            elements.dropzoneContent.style.display = 'none';
+            elements.uploadedImage.style.display = 'flex';
+            elements.dropZone.style.padding = '1rem';
+            /* elements.dropZone.style.cursor = 'default';*/
+        }
 
-    // Initialize
-    async function init() {
-        try {
-            showLoading("Initializing application...");
-            
-            // Try WebGL first, fallback to CPU
+        function resetDropzone() {
+            elements.dropzoneContent.style.display = 'flex';
+            elements.uploadedImage.style.display = 'none';
+            elements.dropZone.style.padding = '3rem 2rem';
+            /* elements.dropZone.style.cursor = 'pointer';*/
+        }
+
+        // Initialize
+        async function init() {
             try {
-                showLoading("Checking for WebGL acceleration...");
-                await tf.setBackend('webgl');
-                showLoading("Using WebGL backend for faster processing");
-                console.log('Using WebGL backend');
-            } catch (e) {
-                showLoading("WebGL not available, falling back to CPU (processing may be slower)");
-                await tf.setBackend('cpu');
-                console.log('Using CPU backend');
-            }
-            
-            // Load model
-            showLoading("Loading AI model... (This may take a moment)");
 
-            try {
-                model = await tf.loadGraphModel('models/model.json');
-                isModelLoaded = true;
-                showStatus("AI model loaded successfully!");
-                console.log('Model loaded successfully');
+                
+                showLoading("Initializing application...");
+
+                // Try WebGL first, fallback to CPU
+                try {
+                    showLoading("Checking for WebGL acceleration...");
+                    await tf.setBackend('webgl');
+                    showLoading("Using WebGL backend for faster processing");
+                    console.log('Using WebGL backend');
+                } catch (e) {
+                    showLoading("WebGL not available, falling back to CPU (processing may be slower)");
+                    await tf.setBackend('cpu');
+                    console.log('Using CPU backend');
+                }
+
+                // Load model
+                showLoading("Loading AI model... (This may take a moment)");
+
+                try {
+                    model = await tf.loadGraphModel('models/model.json');
+                    isModelLoaded = true;
+                    showStatus("AI model loaded successfully!");
+                    console.log('Model loaded successfully');
+                } catch (error) {
+                    showProcessButton();
+                    showError("Failed to load AI model: " + error.message);
+                    throw error;
+                } finally {
+                    hideLoading();
+                }
+
+                // Set up event listeners
+                setupEventListeners();
+
             } catch (error) {
                 showProcessButton();
-                showError("Failed to load AI model: " + error.message);
-                throw error;
+                console.log('Initialization failed:', error);
+                showError('Failed to initialize: ' + error.message);
+                hideLoading();
+            }
+        }
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Click to select file
+            elements.dropZone.addEventListener('click', () => {
+                if (!elements.uploadedImage.style.display || elements.uploadedImage.style.display === 'none') {
+                    elements.fileInput.click();
+                }
+            });
+
+            // File selection
+            elements.fileInput.addEventListener('change', handleFileSelect);
+
+            // Process button
+            elements.processBtn.addEventListener('click', processImage);
+
+            // New image button
+            elements.newImageBtn.addEventListener('click', () => {
+                resetUI();
+                resetDropzone();
+                elements.fileInput.value = '';
+            });
+
+            // Drag and drop events
+            elements.dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                elements.dropZone.classList.add('active');
+            });
+
+            elements.dropZone.addEventListener('dragleave', () => {
+                elements.dropZone.classList.remove('active');
+            });
+
+            elements.dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                elements.dropZone.classList.remove('active');
+                if (e.dataTransfer.files.length) {
+                    handleFileSelect({ target: { files: e.dataTransfer.files } });
+                }
+            });
+        }
+
+        // File Selection
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (!file.type.match('image.*')) {
+                showError('Please select an image file (JPEG or PNG)');
+                return;
+            }
+
+            hideError();
+            hideResults();
+            showLoading("Reading uploaded image...");
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                currentImage = new Image();
+                currentImage.src = e.target.result;
+                currentImage.onload = () => {
+                    showStatus("Image uploaded successfully!");
+                    hideLoading();
+
+
+                    elements.originalImage.src = currentImage.src
+                    elements.uploadedImage.src = currentImage.src;
+                    updateDropzoneForUploadedImage();
+                };
+            };
+            reader.onerror = () => {
+                showProcessButton();
+                showError('Error reading file. Please try another image.');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Image Processing
+        async function processImage() {
+
+            document.body.style.overflow = "auto";
+
+            if (!currentImage || !isModelLoaded) return;
+
+            try {
+                // Disable button when processing starts
+                console.log("Button state before:", elements.processBtn.disabled);
+                hideProcessButton();
+                console.log("Button state after:", elements.processBtn.disabled);
+
+                await new Promise(resolve => {
+                    showLoading("Image processing has started...");
+                    showStatus("AI doing it's magic, hold tight!");
+                    setTimeout(resolve, 50); // Small delay to allow UI to update
+                });
+
+                // Preprocess
+                showLoading("Resizing image for processing...");
+                const inputTensor = tf.tidy(() => {
+                    return tf.browser.fromPixels(currentImage)
+                        .resizeBilinear([320, 320])
+                        .toFloat()
+                        .div(255)
+                        .transpose([2, 0, 1]) // Convert [H, W, C] → [C, H, W]
+                        .expandDims(0); // Add batch dimension [1, C, H, W]
+                });
+
+                showStatus("Image resized and prepared for AI processing");
+                console.log("Image preprocessed");
+
+                // Predict
+                showLoading("Removing background with AI... (This may take a few moments)");
+
+                if (!model) {
+                    showProcessButton();
+                    throw new Error('Model not loaded. Please try again.');
+                }
+
+                await new Promise(resolve => {
+                    showLoading("Running AI model on image...");
+                    setTimeout(resolve, 50); // Small delay to allow UI to update
+                });
+                console.time("Prediction Time");
+                let outputTensor = await model.predict(inputTensor);
+                const predictionTime = performance.now() - console.timeLog("Prediction Time");
+                showStatus(`AI processing completed in ${Math.round(predictionTime)}ms`);
+
+                if (Array.isArray(outputTensor)) {
+                    showLoading("Processing AI output...");
+                    outputTensor = outputTensor[0];
+                }
+
+                if (!(outputTensor instanceof tf.Tensor)) {
+                    showProcessButton();
+                    throw new Error("AI processing did not return valid results.");
+                }
+
+                // Post-process
+                await new Promise(resolve => {
+                    showLoading("Creating final image...");
+                    setTimeout(resolve, 50); // Small delay to allow UI to update
+                });
+                const mask = outputTensor.squeeze();
+                const threshold = 0.5;
+                const binaryMask = mask.greater(tf.scalar(threshold)).toFloat();
+
+                // Apply mask
+                await new Promise(resolve => {
+                    showLoading("Applying transparency to background...");
+                    setTimeout(resolve, 50); // Small delay to allow UI to update
+                });
+                const result = await applyMask(currentImage, binaryMask);
+
+                // Show result
+                await new Promise(resolve => {
+                    showStatus("Background removal complete!");
+                    setTimeout(resolve, 50); // Small delay to allow UI to update
+                });
+                elements.resultImage.src = result;
+                elements.downloadBtn.href = result;
+                showResults();
+
+            } catch (error) {
+                console.log('Processing error:', error);
+                showError('Processing failed: ' + error.message);
             } finally {
                 hideLoading();
-            }
-            
-            // Set up event listeners
-            setupEventListeners();
-            
-        } catch (error) {
-            showProcessButton();
-            console.error('Initialization failed:', error);
-            showError('Failed to initialize: ' + error.message);
-            hideLoading();  
-        }
-    }
-
-    // Event Listeners
-    function setupEventListeners() {
-        // Click to select file
-        elements.dropZone.addEventListener('click', () => {
-            if (!elements.uploadedImage.style.display || elements.uploadedImage.style.display === 'none') {
-                elements.fileInput.click();
-            }
-        });
-        
-        // File selection
-        elements.fileInput.addEventListener('change', handleFileSelect);
-        
-        // Process button
-        elements.processBtn.addEventListener('click', processImage);
-        
-        // New image button
-        elements.newImageBtn.addEventListener('click', () => {
-            resetUI();
-            resetDropzone();
-            elements.fileInput.value = '';
-        });
-        
-        // Drag and drop events
-        elements.dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            elements.dropZone.classList.add('active');
-        });
-        
-        elements.dropZone.addEventListener('dragleave', () => {
-            elements.dropZone.classList.remove('active');
-        });
-        
-        elements.dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            elements.dropZone.classList.remove('active');
-            if (e.dataTransfer.files.length) {
-                handleFileSelect({ target: { files: e.dataTransfer.files } });
-            }
-        });
-    }
-
-    // File Selection
-    function handleFileSelect(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        
-        if (!file.type.match('image.*')) {
-            showError('Please select an image file (JPEG or PNG)');
-            return;
-        }
-        
-        hideError();
-        hideResults();
-        showLoading("Reading uploaded image...");
-        
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            currentImage = new Image();
-            currentImage.src = e.target.result;
-            currentImage.onload = () => {
-                showStatus("Image uploaded successfully!");
-                hideLoading();
-
-
-                elements.originalImage.src = currentImage.src
-                elements.uploadedImage.src = currentImage.src;
-                updateDropzoneForUploadedImage();
-                };
-        };
-        reader.onerror = () => {
-            showProcessButton();
-            showError('Error reading file. Please try another image.');
-        };
-        reader.readAsDataURL(file);
-    }
-
-    // Image Processing
-    async function processImage() {
-
-        document.body.style.overflow = "auto";
-
-        if (!currentImage || !isModelLoaded) return;
-        
-        try {
-            // Disable button when processing starts
-            console.log("Button state before:", elements.processBtn.disabled);
-            hideProcessButton();
-            console.log("Button state after:", elements.processBtn.disabled);
-        
-        await new Promise(resolve => {
-            showLoading("Image processing has started...");
-            showStatus("AI doing it's magic, hold tight!");
-            setTimeout(resolve, 50); // Small delay to allow UI to update
-        });
-            
-            // Preprocess
-            showLoading("Resizing image for processing...");
-            const inputTensor = tf.tidy(() => {
-                return tf.browser.fromPixels(currentImage)
-                    .resizeBilinear([320, 320])
-                    .toFloat()
-                    .div(255)
-                    .transpose([2, 0, 1]) // Convert [H, W, C] → [C, H, W]
-                    .expandDims(0); // Add batch dimension [1, C, H, W]
-            });
-
-            showStatus("Image resized and prepared for AI processing");
-            console.log("Image preprocessed");
-            
-            // Predict
-            showLoading("Removing background with AI... (This may take a few moments)");
-            
-            if (!model) {
                 showProcessButton();
-                throw new Error('Model not loaded. Please try again.');
+                // Button remains disabled until user uploads a new image
+                tf.disposeVariables();
             }
-            
-            await new Promise(resolve => {
-            showLoading("Running AI model on image...");
-            setTimeout(resolve, 50); // Small delay to allow UI to update
-        });
-            console.time("Prediction Time");
-            let outputTensor = await model.predict(inputTensor);
-            const predictionTime = performance.now() - console.timeLog("Prediction Time");
-            showStatus(`AI processing completed in ${Math.round(predictionTime)}ms`);
-            
-            if (Array.isArray(outputTensor)) {
-                showLoading("Processing AI output...");
-                outputTensor = outputTensor[0];
-            }
-
-            if (!(outputTensor instanceof tf.Tensor)) {
-                showProcessButton();
-                throw new Error("AI processing did not return valid results.");
-            }
-
-            // Post-process
-            await new Promise(resolve => {
-            showLoading("Creating final image...");
-            setTimeout(resolve, 50); // Small delay to allow UI to update
-        });
-            const mask = outputTensor.squeeze();
-            const threshold = 0.5;
-            const binaryMask = mask.greater(tf.scalar(threshold)).toFloat();
-            
-            // Apply mask
-            await new Promise(resolve => {
-            showLoading("Applying transparency to background...");
-            setTimeout(resolve, 50); // Small delay to allow UI to update
-        });
-            const result = await applyMask(currentImage, binaryMask);
-            
-            // Show result
-            await new Promise(resolve => {
-            showStatus("Background removal complete!");
-            setTimeout(resolve, 50); // Small delay to allow UI to update
-        });
-            elements.resultImage.src = result;
-            elements.downloadBtn.href = result;
-            showResults();
-            
-        } catch (error) {
-            console.error('Processing error:', error);
-            showError('Processing failed: ' + error.message);
-        } finally {
-            hideLoading();
-            showProcessButton();
-            // Button remains disabled until user uploads a new image
-            tf.disposeVariables();
         }
-    }
 
-    // Apply mask to create transparent image
-    async function applyMask(image, maskTensor) {
-        return new Promise((resolve) => {
-            tf.tidy(() => {
-                const canvas = document.createElement('canvas');
-                canvas.width = image.naturalWidth;
-                canvas.height = image.naturalHeight;
-                const ctx = canvas.getContext('2d');
-                
-                // Draw original image
-                ctx.drawImage(image, 0, 0);
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                
-                // Ensure mask has correct dimensions for resizeBilinear
-                const expandedMask = maskTensor.expandDims(-1);
-                const resizedMask = tf.image.resizeBilinear(expandedMask, [canvas.height, canvas.width]);
-                const maskData = resizedMask.dataSync();
-                
-                for (let i = 0; i < maskData.length; i++) {
-                    imageData.data[i * 4 + 3] = Math.round(maskData[i] * 255); // Alpha channel
-                }
-                
-                ctx.putImageData(imageData, 0, 0);
-                resolve(canvas.toDataURL('image/png'));
+        // Apply mask to create transparent image
+        async function applyMask(image, maskTensor) {
+            return new Promise((resolve) => {
+                tf.tidy(() => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = image.naturalWidth;
+                    canvas.height = image.naturalHeight;
+                    const ctx = canvas.getContext('2d');
+
+                    // Draw original image
+                    ctx.drawImage(image, 0, 0);
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                    // Ensure mask has correct dimensions for resizeBilinear
+                    const expandedMask = maskTensor.expandDims(-1);
+                    const resizedMask = tf.image.resizeBilinear(expandedMask, [canvas.height, canvas.width]);
+                    const maskData = resizedMask.dataSync();
+
+                    for (let i = 0; i < maskData.length; i++) {
+                        imageData.data[i * 4 + 3] = Math.round(maskData[i] * 255); // Alpha channel
+                    }
+
+                    ctx.putImageData(imageData, 0, 0);
+                    resolve(canvas.toDataURL('image/png'));
+                });
             });
-        });
-    }
+        }
 
-    // Start the application
-    document.addEventListener('DOMContentLoaded', init);
+        // Start the application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+    <script>
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        };
     </script>
 </body>
+
 </html>
