@@ -26,24 +26,24 @@
     <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-light: #e0e7ff;
-            --success: #10b981;
-            --error: #ef4444;
-            --warning: #f59e0b;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
+        --primary: #e61618; /* Changed to red */
+        --primary-light: #2b2b2b; /* Dark grey */
+        --success: #10b981;
+        --error: #ef4444;
+        --warning: #f59e0b;
+        --gray-100: #121212; /* Dark background */
+        --gray-200: #1e1e1e; /* Slightly lighter dark */
+        --gray-300: #2d2d2d; /* Borders */
+        --gray-400: #4a4a4a; /* Secondary text */
+        --gray-500: #7a7a7a; /* Subtle text */
+        --gray-600: #a0a0a0; /* Main text */
+        --gray-700: #c0c0c0; /* Bright text */
+        --gray-800: #e0e0e0; /* Very bright text */
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+        --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    }
 
         * {
             box-sizing: border-box;
@@ -54,7 +54,7 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.5;
-            color: var(--gray-800);
+            color: var(--gray-700);
             background-color: var(--gray-100);
             min-height: 100vh;
             height: auto;
@@ -67,20 +67,24 @@
             max-width: 95vw;
             margin-top:5vh !important;
             margin: 0 auto;
-            background: white;
+            background: #1a1a1a;
             border-radius: 12px;
             box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-300);
+
             /* overflow: hidden;*/
         }
 
         header {
-            background-color: white;
-            border-bottom: 1px solid var(--gray-200);
+            background-color: #1a1a1a;
+            border-bottom: 1px solid var(--gray-300);
             text-align: center;
+            padding: 2rem;
+
         }
 
         h1 {
-            color: #e61618;
+            color: var(--primary);
             font-size: 1.75rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
@@ -110,25 +114,25 @@
             min-width: 400px;
             min-height: 250px;
             height: auto;
-            border: 2px dashed var(--gray-300);
+            border: 2px dashed var(--gray-400);
             border-radius: 8px;
             padding: 3rem 2rem;
             text-align: center;
             /* cursor: pointer;*/
             transition: all 0.2s ease;
-            background-color: var(--gray-50);
+            background-color: var(--gray-200);
             margin-bottom: 1.5rem;
             position: relative;
         }
 
         #dropZone:hover {
             border-color: var(--primary);
-            background-color: var(--primary-light);
+            background-color: var(--gray-300);
         }
 
         #dropZone.active {
             border-color: var(--primary);
-            background-color: var(--primary-light);
+            background-color: var(--gray-300);
         }
 
         .dropzone-content {
@@ -141,7 +145,7 @@
             width: 48px;
             height: 48px;
             margin-bottom: 1rem;
-            color: var(--gray-400);
+            color: var(--gray-500);
         }
 
         .dropzone-text {
@@ -152,7 +156,7 @@
 
         .dropzone-hint {
             font-size: 0.875rem;
-            color: var(--gray-400);
+            color: var(--gray-500);
         }
 
         #fileInput {
@@ -180,26 +184,26 @@
         }
 
         .btn-primary:hover {
-            background-color: #3a56d4;
+            background-color: #c41212;
             transform: translateY(-1px);
             box-shadow: var(--shadow-md);
         }
 
         .btn-primary:disabled {
-            background-color: var(--gray-300);
+            background-color: var(--gray-400);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
 
         .btn-secondary {
-            background-color: white;
-            color: var(--gray-700);
-            border: 1px solid var(--gray-300);
+            background-color: var(--gray-300);
+        color: var(--gray-700);
+        border: 1px solid var(--gray-400);  
         }
 
         .btn-secondary:hover {
-            background-color: var(--gray-100);
+            background-color: var(--gray-400);
         }
 
         .btn-icon {
@@ -242,11 +246,11 @@
 
         .image-wrapper {
             border-radius: 8px;
-            border: 1px solid var(--gray-200);
+            border: 1px solid var(--gray-300);
             overflow: hidden;
             background:
-                linear-gradient(45deg, var(--gray-200) 25%, transparent 25%, transparent 75%, var(--gray-200) 75%),
-                linear-gradient(45deg, var(--gray-200) 25%, transparent 25%, transparent 75%, var(--gray-200) 75%);
+            linear-gradient(45deg, var(--gray-300) 25%, transparent 25%, transparent 75%, var(--gray-300) 75%),
+            linear-gradient(45deg, var(--gray-300) 25%, transparent 25%, transparent 75%, var(--gray-300) 75%);
             background-size: 20px 20px;
             background-position: 0 0, 10px 10px;
         }
@@ -274,7 +278,7 @@
         .loading-spinner {
             width: 48px;
             height: 48px;
-            border: 4px solid var(--gray-200);
+            border: 4px solid var(--gray-300);
             border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -294,12 +298,12 @@
 
         .error-container {
             display: none;
-            background-color: #fef2f2;
-            color: var(--error);
+            background-color: #2a1a1a;
+            color: #ff6b6b;
             padding: 1rem;
             border-radius: 8px;
             margin: 1rem 0;
-            border: 1px solid #fee2e2;
+            border: 1px solid #5c3a3a;
         }
 
         .error-title {
@@ -312,12 +316,12 @@
         }
 
         .info-container {
-            background-color: #eff6ff;
-            color: var(--gray-700);
+            background-color: #1e1e1e;
+            color: var(--gray-600);
             padding: 1rem;
             border-radius: 8px;
             margin: 1rem 0;
-            border: 1px solid #dbeafe;
+            border: 1px solid var(--gray-300);
             font-size: 0.875rem;
         }
 
@@ -330,12 +334,13 @@
         .status-container {
             overflow-y: auto;
             /* Enables vertical scrolling */
-            background-color: #ecfdf5;
-            color: var(--gray-700);
+            background-color: #1a2a1a;
+            color: var(--gray-600);
             max-height: 20vh;
             border-radius: 8px;
             margin: 1rem 0;
-            border: 1px solid #d1fae5;
+            border: 1px solid #3a5c3a;
+            border: 1px solid #3a5c3a;
             font-size: 0.7rem;
             display: none;
         }
@@ -390,6 +395,8 @@
             font-weight: 400;
             font-size: 0.7rem;
             text-align: center;
+            color: var(--gray-500);
+
         }
 
 
@@ -415,18 +422,17 @@
 
         .social-handle i {
             font-size: 15px;
-            color: #333;
+            color: var(--gray-600) !important;
             /* Default color for icons */
-            border: 0.5px solid #000;
+            border: 0.5px solid var(--gray-500);
             border-radius: 50%;
             padding: 4px;
             transition: all 0.3s ease;
         }
 
         .social-handle i:hover {
-            color: #ff2759;
-            /* Hover color */
-            border-color: #ff2759;
+            color: var(--primary) !important;
+            border-color: var(--primary);
             /* Hover border color */
             transform: scale(1.4);
             /* Increase the size by 20% */
@@ -476,13 +482,13 @@
         .donate-me h3 {
             font-size: 1.2rem;
             margin-bottom: 10px;
-            color: #333;
+            color: var(--gray-700);
         }
 
         .donate-me p {
             font-size: 0.8rem;
             text-transform: none;
-            color: #555;
+            color: var(--gray-600);
             margin-bottom: 20px;
         }
 
@@ -505,10 +511,13 @@
         @media (max-width: 768px) {
             body {
                 padding: 1rem;
+                background-color: #121212;
+
             }
 
             .container {
                 border-radius: 8px;
+                border: 1px solid var(--gray-300);
             }
 
             header {
