@@ -39,7 +39,10 @@
             color: var(--gray-800);
             background-color: var(--gray-100);
             min-height: 100vh;
+            height: auto;
             padding: 2rem;
+            overflow-y: auto !important;
+
         }
         
         .container {
@@ -48,7 +51,7 @@
             background: white;
             border-radius: 12px;
             box-shadow: var(--shadow-lg);
-            overflow: hidden;
+           /* overflow: hidden;*/
         }
         
         header {
@@ -90,7 +93,7 @@
             border-radius: 8px;
             padding: 3rem 2rem;
             text-align: center;
-            cursor: pointer;
+           /* cursor: pointer;*/
             transition: all 0.2s ease;
             background-color: var(--gray-50);
             margin-bottom: 1.5rem;
@@ -144,7 +147,7 @@
             font-weight: 500;
             border-radius: 8px;
             border: none;
-            cursor: pointer;
+           /* cursor: pointer;*/
             transition: all 0.2s ease;
             text-decoration: none;
         }
@@ -302,9 +305,11 @@
         }
         
         .status-container {
+            overflow-y: auto; /* Enables vertical scrolling */
             background-color: #ecfdf5;
             color: var(--gray-700);
             padding: 1rem;
+            max-height: 50vh;
             border-radius: 8px;
             margin: 1rem 0;
             border: 1px solid #d1fae5;
@@ -323,6 +328,9 @@
         }
         
         .uploaded-image {
+            align-items: center;
+            text-align: center;
+            transform: translateX(50%);
             max-width: 100%;
             max-height: 300px;
             border-radius: 8px;
@@ -331,6 +339,7 @@
         }
         
         .status-log {
+            display: none;
             margin-top: 0.5rem;
             font-family: monospace;
             font-size: 0.75rem;
@@ -399,23 +408,14 @@
                 </div>
                 <input type="file" id="fileInput" accept="image/*">
                 
-                <button id="processBtn" class="btn btn-primary">
+                <button id="processBtn" class="btn btn-primary disabled">
                     <svg class="btn-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                     </svg>
                     Remove Background
                 </button>
             </div>
-            
-            <div class="info-container">
-                <p class="info-title">Tips for best results</p>
-                <ul style="padding-left: 1.25rem;">
-                    <li>Use high-quality images with clear subject edges</li>
-                    <li>Images with complex backgrounds may take longer to process</li>
-                    <li>For best results, use images with good contrast between subject and background</li>
-                </ul>
-            </div>
-            
+    
             <div class="status-container" id="statusDisplay">
                 <p class="status-title">Status</p>
                 <p class="status-message" id="statusMessage"></p>
@@ -464,6 +464,14 @@
                 </div>
             </div>
         </div>
+        <div class="info-container">
+            <p class="info-title">Tips for best results</p>
+            <ul style="padding-left: 1.25rem;">
+                <li>Use high-quality images with clear subject edges</li>
+                <li>Images with complex backgrounds may take longer to process</li>
+                <li>For best results, use images with good contrast between subject and background</li>
+            </ul>
+        </div>
         
         <footer>
             <p>AI Background Remover uses TensorFlow.js for in-browser processing. No images are uploaded to any server.</p>
@@ -505,36 +513,44 @@
         elements.errorMessage.textContent = message;
         elements.errorDisplay.style.display = 'block';
         hideStatus();
-        addToStatusLog("❌ " + message);
+       // addToStatusLog("❌ " + message);
     }
 
     function hideError() {
         elements.errorDisplay.style.display = 'none';
     }
 
-    function showStatus(message) {
+   function showStatus(message) {
         console.log(message);
+        elements.statusMessage.textContent = "";  // Clears the previous message
         elements.statusMessage.textContent = message;
         elements.statusDisplay.style.display = 'block';
+        // Force UI update
+        setTimeout(() => {}, 0);
         hideError();
-        addToStatusLog("ℹ️ " + message);
-    }
+       // addToStatusLog("ℹ️ " + message);
+    } 
 
-    function addToStatusLog(message) {
+   /* function addToStatusLog(message) {
         const logEntry = document.createElement('div');
         logEntry.textContent = message;
         elements.statusLog.appendChild(logEntry);
         elements.statusLog.scrollTop = elements.statusLog.scrollHeight;
-    }
-
+    }*/
+    
     function hideStatus() {
         elements.statusDisplay.style.display = 'none';
     }
 
     function showLoading(message) {
+        elements.loadingText.innerHTML = ""; 
         elements.loadingText.textContent = message;
         elements.loading.style.display = 'flex';
-        addToStatusLog("⏳ " + message);
+        elements.loading.style.visibility = 'visible';
+        // Force UI update
+        setTimeout(() => {}, 0);
+       // addToStatusLog("⏳ " + message);
+       hideError();
     }
 
     function hideLoading() {
@@ -549,56 +565,66 @@
         elements.resultsSection.style.display = 'none';
     }
 
+    function hideProcessButton(){
+        console.log("hideProcessButton");
+        elements.processBtn.disabled = true;
+    }
+
+    function showProcessButton(){
+        console.log("showProcessButton");
+        elements.processBtn.disabled = false;
+    }
+
     function resetUI() {
         hideError();
         hideLoading();
         hideResults();
         hideStatus();
-        elements.processBtn.disabled = true;
+        showProcessButton();
         elements.statusLog.innerHTML = '';
     }
 
     function updateDropzoneForUploadedImage() {
         elements.dropzoneContent.style.display = 'none';
-        elements.uploadedImage.style.display = 'block';
+        elements.uploadedImage.style.display = 'flex';
         elements.dropZone.style.padding = '1rem';
-        elements.dropZone.style.cursor = 'default';
+       /* elements.dropZone.style.cursor = 'default';*/
     }
 
     function resetDropzone() {
         elements.dropzoneContent.style.display = 'flex';
         elements.uploadedImage.style.display = 'none';
         elements.dropZone.style.padding = '3rem 2rem';
-        elements.dropZone.style.cursor = 'pointer';
+       /* elements.dropZone.style.cursor = 'pointer';*/
     }
 
     // Initialize
     async function init() {
         try {
-            showStatus("Initializing application...");
+            showLoading("Initializing application...");
             
             // Try WebGL first, fallback to CPU
             try {
-                showStatus("Checking for WebGL acceleration...");
+                showLoading("Checking for WebGL acceleration...");
                 await tf.setBackend('webgl');
-                showStatus("Using WebGL backend for faster processing");
+                showLoading("Using WebGL backend for faster processing");
                 console.log('Using WebGL backend');
             } catch (e) {
-                showStatus("WebGL not available, falling back to CPU (processing may be slower)");
+                showLoading("WebGL not available, falling back to CPU (processing may be slower)");
                 await tf.setBackend('cpu');
                 console.log('Using CPU backend');
             }
             
             // Load model
-            showStatus("Loading AI model... (This may take a moment)");
-            showLoading("Loading AI model...");
-            
+            showLoading("Loading AI model... (This may take a moment)");
+
             try {
                 model = await tf.loadGraphModel('models/model.json');
                 isModelLoaded = true;
                 showStatus("AI model loaded successfully!");
                 console.log('Model loaded successfully');
             } catch (error) {
+                showProcessButton();
                 showError("Failed to load AI model: " + error.message);
                 throw error;
             } finally {
@@ -609,6 +635,7 @@
             setupEventListeners();
             
         } catch (error) {
+            showProcessButton();
             console.error('Initialization failed:', error);
             showError('Failed to initialize: ' + error.message);
             hideLoading();  
@@ -668,7 +695,7 @@
         
         hideError();
         hideResults();
-        showStatus("Reading uploaded image...");
+        showLoading("Reading uploaded image...");
         
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -676,31 +703,42 @@
             currentImage.src = e.target.result;
             currentImage.onload = () => {
                 showStatus("Image uploaded successfully!");
-                elements.originalImage.src = currentImage.src;
+                hideLoading();
+
+
+                elements.originalImage.src = currentImage.src
                 elements.uploadedImage.src = currentImage.src;
                 updateDropzoneForUploadedImage();
-                elements.processBtn.disabled = false; // Enable the button after image is loaded
-            };
+                };
         };
         reader.onerror = () => {
+            showProcessButton();
             showError('Error reading file. Please try another image.');
-            elements.processBtn.disabled = true;
         };
         reader.readAsDataURL(file);
     }
 
     // Image Processing
     async function processImage() {
+
+        document.body.style.overflow = "auto";
+
         if (!currentImage || !isModelLoaded) return;
         
         try {
             // Disable button when processing starts
-            elements.processBtn.disabled = true;
-            showStatus("Starting background removal process...");
-            showLoading("Preparing image...");
+            console.log("Button state before:", elements.processBtn.disabled);
+            hideProcessButton();
+            console.log("Button state after:", elements.processBtn.disabled);
+        
+        await new Promise(resolve => {
+            showLoading("Image processing has started...");
+            showStatus("AI doing it's magic, hold tight!");
+            setTimeout(resolve, 50); // Small delay to allow UI to update
+        });
             
             // Preprocess
-            showStatus("Resizing image for processing...");
+            showLoading("Resizing image for processing...");
             const inputTensor = tf.tidy(() => {
                 return tf.browser.fromPixels(currentImage)
                     .resizeBilinear([320, 320])
@@ -714,41 +752,53 @@
             console.log("Image preprocessed");
             
             // Predict
-            showStatus("Removing background with AI... (This may take a few moments)");
-            showLoading("AI is removing the background...");
+            showLoading("Removing background with AI... (This may take a few moments)");
             
             if (!model) {
+                showProcessButton();
                 throw new Error('Model not loaded. Please try again.');
             }
             
-            showStatus("Running AI model on image...");
+            await new Promise(resolve => {
+            showLoading("Running AI model on image...");
+            setTimeout(resolve, 50); // Small delay to allow UI to update
+        });
             console.time("Prediction Time");
             let outputTensor = await model.predict(inputTensor);
             const predictionTime = performance.now() - console.timeLog("Prediction Time");
             showStatus(`AI processing completed in ${Math.round(predictionTime)}ms`);
             
             if (Array.isArray(outputTensor)) {
-                showStatus("Processing AI output...");
+                showLoading("Processing AI output...");
                 outputTensor = outputTensor[0];
             }
 
             if (!(outputTensor instanceof tf.Tensor)) {
+                showProcessButton();
                 throw new Error("AI processing did not return valid results.");
             }
 
             // Post-process
-            showStatus("Processing results...");
+            await new Promise(resolve => {
             showLoading("Creating final image...");
+            setTimeout(resolve, 50); // Small delay to allow UI to update
+        });
             const mask = outputTensor.squeeze();
             const threshold = 0.5;
             const binaryMask = mask.greater(tf.scalar(threshold)).toFloat();
             
             // Apply mask
-            showStatus("Applying transparency to background...");
+            await new Promise(resolve => {
+            showLoading("Applying transparency to background...");
+            setTimeout(resolve, 50); // Small delay to allow UI to update
+        });
             const result = await applyMask(currentImage, binaryMask);
             
             // Show result
+            await new Promise(resolve => {
             showStatus("Background removal complete!");
+            setTimeout(resolve, 50); // Small delay to allow UI to update
+        });
             elements.resultImage.src = result;
             elements.downloadBtn.href = result;
             showResults();
@@ -758,6 +808,7 @@
             showError('Processing failed: ' + error.message);
         } finally {
             hideLoading();
+            showProcessButton();
             // Button remains disabled until user uploads a new image
             tf.disposeVariables();
         }
