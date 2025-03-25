@@ -106,8 +106,10 @@
         }
 
         #dropZone {
-            width: 100%;
-            max-width: 400px;
+            width: auto;
+            min-width: 400px;
+            min-height: 250px;
+            height: auto;
             border: 2px dashed var(--gray-300);
             border-radius: 8px;
             padding: 3rem 2rem;
@@ -351,7 +353,6 @@
         .uploaded-image {
             align-items: center;
             text-align: center;
-            transform: translateX(50%);
             max-width: 100%;
             max-height: 300px;
             border-radius: 8px;
