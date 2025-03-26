@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social</title>
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-VS2WHLJQNE');
+    </script>
+    <script type="module" src="/js/onload.js" defer></script>
+    <script type="module" src="/js/navbar.js" defer></script>
+    <script type="module" src="/js/sidebar.js" defer></script>
+    <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
+    <style>
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --red: #ff0000;
+            --grey: #2a2a2a;
+            --light-grey: #e0e0e0;
+            --dark-grey: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            min-height: 100vh;
+        }
+
+        .nav-menu a {
+            text-transform: uppercase;
+        }
+        header {
+            padding-top: 3rem;
+            padding-bottom: 1.5rem;
+            text-align: center;
+            background-color: var(--grey);
+            border-bottom: 1px solid var(--red);
+        }
+
+        h1 {
+            top:2rem;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            opacity: 0.8;
+            font-weight: 300;
+            font-size: 0.9rem;
+            color: var(--light-grey);
+        }
+
+        .socials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .social-card {
+            background: var(--dark-grey);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(255, 0, 0, 0.15);
+            border-color: rgba(255, 0, 0, 0.2);
+        }
+
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        .embed-container.instagram-reel {
+            padding-bottom: 177.78%;
+            /* 9:16 aspect ratio (16/9 = 1.7778) */
+            background: transparent;
+        }
+
+        .embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .card-footer {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .platform {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .platform-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .platform-name {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .like-btn {
+            background: none;
+            border: none;
+            color: var(--light-grey);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 0.8rem;
+            border-radius: 50px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .like-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .like-btn.liked {
+            color: var(--red);
+        }
+
+        .like-btn.liked:hover {
+            background: rgba(255, 0, 0, 0.05);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            flex-wrap: wrap;
+            background: var(--grey);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .filter-btn {
+            background: var(--dark-grey);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .filter-btn.active {
+            background: var(--red);
+            border-color: var(--red);
+            color: var(--white);
+        }
+
+        .like-count {
+            font-weight: 600;
+        }
+
+        .footer {
+            width: 100vw;
+            text-transform: uppercase;
+            margin-top: 1vh;
+            height: 5vh;
+            font-weight: 400;
+            font-size: 0.7rem;
+            text-align: center;
+            color: var(--gray-500);
+
+        }
+
+
+        .social-handle {
+	position: fixed;
+	/* Fix it to the screen */
+	bottom: 20px;
+	/* Distance from the bottom of the page */
+	right: 20px;
+	/* Distance from the right of the page */
+	display: block;
+	/* Hide initially */
+	justify-content: space-around;
+	align-items: center;
+	gap: 4px;
+	z-index: 10;
+	/* Ensure it's on top of other content */
+}
+
+.social-handle a {
+	display: inline-block;
+}
+
+.social-handle i {
+	font-size: 15px;
+	color: #333;
+	/* Default color for icons */
+	border: 0.5px solid #000;
+	border-radius: 50%;
+	padding: 4px;
+	transition: all 0.3s ease;
+}
+
+.social-handle i:hover {
+	color: #ff2759;
+	/* Hover color */
+	border-color: #ff2759;
+	/* Hover border color */
+	transform: scale(1.4);
+	/* Increase the size by 20% */
+	z-index: 20;
+	/* Ensure the hovered icon is on top */
+}
+
+
+
+        /* Specific color for each icon */
+        .fa-facebook {
+            color: #3b5998 !important;
+            /* Facebook blue */
+        }
+
+        .fa-twitter {
+            color: #1da1f2 !important;
+            /* Twitter blue */
+        }
+
+        .fa-instagram {
+            color: #e4405f !important;
+            /* Instagram pinkish red */
+        }
+
+        .fa-youtube {
+            color: #ff0000 !important;
+            /* YouTube red */
+        }
+
+        .fa-linkedin {
+            color: #0077b5 !important;
+            /* LinkedIn blue */
+        }
+
+        @media (max-width: 768px) {
+            .socials-container {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            header {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
+    <button class="menu-btn">☰</button>
+    <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
+    <header>
+        <h1>In a Galaxy Not So Far Away</h1>
+        <p class="subtitle">Explore my latest content across platforms</p>
+    </header>
+
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All Content</button>
+        <button class="filter-btn" data-filter="youtube">YouTube</button>
+        <button class="filter-btn" data-filter="instagram">Instagram</button>
+    </div>
+
+    <div class="socials-container">
+        <!-- YouTube Example -->
+        <div class="social-card" data-platform="youtube">
+            <div class="embed-container">
+                <iframe src="https://www.youtube.com/embed/VokJD4Kksw4" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--red)">
+                        <path
+                            d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                    </svg>
+                    <span class="platform-name">Kawasaki Ninja 300 Highway Ride</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="social-card" data-platform="youtube">
+            <div class="embed-container">
+                <iframe src="https://www.youtube.com/embed/a4KfWkIUcVM?si=xu6jv29w7tIY0dry" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--red)">
+                        <path
+                            d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                    </svg>
+                    <span class="platform-name">Riding the Great Himalayas</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="social-card" data-platform="youtube">
+            <div class="embed-container">
+                <iframe src="https://www.youtube.com/embed/NAYy3QHW9_4?si=sU4yDV9Wpn4ZBNLU" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--red)">
+                        <path
+                            d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                    </svg>
+                    <span class="platform-name">Exploring Chandigarh The City Beautiful in India | Street Riding</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+         <!-- Instagram Reel Example -->
+         <div class="social-card" data-platform="instagram">
+            <div class="embed-container instagram-reel">
+                <iframe src="https://www.instagram.com/p/CvMAMqCI-iS/embed" frameborder="0" scrolling="no"
+                    allowtransparency="true"></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--white)">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                    <span class="platform-name">Instagram</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+         <!-- Instagram Reel Example -->
+         <div class="social-card" data-platform="instagram">
+            <div class="embed-container instagram-reel">
+                <iframe src="https://www.instagram.com/p/C_p6r1Po3KS/embed" frameborder="0" scrolling="no"
+                    allowtransparency="true"></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--white)">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                    <span class="platform-name">Instagram</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="social-card" data-platform="instagram">
+            <div class="embed-container instagram-reel">
+                <iframe src="https://www.instagram.com/p/DCbFKC5Mo10/embed" frameborder="0" scrolling="no"
+                    allowtransparency="true"></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--white)">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                    <span class="platform-name">Instagram</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="social-card" data-platform="youtube">
+            <div class="embed-container">
+                <iframe src="https://www.youtube.com/embed/TM9cvfOfMW4?si=gDIAMXWPeNKdjfIj" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--red)">
+                        <path
+                            d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                    </svg>
+                    <span class="platform-name">It's 3am, come ride with me...</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="social-card" data-platform="youtube">
+            <div class="embed-container">
+                <iframe src="https://www.youtube.com/embed/MvRK9_UkL3U?si=Bg-bHrokHh1MVgop" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--red)">
+                        <path
+                            d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                    </svg>
+                    <span class="platform-name">Kawasaki Ninja Night Ride Pure Sound (No Music) ft. Chandigarh</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="social-card" data-platform="youtube">
+            <div class="embed-container">
+                <iframe src="https://www.youtube.com/embed/cv4__6gBDEk?si=hmzcl9WtOXp4TDhI" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--red)">
+                        <path
+                            d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                    </svg>
+                    <span class="platform-name">Exploring India 🇮🇳 ft. Punjab | Group Ride</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="social-card" data-platform="instagram">
+            <div class="embed-container instagram-reel">
+                <iframe src="https://www.instagram.com/p/DBYXyfTob9e/embed" frameborder="0" scrolling="no"
+                    allowtransparency="true"></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--white)">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                    <span class="platform-name">Instagram</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="social-card" data-platform="instagram">
+            <div class="embed-container instagram-reel">
+                <iframe src="https://www.instagram.com/p/C5h7LpHSsYN/embed" frameborder="0" scrolling="no"
+                    allowtransparency="true"></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--white)">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                    <span class="platform-name">Instagram</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="social-card" data-platform="instagram">
+            <div class="embed-container instagram-reel">
+                <iframe src="https://www.instagram.com/p/C5Ktu98ocfq/embed" frameborder="0" scrolling="no"
+                    allowtransparency="true"></iframe>
+            </div>
+            <div class="card-footer">
+                <div class="platform">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="var(--white)">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                    <span class="platform-name">Instagram</span>
+                </div>
+                <button class="like-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <span class="like-count">0</span>
+                </button>
+            </div>
+        </div>
+        <!-- Add more social cards as needed -->
+
+        <div class="social-handle">
+            <a href="https://www.instagram.com/swiftwindwalker" target="_blank">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com/motoravzzy" target="_blank">
+                <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/motoravzzy" target="_blank">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/ravzzy" target="_blank">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+        <div class="footer"> &copy;2025 ravzzy</div>
+
+    </div>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const socialCards = document.querySelectorAll('.social-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filter = button.dataset.filter;
+
+                // Filter cards
+                socialCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.platform === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Like functionality
+        const likeButtons = document.querySelectorAll('.like-btn');
+
+        likeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const likeCount = button.querySelector('.like-count');
+                const isLiked = button.classList.contains('liked');
+
+                if (isLiked) {
+                    button.classList.remove('liked');
+                    likeCount.textContent = parseInt(likeCount.textContent) - 1;
+                } else {
+                    button.classList.add('liked');
+                    likeCount.textContent = parseInt(likeCount.textContent) + 1;
+                }
+            });
+        });
+
+        // Resize Instagram embeds to maintain aspect ratio
+        window.addEventListener('load', () => {
+            const instagramEmbeds = document.querySelectorAll('iframe[src*="instagram.com"]');
+
+            instagramEmbeds.forEach(embed => {
+                embed.onload = () => {
+                    embed.style.height = embed.contentWindow.document.body.scrollHeight + 'px';
+                };
+            });
+        });
+    </script>
+</body>
+
+</html>
