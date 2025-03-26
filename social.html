@@ -11,8 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -211,15 +211,18 @@
         }
 
         .footer {
-            width: 100vw;
-            text-transform: uppercase;
-            margin-top: 1vh;
-            height: 5vh;
-            font-weight: 400;
+            position: fixed;
             font-size: 0.7rem;
+            text-transform: uppercase;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
+            width: 100%;
+            /* Optional, for visibility */
             color: var(--gray-500);
-
+            /* Optional, for text color */
+            padding: 10px 0;
         }
 
 
@@ -294,6 +297,11 @@
 
         @media (max-width: 768px) {
 
+            body,
+            html {
+                overflow-x: hidden !important;
+            }
+
             header h1 {
                 font-size: 1.5rem;
             }
@@ -325,6 +333,7 @@
             header {
                 padding: 2rem 1.5rem;
             }
+
 
         }
     </style>
