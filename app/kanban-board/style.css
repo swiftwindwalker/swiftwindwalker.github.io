@@ -1,0 +1,419 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+    --to-do: #ffcb00;
+    --doing: #00c875;
+    --done: #a25ddc;
+    --on-hold: #ff5c8d;
+    --header-bg: #2a2e43;
+    --card-bg: #ffffff;
+    --text-dark: #323338;
+    --text-light: #ffffff;
+    --border-radius: 8px;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f6f7fb;
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.app-header {
+    width: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #f6f7fb;
+    /*background-color: var(--header-bg);*/
+    color: var(--text-dark);
+    box-shadow: var(--shadow);
+    z-index: 10;
+}
+
+.main-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.nav-menu a {
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+    /* Higher than navbar/sidebar */
+
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: rgba(116, 110, 110, 0.2);
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--text-dark);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+    background-color: rgba(116, 110, 110, 0.4);
+}
+
+.drag-container {
+    position: relative;
+    top: 12vh;
+    padding: 20px;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.drag-list {
+    display: flex;
+    gap: 20px;
+    padding: 10px 0;
+    min-height: calc(100vh - 100px);
+}
+
+.drag-column {
+    flex: 1;
+    min-width: 280px;
+    background-color: #f0f2f5;
+    border-radius: var(--border-radius);
+    padding: 15px;
+    box-shadow: var(--shadow);
+}
+
+.drag-column .header {
+    padding: 10px 15px;
+    margin: -15px -15px 15px -15px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    color: var(--text-light);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.header h1 {
+    color: var(--text-dark);
+}
+
+.to-do-column .header {
+    background-color: var(--to-do);
+}
+
+.doing-column .header {
+    background-color: var(--doing);
+}
+
+.done-column .header {
+    background-color: var(--done);
+}
+
+.on-hold-column .header {
+    background-color: var(--on-hold);
+}
+
+.custom-scroll-todo,
+.custom-scroll-doing,
+.custom-scroll-done,
+.custom-scroll {
+    overflow-y: auto;
+    max-height: calc(100vh - 220px);
+    padding-right: 5px;
+}
+
+/* Custom scrollbars */
+.custom-scroll-todo::-webkit-scrollbar-thumb {
+    background-color: var(--to-do);
+}
+
+.custom-scroll-doing::-webkit-scrollbar-thumb {
+    background-color: var(--doing);
+}
+
+.custom-scroll-done::-webkit-scrollbar-thumb {
+    background-color: var(--done);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--on-hold);
+}
+
+.custom-scroll-todo::-webkit-scrollbar,
+.custom-scroll-doing::-webkit-scrollbar,
+.custom-scroll-done::-webkit-scrollbar,
+.custom-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scroll-todo::-webkit-scrollbar-track,
+.custom-scroll-doing::-webkit-scrollbar-track,
+.custom-scroll-done::-webkit-scrollbar-track,
+.custom-scroll::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.drag-item-list {
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.drag-item {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 12px 15px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.drag-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.drag-item:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+}
+
+.add-btn-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    background-color: transparent;
+    border: none;
+    border-radius: var(--border-radius);
+    color: #666;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.solid {
+    display: none;
+    background-color: #e9e9e9;
+    color: var(--text-dark);
+}
+
+.add-container {
+    display: none;
+    margin-top: 10px;
+}
+
+.add-item {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    resize: none;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.add-item:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.over {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: var(--border-radius);
+}
+
+/* Column colors for drag over state */
+.to-do-column.over {
+    background-color: rgba(255, 203, 0, 0.1);
+}
+
+.doing-column.over {
+    background-color: rgba(0, 200, 117, 0.1);
+}
+
+.done-column.over {
+    background-color: rgba(162, 93, 220, 0.1);
+}
+
+.on-hold-column.over {
+    background-color: rgba(255, 92, 141, 0.1);
+}
+
+
+.social-handle {
+    position: fixed;
+    /* Fix it to the screen */
+    bottom: 20px;
+    /* Distance from the bottom of the page */
+    right: 20px;
+    /* Distance from the right of the page */
+    display: block;
+    /* Hide initially */
+    justify-content: space-around;
+    align-items: center;
+    gap: 4px;
+    z-index: 10;
+    /* Ensure it's on top of other content */
+}
+
+.social-handle a {
+    display: inline-block;
+}
+
+.social-handle i {
+    font-size: 15px;
+    color: #333;
+    /* Default color for icons */
+    border: 0.5px solid #000;
+    border-radius: 50%;
+    padding: 4px;
+    transition: all 0.3s ease;
+}
+
+.social-handle i:hover {
+    color: #ff2759;
+    /* Hover color */
+    border-color: #ff2759;
+    /* Hover border color */
+    transform: scale(1.4);
+    /* Increase the size by 20% */
+    z-index: 20;
+    /* Ensure the hovered icon is on top */
+}
+
+
+/* Specific color for each icon */
+.fa-facebook {
+    color: #3b5998 !important;
+    /* Facebook blue */
+}
+
+.fa-twitter {
+    color: #1da1f2 !important;
+    /* Twitter blue */
+}
+
+.fa-instagram {
+    color: #e4405f !important;
+    /* Instagram pinkish red */
+}
+
+.fa-youtube {
+    color: #ff0000 !important;
+    /* YouTube red */
+}
+
+.fa-linkedin {
+    color: #0077b5 !important;
+    /* LinkedIn blue */
+}
+
+/* Donate Me Section */
+.donate-me {
+    padding-top: 5vh;
+    width: 80%;
+    text-align: center;
+    padding-bottom: 2vh;
+    margin: 0 auto;
+    /* Centers it horizontally */
+
+}
+
+.donate-me h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.donate-me p {
+    font-size: 0.8rem;
+    text-transform: none;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.donate-me img {
+    width: 100px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.donate-me img:hover {
+    transform: scale(1.1);
+}
+
+.footer {
+    text-transform: uppercase;
+    margin-top: 5vh;
+    height: 7vh;
+    font-weight: 400;
+    font-size: 0.7rem;
+    text-align: center;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .drag-list {
+        flex-wrap: wrap;
+    }
+
+    .drag-column {
+        min-width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .drag-column {
+        min-width: 100%;
+    }
+
+    .app-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .action-btn {
+        flex: 1;
+        justify-content: center;
+    }
+}

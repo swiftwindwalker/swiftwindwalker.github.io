@@ -142,11 +142,11 @@
             font-size: 0.7rem;
             text-align: center;
         }
+
         .nav-menu a {
             text-transform: uppercase;
-            font-size:0.7rem;
+            font-size: 0.7rem;
         }
-
 
         .social-handle {
             position: fixed;
@@ -216,7 +216,7 @@
             /* LinkedIn blue */
         }
 
-        
+
 
         @media (max-width: 900px) {
             .projects-grid.two-tiles {
@@ -258,7 +258,7 @@
             <!-- Project Tile 1 -->
             <a href="/app/speedtest/home.html" class="project-tile">
                 <div class="project-icon">
-                    <span>🔧</span>
+                    <img src="/imgs/speed-test-icon.webp" alt="Speed Test Icon" width="50">
                 </div>
                 <div class="project-content">
                     <h3 class="project-title">Anonymous Browser-Based Speed Test (No Ads)</h3>
@@ -271,12 +271,25 @@
             <!-- Project Tile 2 -->
             <a href="/app/remove-background/home.html" class="project-tile">
                 <div class="project-icon">
-                    <span>📊</span>
+                    <img src="/imgs/ghost-cut-ai.webp" alt="Ghostcut AI Icon" width="50">
                 </div>
                 <div class="project-content">
                     <h3 class="project-title">GhostCut AI</h3>
                     <p class="project-description">A fast, AI-powered tool that removes backgrounds from images
                         instantly—no downloads, accounts, or watermarks. Just upload, edit, and download in seconds.</p>
+                </div>
+            </a>
+
+            <a href="/app/kanban-board/home.html" class="project-tile">
+                <div class="project-icon">
+                    <img src="/imgs/kanban-board-icon.webp" alt="Kanban Board Icon" width="50">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Kanban Board</h3>
+                    <p class="project-description">An HTML-based Kanban board is a simple, interactive task management
+                        tool that helps users organize and track their tasks visually. It consists of columns
+                        representing different stages of work (e.g., To Do, In Progress, Done) and draggable task cards
+                        that move between these columns.</p>
                 </div>
             </a>
 
@@ -312,9 +325,9 @@
     </script>
     <script>
         window.onbeforeunload = function () {
-          window.scrollTo(0, 0);
+            window.scrollTo(0, 0);
         };
-      </script>
+    </script>
 </body>
 
 </html>
