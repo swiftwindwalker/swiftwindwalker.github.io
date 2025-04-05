@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-VS2WHLJQNE');
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="module" src="/js/onload.js" defer></script>
+    <script type="module" src="/js/navbar.js" defer></script>
+    <script type="module" src="/js/sidebar.js" defer></script>
+    <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
+    <title>Blogs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1,
+        .headline {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .line-clamp-4 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .footer {
+            text-transform: uppercase;
+            margin-top: 5vh;
+            height: 5vh;
+            font-weight: 400;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+
+        .nav-menu a {
+            text-transform: uppercase;
+            font-size: 0.7rem;
+        }
+
+        .social-handle {
+            position: fixed;
+            /* Fix it to the screen */
+            bottom: 20px;
+            /* Distance from the bottom of the page */
+            right: 20px;
+            /* Distance from the right of the page */
+            display: block;
+            /* Hide initially */
+            justify-content: space-around;
+            align-items: center;
+            gap: 4px;
+            z-index: 10;
+            /* Ensure it's on top of other content */
+        }
+
+        .social-handle a {
+            display: inline-block;
+        }
+
+        .social-handle i {
+            font-size: 15px;
+            color: #333;
+            /* Default color for icons */
+            border: 0.5px solid #000;
+            border-radius: 50%;
+            padding: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .social-handle i:hover {
+            color: #ff2759;
+            /* Hover color */
+            border-color: #ff2759;
+            /* Hover border color */
+            transform: scale(1.4);
+            /* Increase the size by 20% */
+            z-index: 20;
+            /* Ensure the hovered icon is on top */
+        }
+
+
+        /* Specific color for each icon */
+        .fa-facebook {
+            color: #3b5998 !important;
+            /* Facebook blue */
+        }
+
+        .fa-twitter {
+            color: #1da1f2 !important;
+            /* Twitter blue */
+        }
+
+        .fa-instagram {
+            color: #e4405f !important;
+            /* Instagram pinkish red */
+        }
+
+        .fa-youtube {
+            color: #ff0000 !important;
+            /* YouTube red */
+        }
+
+        .fa-linkedin {
+            color: #0077b5 !important;
+            /* LinkedIn blue */
+        }
+
+    </style>
+</head>
+
+<body class="bg-white text-black">
+    <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
+    <button class="menu-btn">☰</button>
+    <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
+    
+    <!-- Header -->
+    <header class="text-center py-10 border-b border-gray-200 px-4">
+        <h1 class="text-4xl sm:text-5xl font-semibold headline tracking-widest">Echoes of the Force</h1>
+        <p class="uppercase text-sm mt-2 tracking-wider text-gray-500">In every story, the Force flows. Through words,
+            we find balance</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        <div id="articles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            <!-- Articles will be injected here -->
+        </div>
+    </main>
+    <div class="social-handle">
+        <a href="https://www.instagram.com/swiftwindwalker" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/motoravzzy" target="_blank">
+            <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/motoravzzy" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/ravzzy" target="_blank">
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+    </div>
+    <div class="footer"> &copy;2025 ravzzy</div>
+
+    <!-- JS -->
+    <script>
+        async function loadMediumArticles() {
+            const rssUrl = 'https://medium.com/feed/@ravzzy';
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+            const container = document.getElementById('articles');
+
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+
+                if (data.items && data.items.length > 0) {
+                    data.items.forEach(item => {
+                        // Extract first image from content
+                        const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
+                        const imageUrl = imgMatch ? imgMatch[1] : 'https://via.placeholder.com/600x400?text=No+Image';
+
+                        const article = document.createElement('div');
+                        article.className = `fade-in border-b lg:border-0`;
+
+                        article.innerHTML = `
+              <a href="${item.link}" target="_blank" class="block group overflow-hidden rounded-lg">
+                <div class="overflow-hidden rounded-md aspect-video mb-4">
+                  <img src="${imageUrl}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 rounded-md" />
+                </div>
+                <h2 class="headline text-xl sm:text-2xl leading-snug group-hover:underline transition duration-300">${item.title}</h2>
+                <p class="text-xs uppercase text-gray-400 mt-1">${new Date(item.pubDate).toLocaleDateString()}</p>
+                <p class="text-base text-gray-700 mt-4 line-clamp-4">${item.description.replace(/<[^>]+>/g, '').slice(0, 200)}...</p>
+              </a>
+            `;
+
+                        container.appendChild(article);
+                    });
+                } else {
+                    container.innerHTML = '<p>No articles found.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading articles:', error);
+                container.innerHTML = '<p class="text-red-500">Failed to load articles.</p>';
+            }
+        }
+
+        loadMediumArticles();
+    </script>
+    <script>
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        };
+    </script>
+</body>
+
+</html>
