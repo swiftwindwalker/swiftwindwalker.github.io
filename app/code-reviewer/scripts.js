@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <pre>special_tokens_map.json</pre>
             <pre>vocab.json</pre>
             <pre>merges.txt</pre>
-            <li>Download and update the server.py file to load the Phi-2 model using the correct local model path where you kept the above files.</li>
+            <li>Download and update the <a href="https://github.com/ravzzy/ai-code-reviewer/blob/main/server.py" target="_blank">server.py</a> file to load the Phi-2 model using the correct local model path where you kept the above files.</li>
           <li>Run the server (either of the below commands):
               <pre>uvicorn server:app --host 0.0.0.0 --port 8000</pre>
               <pre>python3.10 -m uvicorn server:app --host 0.0.0.0 --port 8000</pre>
