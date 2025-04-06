@@ -84,13 +84,9 @@ curl -X POST http://localhost:8000/test \
 if it's working, you should get a response
 {"message":"CORS test successful"}% 
 
+The logs are now available
+tail -f code_analysis.log
 
-check progress (Polling)
-curl http://localhost:8000/progress
 
-Health check
-curl http://localhost:8000/health
-
-WebSocket Test (using wscat):
-# Install wscat if needed: npm install -g wscat
-wscat -c ws://localhost:8000/ws/progress
+Check GPU Status:
+curl http://localhost:8000/gpu-info | jq
