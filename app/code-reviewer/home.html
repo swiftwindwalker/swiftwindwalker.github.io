@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Code Reviewer (Local GPT-2)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    #appContent {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    textarea, select, input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    #annotatedCode {
+      background-color: #fdfdfd;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    ul#lintResults {
+      padding-left: 20px;
+    }
+
+    ul#lintResults li {
+      background: #ecf0f1;
+      margin-bottom: 6px;
+      padding: 6px 10px;
+      border-radius: 5px;
+    }
+
+    #loadingOverlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .disabled-ui {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+      textarea, select, button {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.16.2/dist/ort.min.js"></script>
+</head>
+<body>
+  <div id="loadingOverlay">
+    <div class="spinner"></div>
+    <h2 id="loadingStatus">Upload GPT-2 ONNX Model</h2>
+    <progress id="loadingProgress" value="0" max="100" style="width: 300px;"></progress><br>
+    <input type="file" id="modelUpload" accept=".onnx" />
+  </div>
+
+  <div id="appContent" class="disabled-ui">
+    <h1>🧠 AI Code Reviewer</h1>
+
+    <textarea id="codeInput" placeholder="Paste your code here..." rows="10" disabled></textarea>
+
+    <input type="file" id="fileInput" accept=".js,.py,.java,.c,.cpp,.sql" disabled>
+
+    <select id="languageSelect" disabled>
+      <option value="javascript">JavaScript</option>
+      <option value="python">Python</option>
+      <option value="java">Java</option>
+      <option value="c">C</option>
+      <option value="cpp">C++</option>
+      <option value="sql">SQL</option>
+    </select>
+
+    <button id="analyzeBtn" disabled>Analyze Code</button>
+
+    <h3>📌 Inline Suggestions:</h3>
+    <div id="annotatedCode">Waiting for analysis...</div>
+
+    <h3>🛠️ Code Issues:</h3>
+    <ul id="lintResults"></ul>
+  </div>
+
+  <script>
+      
+
+    //const MAX_LENGTH = 150;
+      const MAX_LENGTH = 30;
+      const TEMPERATURE = 0.6;
+      const TOP_K = 30;
+    const NUM_LAYERS = 12;
+    const MAX_INPUT_TOKENS = 1024;
+
+    let session = null;
+    let tokenizer = null;
+
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loadingStatus = document.getElementById('loadingStatus');
+    const loadingProgress = document.getElementById('loadingProgress');
+    const modelUpload = document.getElementById('modelUpload');
+    const appContent = document.getElementById('appContent');
+    const codeInput = document.getElementById('codeInput');
+    const fileInput = document.getElementById('fileInput');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const annotatedCode = document.getElementById('annotatedCode');
+    const lintResults = document.getElementById('lintResults');
+    const languageSelect = document.getElementById('languageSelect');
+
+    modelUpload.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+        
+        console.log("Model file selected:", file.name);
+
+      try {
+        loadingStatus.textContent = "Loading ONNX Model...";
+        loadingProgress.value = 10;
+
+        const arrayBuffer = await file.arrayBuffer();
+        console.log("Model arrayBuffer loaded, initializing session...");
+        session = await ort.InferenceSession.create(arrayBuffer, {
+          executionProviders: ['wasm'],
+          graphOptimizationLevel: 'all'
+        });
+        console.log("ONNX model session loaded.");
+		console.log(session.inputNames); // After session is loaded
+
+        loadingProgress.value = 70;
+        loadingStatus.textContent = "Initializing tokenizer...";
+
+        tokenizer = {
+  encode: (text) => {
+    console.time("Tokenization");
+    const tokenCache = {};
+    const allTokens = [];
+    const chunkSize = 5000;
+
+    for (let i = 0; i < text.length; i += chunkSize) {
+      const chunk = text.substring(i, i + chunkSize);
+
+      // 🚀 Simplified fast tokenizer
+      const tokens = chunk.split(" "); // split on space only for speed
+      const tokenIds = tokens.map(t => {
+        if (tokenCache[t]) return tokenCache[t];
+
+        let hash = 0;
+        for (let i = 0; i < t.length; i++) {
+          hash = (hash << 5) - hash + t.charCodeAt(i);
+          hash |= 0; // force 32-bit
+        }
+
+        const id = Math.abs(hash) % 50000;
+        tokenCache[t] = id;
+        return id;
+      });
+
+      allTokens.push(...tokenIds);
+    }
+
+    const truncatedTokens = allTokens.slice(0, MAX_INPUT_TOKENS);
+    console.log("Token count:", truncatedTokens.length);
+    console.timeEnd("Tokenization");
+
+    return {
+      input_ids: truncatedTokens
+    };
+  },
+
+  decode: (ids) => ids.map(id => String.fromCharCode(id % 65536)).join('')
+};
+
+        console.log("Tokenizer initialized.");
+        loadingStatus.textContent = "Model ready!";
+        loadingProgress.value = 100;
+
+        setTimeout(() => {
+          loadingOverlay.style.display = 'none';
+          enableUI();
+        }, 1000);
+
+      } catch (err) {
+        console.error("Model load error:", err);
+        loadingStatus.textContent = "Failed to load ONNX model.";
+        loadingOverlay.style.backgroundColor = "#a00";
+      }
+    });
+
+    function enableUI() {
+        
+      console.log("Enabling UI...");
+      appContent.classList.remove('disabled-ui');
+      codeInput.disabled = false;
+      fileInput.disabled = false;
+      languageSelect.disabled = false;
+      analyzeBtn.disabled = false;
+    }
+
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      console.log("Code file loaded:", file.name);
+      codeInput.value = text;
+    });
+
+    analyzeBtn.addEventListener('click', async () => {
+      const code = codeInput.value.trim();
+      const lang = languageSelect.value;
+      if (!code) return showError("Please paste or upload code first.");
+       console.log("Starting code analysis...");
+      analyzeBtn.disabled = true;
+      analyzeBtn.textContent = "Analyzing...";
+      annotatedCode.textContent = "Analyzing code...";
+      lintResults.innerHTML = "<li>Running static checks...</li>";
+
+      const chunkSize = 5000;
+      let fullOutput = "";
+      for (let i = 0; i < code.length; i += chunkSize) {
+        const chunk = code.substring(i, i + chunkSize);
+        const prompt = `Review the following ${lang} code and suggest specific improvements with brief explanations:\n\n${chunk}\n\nSuggestions:\n`;
+
+        console.log("prompt:" +prompt)
+        const output = await generateText(prompt);
+        console.log("output:" +output)
+
+        fullOutput += output + "\n";
+        loadingStatus.textContent = `Reviewing ${lang} code chunk ${Math.floor(i / chunkSize) + 1}...`;
+
+      }
+
+      showInlineComments(code, fullOutput, lang);
+      runStaticChecks(code, lang);
+      analyzeBtn.disabled = false;
+      analyzeBtn.textContent = "Analyze Code";
+    });
+
+    async function generateText(prompt, maxLength = MAX_LENGTH) {
+     console.log("generateText:"+MAX_LENGTH)
+        
+      let encoding = tokenizer.encode(prompt);
+      console.log("encoding:" +encoding)
+
+      let inputIds = encoding.input_ids;
+              console.log("inputIds:" +inputIds)
+
+      let pastKeyValues = Array(NUM_LAYERS).fill(null).map(() => ({
+        key: new ort.Tensor('float32', new Float32Array(0), [1, 12, 0, 64]),
+        value: new ort.Tensor('float32', new Float32Array(0), [1, 12, 0, 64])
+      }));
+
+      let outputTokens = [];
+      let useCacheBranch = true;
+
+      for (let i = 0; i < maxLength; i++) {
+        let inputId = BigInt(inputIds[0] || 0);
+        const inputs = {
+          input_ids: new ort.Tensor('int64', new BigInt64Array([inputId]), [1, 1]),
+        };
+        
+        console.log ("inputs: "+inputs);
+        const results = await session.run(inputs);
+        console.log("Session results:", results);
+
+        pastKeyValues = Array(NUM_LAYERS).fill(null).map((_, idx) => ({
+          key: results[`present.${idx}.key`],
+          value: results[`present.${idx}.value`]
+        }));
+
+        const logits = results.logits.data;
+        console.log("sampleToken:", logits.length, TEMPERATURE, TOP_K);
+
+        const nextTokenId = sampleToken(logits, TEMPERATURE, TOP_K);
+        if (nextTokenId === 0) break;
+          
+        console.log ("nextTokenId: "+nextTokenId);
+
+        outputTokens.push(nextTokenId);
+        inputIds = [nextTokenId];
+      }
+
+      return tokenizer.decode(outputTokens);
+    }
+
+    function sampleToken(logits, temperature, topK) {
+     const t0 = performance.now();
+
+      console.log ("sampleToken: "+logits.length+", "+temperature+", "+topK);
+
+      const scaledLogits = logits.map(x => x / temperature);
+      const maxLogit = Math.max(...scaledLogits);
+      const exps = scaledLogits.map(x => Math.exp(x - maxLogit));
+      const probs = exps.map(x => x / exps.reduce((a, b) => a + b));
+
+      const topKIndices = probs
+        .map((p, i) => ({ p, i }))
+        .sort((a, b) => b.p - a.p)
+        .slice(0, topK);
+
+      const topProbs = topKIndices.map(x => x.p);
+      const norm = topProbs.reduce((a, b) => a + b, 0);
+      const normalized = topProbs.map(p => p / norm);
+
+      let r = Math.random(), acc = 0;
+      for (let i = 0; i < normalized.length; i++) {
+        acc += normalized[i];
+        if (r <= acc) return topKIndices[i].i;
+      }
+      console.log ("sampleToken return: "+topKIndices[0].i);
+      const t1 = performance.now();
+    console.log(`⏱ Token time: ${(t1 - t0).toFixed(2)} ms`);
+
+      return topKIndices[0].i;
+    }
+
+    function showError(msg) {
+      annotatedCode.textContent = "⚠️ " + msg;
+      lintResults.innerHTML = `<li style="color:red">${msg}</li>`;
+    }
+
+    function getCommentSymbol(lang) {
+      return {
+        python: '#', sql: '--', java: '//', c: '//', cpp: '//'
+      }[lang] || '//';
+    }
+
+    function showInlineComments(code, output, lang) {
+      const symbol = getCommentSymbol(lang);
+      const lines = code.split('\n');
+      const suggestions = output.split('\n').filter(l => l.includes("Suggestion:") || l.includes(symbol)).map(l => l.replace(symbol, '').trim());
+      let annotated = '';
+      lines.forEach((line, i) => {
+        annotated += line + '\n';
+        if (i % 5 === 0 && suggestions.length) {
+          annotated += `${symbol} 💡 ${suggestions.shift()}\n`;
+        }
+      });
+      annotatedCode.innerHTML = `<pre>${annotated}</pre>`;
+    }
+
+    function runStaticChecks(code, lang) {
+        console.log("runStaticChecks: "+code+", "+lang);
+      const issues = [];
+      if (lang === 'javascript') {
+        if (/eval\(/.test(code)) issues.push("⚠️ Avoid using eval() for security reasons.");
+        if (/==/.test(code)) issues.push("⚠️ Use === instead of == for strict comparison.");
+      }
+      const longLines = code.split('\n').filter(l => l.length > 120);
+      if (longLines.length) issues.push(`⚠️ ${longLines.length} lines exceed 120 characters.`);
+      lintResults.innerHTML = issues.length ? issues.map(i => `<li>${i}</li>`).join('') : '<li>✅ No major issues found!</li>';
+    }
+  </script>
+
+</body>
+</html>
