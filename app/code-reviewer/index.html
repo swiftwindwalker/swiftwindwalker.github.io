@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Analyzer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Code Analyzer</h1>
+    <label for="server-url">Local Server URL:</label>
+    <input type="text" id="server-url" placeholder="http://localhost:8000">
+    
+    <label for="language">Select Language:</label>
+    <select id="language">
+      <option value="java">Java</option>
+      <option value="c">C</option>
+      <option value="cpp">C++</option>
+      <option value="sql">SQL</option>
+      <option value="plsql">PLSQL</option>
+      <option value="xquery">XQuery</option>
+      <option value="javascript">JavaScript</option>
+      <option value="html">HTML</option>
+      <option value="css">CSS</option>
+    </select>
+
+    <label for="max-length">Max Length:</label>
+    <select id="max-length">
+      <!-- Options will be populated by JavaScript -->
+    </select>
+
+    <label for="code-input">Paste Your Code Here:</label>
+    <textarea id="code-input" placeholder="Enter your code..."></textarea>
+
+    <button id="analyze-btn">Analyze</button>
+
+    <div id="result-container">
+      <h2>Analysis Result</h2>
+      <pre id="result"></pre>
+      <button id="copy-btn">Copy to Clipboard</button>
+    </div>
+
+    <div class="instructions">
+      <button id="toggle-instructions">+</button>
+      <h2>Setup Instructions</h2>
+      <div id="instructions-content">
+        <!-- Instructions will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+  <script src="scripts.js"></script>
+</body>
+</html>
