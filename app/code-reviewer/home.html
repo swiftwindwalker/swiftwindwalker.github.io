@@ -1,54 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Analyzer</title>
+  <title>CodeMancer</title>
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link href="https://db.onlinewebfonts.com/c/f1133d34c861b65dbfcd58acb2df0b4e?family=Schelter+Grotesk+NF+W01+Rg"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+ <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-VS2WHLJQNE');
+  </script>
+  <script type="module" src="/js/onload.js" defer></script>
+  <script type="module" src="/js/navbar.js" defer></script>
+  <script type="module" src="/js/sidebar.js" defer></script>
+  <link rel="shortcut icon" href="/imgs/code-mancer.jpg" type="image/x-icon" />
 </head>
+
 <body>
-  <div class="container">
-    <h1>Code Analyzer</h1>
-    <label for="server-url">Local Server URL:</label>
-    <input type="text" id="server-url" placeholder="http://localhost:8000">
-    
-    <label for="language">Select Language:</label>
-    <select id="language">
-      <option value="java">Java</option>
-      <option value="c">C</option>
-      <option value="cpp">C++</option>
-      <option value="sql">SQL</option>
-      <option value="plsql">PLSQL</option>
-      <option value="xquery">XQuery</option>
-      <option value="javascript">JavaScript</option>
-      <option value="html">HTML</option>
-      <option value="css">CSS</option>
-    </select>
+  <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
+  <button class="menu-btn">☰</button>
+  <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
+  <header>
+    <div class="container">
+      <h1>CodeMancer - An AI-powered code review assistant</h1>
 
-    <label for="max-length">Max Length:</label>
-    <select id="max-length">
-      <!-- Options will be populated by JavaScript -->
-    </select>
-
-    <label for="code-input">Paste Your Code Here:</label>
-    <textarea id="code-input" placeholder="Enter your code..."></textarea>
-
-    <button id="analyze-btn">Analyze</button>
-
-    <div id="result-container">
-      <h2>Analysis Result</h2>
-      <pre id="result"></pre>
-      <button id="copy-btn">Copy to Clipboard</button>
-    </div>
-
-    <div class="instructions">
-      <button id="toggle-instructions">+</button>
-      <h2>Setup Instructions</h2>
-      <div id="instructions-content">
-        <!-- Instructions will be populated by JavaScript -->
+      <div class="instructions">
+        <div class="instructions-header">
+          <button id="toggle-instructions">+</button>
+          <h2>Pre-requisites</h2>
+        </div>
+        <div id="instructions-content">
+          <!-- Instructions will be populated by JavaScript -->
+        </div>
       </div>
+
+      <label for="server-url">Local Server URL:</label>
+      <input type="text" id="server-url" placeholder="http://localhost:8000">
+
+      <label for="language">Select Language:</label>
+      <select id="language">
+        <option value="java">Java</option>
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+        <option value="sql">SQL</option>
+        <option value="plsql">PLSQL</option>
+        <option value="xquery">XQuery</option>
+        <option value="javascript">JavaScript</option>
+        <option value="html">HTML</option>
+        <option value="css">CSS</option>
+      </select>
+
+      <label for="max-length">Max Tokens:</label>
+      <select id="max-length">
+        <!-- Options will be populated by JavaScript -->
+      </select>
+
+      <label for="code-input">Paste Your Code Here:</label>
+      <textarea id="code-input" placeholder="Enter your code..."></textarea>
+
+      <button id="analyze-btn">Analyze Code</button>
+
+      <div id="result-container">
+        <h2>Analysis Result</h2>
+        <pre id="result"></pre>
+        <div class="copy-btn-container">
+          <button id="copy-btn">Copy to Clipboard</button>
+        </div>
+      </div>
+
+      <div class="social-handle">
+        <a href="https://github.com/ravzzy" target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://www.instagram.com/swiftwindwalker" target="_blank">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/motoravzzy" target="_blank">
+          <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/motoravzzy" target="_blank">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/ravzzy" target="_blank">
+          <i class="fa-brands fa-youtube"></i>
+        </a>
+        <a href="https://medium.com/@ravzzy" target="_blank">
+          <i class="fa-brands fa-medium"></i>
+        </a>
+      </div>
+      <div class="donate-me">
+        <h3>Support My Work</h3>
+        <p>If you find this tool useful, consider donating to support its development and maintenance. Thank you! ❤️</p>
+        <a href="https://www.paypal.me/erravz" target="_blank">
+            <img src="/imgs/paypal_button.png" alt="Donate with PayPal" />
+        </a>
     </div>
-  </div>
-  <script src="scripts.js"></script>
+      <div class="footer"> &copy;2025 ravzzy</div>
+
+    </div>
+    <script src="scripts.js"></script>
+
 </body>
+
 </html>
