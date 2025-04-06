@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
     <script>
@@ -94,32 +94,36 @@
         #mobileControls {
             display: none;
             position: absolute;
-            bottom: 20px;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            justify-content: space-between;
-            padding: 0 20px;
-            box-sizing: border-box;
+            height: 30%;
             z-index: 150;
         }
         
-        .mobileBtn {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            color: white;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
+        #leftControl {
+            position: absolute;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            /* background: rgba(255, 0, 0, 0.1); */ /* For debugging */
+        }
+        
+        #rightControl {
+            position: absolute;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            /* background: rgba(0, 0, 255, 0.1); */ /* For debugging */
+        }
+        
+        #fireControl {
+            display: none; /* Auto-fire now, no need for button */
         }
         
         @media (max-width: 768px) {
             #mobileControls {
-                display: flex;
+                display: block;
             }
             
             h1 {
@@ -127,6 +131,7 @@
             }
             p {
                 text-align: center;
+                padding: 0 20px;
             }
         }
         
@@ -143,6 +148,13 @@
             pointer-events: none;
             z-index: 300;
         }
+        
+        .instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #aaa;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -158,7 +170,7 @@
         <h1>GALAXY CRUSADERS</h1>
         <p>Take command, wield the power of the stars, and become the galaxy's final hope. Defend the cosmos before it's consumed by darkness!</p>
         <button id="startButton">START GAME</button>
-        <p>Use arrow keys or touch controls to move. Space to shoot.</p>
+        <p class="instructions">On mobile: Touch left side to move left, right side to move right. Firing is automatic!</p>
     </div>
     
     <div id="gameOver">
@@ -168,9 +180,9 @@
     </div>
     
     <div id="mobileControls">
-        <div class="mobileBtn" id="leftBtn">←</div>
-        <div class="mobileBtn" id="fireBtn">⚡</div>
-        <div class="mobileBtn" id="rightBtn">→</div>
+        <div id="leftControl"></div>
+        <div id="rightControl"></div>
+        <div id="fireControl"></div>
     </div>
     
     <div id="penaltyMessage"></div>
@@ -187,9 +199,8 @@
         const gameOverScreen = document.getElementById('gameOver');
         const startButton = document.getElementById('startButton');
         const restartButton = document.getElementById('restartButton');
-        const leftBtn = document.getElementById('leftBtn');
-        const rightBtn = document.getElementById('rightBtn');
-        const fireBtn = document.getElementById('fireBtn');
+        const leftControl = document.getElementById('leftControl');
+        const rightControl = document.getElementById('rightControl');
         const penaltyMessage = document.getElementById('penaltyMessage');
         
         // Set canvas size
@@ -206,11 +217,12 @@
         let lastEnemySpawn = 0;
         let lastPowerUpSpawn = 0;
         let powerUpSpawnRate = 500;
+        let lastAutoFire = 0;
+        let autoFireDelay = 500; // Initial auto-fire delay (ms)
         let keys = {};
         let touchControls = {
             left: false,
-            right: false,
-            fire: false
+            right: false
         };
         
         // Ship designs
@@ -308,11 +320,7 @@
                     this.x += this.speed;
                 }
                 
-                // Shooting
-                if ((keys[' '] || touchControls.fire) && Date.now() - this.lastShot > this.shootDelay) {
-                    this.shoot();
-                    this.lastShot = Date.now();
-                }
+                // Auto-firing handled in gameLoop()
                 
                 // Update bullets
                 for (let i = this.bullets.length - 1; i >= 0; i--) {
@@ -326,6 +334,7 @@
                 if (this.isPoweredUp && Date.now() > this.powerUpEnd) {
                     this.isPoweredUp = false;
                     this.shootDelay = 300;
+                    autoFireDelay = 500;
                 }
             },
             
@@ -348,6 +357,7 @@
                 this.y = canvas.height - 100;
                 this.bullets = [];
                 this.isPoweredUp = false;
+                autoFireDelay = 500;
             }
         };
         
@@ -784,6 +794,12 @@
                     lastPowerUpSpawn = timestamp;
                 }
                 
+                // Auto-fire logic
+                if (timestamp - lastAutoFire > autoFireDelay) {
+                    player.shoot();
+                    lastAutoFire = timestamp;
+                }
+                
                 // Update and draw player
                 player.update();
                 player.draw();
@@ -858,6 +874,7 @@
                             player.isPoweredUp = true;
                             player.powerUpEnd = Date.now() + 10000; // 10 seconds
                             player.shootDelay = 150; // Faster shooting
+                            autoFireDelay = 250; // Faster auto-fire when powered up
                         }
                         
                         playSound('powerup');
@@ -902,32 +919,58 @@
         startButton.addEventListener('click', startGame);
         restartButton.addEventListener('click', startGame);
         
-        // Mobile controls
-        leftBtn.addEventListener('touchstart', (e) => {
+        // Mobile controls - touch areas
+        leftControl.addEventListener('touchstart', (e) => {
             touchControls.left = true;
             e.preventDefault();
         });
         
-        leftBtn.addEventListener('touchend', () => {
+        leftControl.addEventListener('touchend', () => {
             touchControls.left = false;
         });
         
-        rightBtn.addEventListener('touchstart', (e) => {
+        leftControl.addEventListener('touchcancel', () => {
+            touchControls.left = false;
+        });
+        
+        rightControl.addEventListener('touchstart', (e) => {
             touchControls.right = true;
             e.preventDefault();
         });
         
-        rightBtn.addEventListener('touchend', () => {
+        rightControl.addEventListener('touchend', () => {
             touchControls.right = false;
         });
         
-        fireBtn.addEventListener('touchstart', (e) => {
-            touchControls.fire = true;
+        rightControl.addEventListener('touchcancel', () => {
+            touchControls.right = false;
+        });
+        
+        // Mouse controls for testing on desktop
+        leftControl.addEventListener('mousedown', (e) => {
+            touchControls.left = true;
             e.preventDefault();
         });
         
-        fireBtn.addEventListener('touchend', () => {
-            touchControls.fire = false;
+        leftControl.addEventListener('mouseup', () => {
+            touchControls.left = false;
+        });
+        
+        leftControl.addEventListener('mouseleave', () => {
+            touchControls.left = false;
+        });
+        
+        rightControl.addEventListener('mousedown', (e) => {
+            touchControls.right = true;
+            e.preventDefault();
+        });
+        
+        rightControl.addEventListener('mouseup', () => {
+            touchControls.right = false;
+        });
+        
+        rightControl.addEventListener('mouseleave', () => {
+            touchControls.right = false;
         });
         
         // Handle window resize
