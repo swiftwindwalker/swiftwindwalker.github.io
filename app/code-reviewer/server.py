@@ -24,7 +24,12 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 # CORS Configuration
-origins = ["http://localhost:8001"]
+# CORS Configuration
+origins = [
+    "https://www.ravzzy.com",  # Your production frontend
+    "http://localhost:8001",   # Your local development frontend
+    # Add any other domains that need access
+]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
