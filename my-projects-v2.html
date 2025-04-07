@@ -34,6 +34,30 @@
         font-family: 'DM Mono', monospace;
     }
 
+    /* Landscape orientation prompt */
+    .orientation-prompt {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/imgs/rotate-your-phone.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 1000;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    
+
+
     .card-list {
         display: flex;
         padding: 3rem;
@@ -289,7 +313,7 @@
         color: black !important;
         /* LinkedIn blue */
     }
-
+/*
     @media (max-width: 768px) {
         .card-list {
             flex-direction: column;
@@ -308,7 +332,7 @@
         }
 
     }
-
+*/
 
     @media (max-width: 900px) {
 
@@ -377,11 +401,27 @@
             margin-left: -90px;
         }
 
+    }
 
+    /* Show prompt only on mobile portrait */
+    @media screen and (max-width: 768px) and (orientation: portrait) {
+        .orientation-prompt {
+            display: flex;
+        }
+        
+        /* Prevent scrolling when prompt is shown */
+        body {
+            overflow: hidden;
+            height: 100%;
+        }
     }
 </style>
 
 <body>
+    <!-- Landscape orientation prompt -->
+    <div class="orientation-prompt">
+    </div>
+
     <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
     <button class="menu-btn">☰</button>
     <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
@@ -407,12 +447,6 @@
                     Ravzzy
                 </div>
             </div>
-            <!--
-            <div class="tags">
-                <a href="#">App</a>
-                <a href="#">Open-Source</a>
-            </div>
-            -->
         </article>
         <article class="card">
             <header class="card-header">
@@ -463,10 +497,10 @@
                 <a href="/games/galaxy-crusaders.html" style="text-decoration: none; color:white;">
                     <h2>Galaxy Crusaders</h2>
                 </a>
-                <p><br>A thrilling single-player HTML5 space defense game where you’re the
-                    galaxy’s last hope. Inspired by classic titles like Space Invaders, you'll command a lone
+                <p><br>A thrilling single-player HTML5 space defense game where you're the
+                    galaxy's last hope. Inspired by classic titles like Space Invaders, you'll command a lone
                     starship, battling relentless waves of alien forces to protect the cosmos. With fast-paced
-                    action, strategic upgrades, and immersive space battles, it’s up to you to save the galaxy from
+                    action, strategic upgrades, and immersive space battles, it's up to you to save the galaxy from
                     destruction.</p>
             </header>
             <div class="card-author">
@@ -527,6 +561,26 @@
         </a>
     </div>
     <div class="footer"> &copy;2025 ravzzy</div>
-</body>
 
+    <script>
+        // Check orientation on load and resize
+        function checkOrientation() {
+            const prompt = document.querySelector('.orientation-prompt');
+            if (window.innerWidth <= 768 && window.matchMedia("(orientation: portrait)").matches) {
+                prompt.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            } else {
+                prompt.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Run on initial load
+        window.addEventListener('load', checkOrientation);
+        
+        // Run on resize or orientation change
+        window.addEventListener('resize', checkOrientation);
+        window.addEventListener('orientationchange', checkOrientation);
+    </script>
+</body>
 </html>
