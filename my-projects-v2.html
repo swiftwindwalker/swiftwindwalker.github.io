@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <title>My Projects</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-VS2WHLJQNE');
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="module" src="/js/onload.js" defer></script>
+    <script type="module" src="/js/navbar.js" defer></script>
+    <script type="module" src="/js/sidebar.js" defer></script>
+    <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap');
+
+    body {
+        padding: 0;
+        margin: 0;
+        background-color: #18151f;
+        color: white;
+        font-family: 'DM Mono', monospace;
+    }
+
+    .card-list {
+        display: flex;
+        padding: 3rem;
+        overflow-x: scroll;
+    }
+
+    .card {
+        top: 5vh;
+        height: 65vh;
+        width: 22vw;
+        min-width: 12vw;
+        padding: 1.5rem;
+        border-radius: 16px;
+        background: #17141d;
+        box-shadow: -1rem 0 3rem #000;
+        display: flex;
+        flex-direction: column;
+        transition: .2s;
+        margin: 0;
+        scroll-snap-align: start;
+        clear: both;
+        position: relative;
+    }
+
+    .card-list::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    .card-list::-webkit-scrollbar-thumb {
+        background: #201c29;
+        border-radius: 10px;
+        box-shadow: inset 2px 2px 2px hsla(0, 0%, 100%, .25), inset -2px -2px 2px rgba(0, 0, 0, .25);
+    }
+
+    .card-list::-webkit-scrollbar-track {
+        background: linear-gradient(90deg, #201c29, #201c29 1px, #17141d 0, #17141d);
+    }
+
+    .card:hover {
+        transform: translateY(-1rem);
+    }
+
+    .card:focus-within~.card,
+    .card:hover~.card {
+        transform: translateX(130px);
+    }
+
+    .card:not(:first-child) {
+        margin-left: -130px;
+    }
+
+    .card-header {
+        margin-bottom: auto;
+    }
+
+    .card-header p {
+        font-size: 14px;
+        margin: 0;
+        color: #7a7a8c;
+    }
+
+    .card-header h2 {
+        font-size: 20px;
+        margin: .25rem 0 auto;
+        text-decoration: none;
+        color: inherit;
+        border: 0;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .card-header h2:hover {
+        background: linear-gradient(90deg, #ff8a00, #e52e71);
+        text-shadow: none;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+
+    .card-author {
+        margin: 3rem 0 0;
+        display: grid;
+        grid-template-columns: 75px 1fr;
+        align-items: center;
+        position: relative;
+    }
+
+    .author-avatar {
+        grid-area: auto;
+        align-self: start;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    .author-avatar img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        filter: grayscale(100%);
+        display: block;
+        overflow: hidden;
+        margin: 16px 10px;
+    }
+
+    .author-name {
+        grid-area: auto;
+        box-sizing: border-box;
+    }
+
+    .author-name-prefix {
+        font-style: normal;
+        font-weight: 700;
+        color: #7a7a8c;
+    }
+
+    .half-circle {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 48px;
+        fill: none;
+        stroke: #ff8a00;
+        stroke-width: 8;
+        stroke-linecap: round;
+        pointer-events: none;
+    }
+
+    .tags {
+        margin: 1rem 0 2rem;
+        padding: .5rem 0 1rem;
+        line-height: 2;
+        margin-bottom: 0;
+    }
+
+    .tags a {
+        font-style: normal;
+        font-weight: 700;
+        font-size: .5rem;
+        color: #7a7a8c;
+        text-transform: uppercase;
+        font-size: .66rem;
+        border: 3px solid #28242f;
+        border-radius: 2rem;
+        padding: .2rem .85rem .25rem;
+        position: relative;
+        text-decoration: none;
+    }
+
+    .tags a:hover {
+        background: linear-gradient(90deg, #ff8a00, #e52e71);
+        text-shadow: none;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-box-decoration-break: clone;
+        background-clip: text;
+        border-color: white;
+    }
+
+
+    .footer {
+        text-transform: uppercase;
+        margin-top: 5vh;
+        height: 5vh;
+        font-weight: 400;
+        font-size: 0.7rem;
+        text-align: center;
+    }
+
+    .nav-menu a {
+        text-transform: uppercase;
+        font-size: 0.7rem;
+    }
+
+    .social-handle {
+        position: fixed;
+        /* Fix it to the screen */
+        bottom: 20px;
+        /* Distance from the bottom of the page */
+        right: 20px;
+        /* Distance from the right of the page */
+        display: block;
+        /* Hide initially */
+        justify-content: space-around;
+        align-items: center;
+        gap: 4px;
+        z-index: 10;
+        /* Ensure it's on top of other content */
+    }
+
+    .social-handle a {
+        display: inline-block;
+    }
+
+    .social-handle i {
+        font-size: 15px;
+        color: #333;
+        /* Default color for icons */
+        border: 0.5px solid #000;
+        border-radius: 50%;
+        padding: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .social-handle i:hover {
+        color: #ff2759;
+        /* Hover color */
+        border-color: #ff2759;
+        /* Hover border color */
+        transform: scale(1.4);
+        /* Increase the size by 20% */
+        z-index: 20;
+        /* Ensure the hovered icon is on top */
+    }
+
+
+    /* Specific color for each icon */
+    .fa-github {
+        color: white !important;
+        /* Facebook blue */
+    }
+
+    .fa-facebook {
+        color: #3b5998 !important;
+        /* Facebook blue */
+    }
+
+    .fa-twitter {
+        color: #1da1f2 !important;
+        /* Twitter blue */
+    }
+
+    .fa-instagram {
+        color: #e4405f !important;
+        /* Instagram pinkish red */
+    }
+
+    .fa-youtube {
+        color: #ff0000 !important;
+        /* YouTube red */
+    }
+
+    .fa-linkedin {
+        color: #0077b5 !important;
+        /* LinkedIn blue */
+    }
+
+    .fa-medium {
+        color: lightgray !important;
+        /* LinkedIn blue */
+    }
+
+    @media (max-width: 768px) {
+        .card-list {
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .card {
+            width: 70vw;
+            height: auto;
+            margin: 0 0 2rem;
+        }
+
+        .card:not(:first-child) {
+            margin-left: 0;
+        }
+
+    }
+
+
+    @media (max-width: 900px) {
+
+        .card-header p {
+            font-size: 8px;
+        }
+
+        .card-header h2 {
+            font-size: 12px;
+            margin: .1rem 0 auto;
+        }
+
+        .card-list {
+            align-items: center;
+            padding: 0.5rem;
+        }
+
+        .card-author {
+            margin: 0.5rem 0 0;
+            grid-template-columns: 50px 1fr;
+        }
+
+        .author-avatar img {
+            width: 25px;
+            height: 25px;
+            margin: 8px 5px;
+        }
+
+        .author-name {
+            font-size: 10px;
+        }
+
+        .author-name-prefix {
+            font-style: normal;
+            font-weight: 400;
+            color: #7a7a8c;
+        }
+
+        .half-circle {
+            width: 36px;
+            height: 24px;
+            stroke-width: 2;
+
+        }
+
+        .card {
+            margin: 0 0 0.1rem;
+        }
+
+        .card:not(:first-child) {
+            margin-left: 0;
+        }
+    }
+</style>
+
+<body>
+    <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
+    <button class="menu-btn">☰</button>
+    <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
+    <section class="card-list">
+        <article class="card">
+            <header class="card-header">
+                <a href="/app/speedtest/home.html" style="text-decoration: none; color:white;">
+                    <h2>Anonymous Browser Based Speed Test <br>(No Ads)</h2>
+                </a>
+                <p><br>A lightweight, privacy-focused internet speed test that runs directly
+                    in your browser without tracking, ads, or requiring personal data. Measures download, upload,
+                    and latency quickly and accurately. No sign-ups, no distractions.</p>
+            </header>
+            <div class="card-author">
+                <a href="/app/speedtest/home.html" class="author-avatar">
+                    <img src="/imgs/speed-test-icon.webp" alt="Speed Test Icon">
+                </a>
+                <svg class="half-circle" viewBox="0 0 106 57">
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+                <div class="author-name">
+                    <div class="author-name-prefix">Author</div>
+                    Ravzzy
+                </div>
+            </div>
+            <!--
+            <div class="tags">
+                <a href="#">App</a>
+                <a href="#">Open-Source</a>
+            </div>
+            -->
+        </article>
+        <article class="card">
+            <header class="card-header">
+                <a href="/app/remove-background/home.html" style="text-decoration: none; color:white;">
+                    <h2>GhostCut AI</h2>
+                </a>
+                <p><br>A fast, AI-powered tool that removes backgrounds from images
+                    instantly—no downloads, accounts, or watermarks. Just upload, edit, and download in seconds.</p>
+            </header>
+            <div class="card-author">
+                <a href="/app/remove-background/home.html" class="author-avatar">
+                    <img src="/imgs/ghost-cut-ai.webp" alt="Ghostcut AI Icon">
+                </a>
+                <svg class="half-circle" viewBox="0 0 106 57">
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+                <div class="author-name">
+                    <div class="author-name-prefix">Author</div>
+                    Ravzzy
+                </div>
+            </div>
+        </article>
+        <article class="card">
+            <header class="card-header">
+                <a href="/app/kanban-board/home.html" style="text-decoration: none; color:white;">
+                    <h2>Kanban Board</h2>
+                </a>
+                <p><br>An HTML-based Kanban board is a simple, interactive task management
+                    tool that helps users organize and track their tasks visually. It consists of columns
+                    representing different stages of work (e.g., To Do, In Progress, Done) and draggable task cards
+                    that move between these columns.</p>
+            </header>
+            <div class="card-author">
+                <a href="/app/kanban-board/home.html" class="author-avatar">
+                    <img src="/imgs/kanban-board-icon.webp" alt="Kanban Board Icon">
+                </a>
+                <svg class="half-circle" viewBox="0 0 106 57">
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+                <div class="author-name">
+                    <div class="author-name-prefix">Author</div>
+                    Ravzzy
+                </div>
+            </div>
+        </article>
+        <article class="card">
+            <header class="card-header">
+                <a href="/games/galaxy-crusaders.html" style="text-decoration: none; color:white;">
+                    <h2>Galaxy Crusaders</h2>
+                </a>
+                <p><br>A thrilling single-player HTML5 space defense game where you’re the
+                    galaxy’s last hope. Inspired by classic titles like Space Invaders, you'll command a lone
+                    starship, battling relentless waves of alien forces to protect the cosmos. With fast-paced
+                    action, strategic upgrades, and immersive space battles, it’s up to you to save the galaxy from
+                    destruction.</p>
+            </header>
+            <div class="card-author">
+                <a href="/games/galaxy-crusaders.html" class="author-avatar">
+                    <img src="/imgs/galaxy-crusaders.png" alt="Galaxy Crusaders Icon">
+                </a>
+                <svg class="half-circle" viewBox="0 0 106 57">
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+                <div class="author-name">
+                    <div class="author-name-prefix">Author</div>
+                    Ravzzy
+                </div>
+            </div>
+        </article>
+        <article class="card">
+            <header class="card-header">
+                <a href="/app/code-reviewer/home.html" style="text-decoration: none; color:white;">
+                    <h2>Code Mancer</h2>
+                </a>
+                <p><br>An AI-powered code review assistant running Microsoft's Phi-2 locally on your machine for
+                    private,
+                    anonymous, no-ads and secure code analysis without sharing your code online.
+                </p>
+            </header>
+            <div class="card-author">
+                <a href="/app/code-reviewer/home.html" class="author-avatar">
+                    <img src="/imgs/code-mancer.jpg" alt="Code Mancer Icon">
+                </a>
+                <svg class="half-circle" viewBox="0 0 106 57">
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+                <div class="author-name">
+                    <div class="author-name-prefix">Author</div>
+                    Ravzzy
+                </div>
+            </div>
+        </article>
+    </section>
+    <div class="social-handle">
+        <a href="https://github.com/ravzzy" target="_blank">
+            <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="https://www.instagram.com/swiftwindwalker" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/motoravzzy" target="_blank">
+            <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/motoravzzy" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/ravzzy" target="_blank">
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+        <a href="https://medium.com/@ravzzy" target="_blank">
+            <i class="fa-brands fa-medium"></i>
+        </a>
+    </div>
+    <div class="footer"> &copy;2025 ravzzy</div>
+</body>
+
+</html>
