@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/navbar.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
-    <!-- Google tag (gtag.js) -->
+    <title>My Projects</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -24,308 +22,526 @@
     <script type="module" src="/js/navbar.js" defer></script>
     <script type="module" src="/js/sidebar.js" defer></script>
     <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
-
-    <title>My Projects</title>
-    <style>
-        :root {
-            /*--primary-color: #6e48aa;
-            --primary-light: #9d50bb;*/
-            --primary-color: black;
-            --primary-light: grey;
-            --secondary-color: #4776e6;
-            --accent-color: #4ecdc4;
-            --background: #f8f9ff;
-            --card-bg: #ffffff;
-            --text-color: #2d3436;
-            --text-light: #636e72;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.2;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .subtitle {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        /* Special centering for exactly 2 tiles */
-        .projects-grid.two-tiles {
-            grid-template-columns: repeat(2, minmax(300px, 350px));
-            justify-content: center;
-        }
-
-        .project-tile {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .project-tile:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-        }
-
-        .project-content {
-            padding: 1.8rem;
-        }
-
-        .project-title {
-            text-align: center;
-            font-size: 1.2rem;
-            margin-bottom: 0.4rem;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .project-description {
-            text-align: justify;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            line-height: 1.2;
-        }
-
-        .project-icon {
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-        }
-
-        .footer {
-            text-transform: uppercase;
-            margin-top: 5vh;
-            height: 5vh;
-            font-weight: 400;
-            font-size: 0.7rem;
-            text-align: center;
-        }
-
-        .nav-menu a {
-            text-transform: uppercase;
-            font-size: 0.7rem;
-        }
-
-        .social-handle {
-            position: fixed;
-            /* Fix it to the screen */
-            bottom: 20px;
-            /* Distance from the bottom of the page */
-            right: 20px;
-            /* Distance from the right of the page */
-            display: block;
-            /* Hide initially */
-            justify-content: space-around;
-            align-items: center;
-            gap: 4px;
-            z-index: 10;
-            /* Ensure it's on top of other content */
-        }
-
-        .social-handle a {
-            display: inline-block;
-        }
-
-        .social-handle i {
-            font-size: 15px;
-            color: #333;
-            /* Default color for icons */
-            border: 0.5px solid #000;
-            border-radius: 50%;
-            padding: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .social-handle i:hover {
-            color: #ff2759;
-            /* Hover color */
-            border-color: #ff2759;
-            /* Hover border color */
-            transform: scale(1.4);
-            /* Increase the size by 20% */
-            z-index: 20;
-            /* Ensure the hovered icon is on top */
-        }
-
-
-        /* Specific color for each icon */
-        .fa-facebook {
-            color: #3b5998 !important;
-            /* Facebook blue */
-        }
-
-        .fa-twitter {
-            color: #1da1f2 !important;
-            /* Twitter blue */
-        }
-
-        .fa-instagram {
-            color: #e4405f !important;
-            /* Instagram pinkish red */
-        }
-
-        .fa-youtube {
-            color: #ff0000 !important;
-            /* YouTube red */
-        }
-
-        .fa-linkedin {
-            color: #0077b5 !important;
-            /* LinkedIn blue */
-        }
-
-
-
-        @media (max-width: 900px) {
-            .projects-grid.two-tiles {
-                grid-template-columns: 1fr;
-                max-width: 500px;
-                margin: 0 auto;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1.5rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .project-icon {
-                height: 120px;
-                font-size: 2.5rem;
-            }
-        }
-    </style>
 </head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap');
+
+    body {
+        padding: 0;
+        margin: 0;
+        background-color: #f1f1f1;
+        color: black;
+        font-family: 'DM Mono', monospace;
+    }
+
+    /* Landscape orientation prompt */
+    .orientation-prompt {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/imgs/rotate-your-phone.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 1000;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    
+
+
+    .card-list {
+        position: relative;
+        top:5vh;
+        display: flex;
+        padding: 3rem;
+        overflow-x: scroll;
+        justify-self: center;
+    }
+
+    .card {
+        height: 65vh;
+        width: 22vw;
+        min-width: 12vw;
+        padding: 1.5rem;
+        border-radius: 16px;
+        background: #17141d;
+        /*box-shadow: -1rem 0 3rem #000;*/
+        box-shadow: -1rem 0 3rem rgba(230, 22, 24, 0.5);
+        display: flex;
+        flex-direction: column;
+        transition: .2s;
+        margin: 0;
+        scroll-snap-align: start;
+        clear: both;
+        position: relative;
+    }
+
+   .card-list::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+
+    .card-list::-webkit-scrollbar-thumb {
+        background: #201c29;
+        border-radius: 10px;
+        box-shadow: inset 2px 2px 2px hsla(0, 0%, 100%, .25), inset -2px -2px 2px rgba(0, 0, 0, .25);
+    } 
+
+    .card-list::-webkit-scrollbar-track {
+        background: linear-gradient(90deg, #201c29, #201c29 1px, #17141d 0, #17141d);
+    } 
+
+    .card:hover {
+        transform: translateY(-1rem);
+    }
+
+    .card:focus-within~.card,
+    .card:hover~.card {
+        transform: translateX(130px);
+    }
+
+    .card:not(:first-child) {
+        margin-left: -130px;
+    }
+
+    .card-header {
+        margin-bottom: auto;
+    }
+
+    .card-header p {
+        font-size: 14px;
+        margin: 0;
+        color: #7a7a8c;
+    }
+
+    .card-header h2 {
+        font-size: 20px;
+        margin: .25rem 0 auto;
+        text-decoration: none;
+        color: inherit;
+        border: 0;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .card-header h2:hover {
+        background: linear-gradient(90deg, #ff8a00, #e52e71);
+        text-shadow: none;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+
+    .card-author {
+        margin: 3rem 0 0;
+        display: grid;
+        grid-template-columns: 75px 1fr;
+        align-items: center;
+        position: relative;
+    }
+
+    .author-avatar {
+        grid-area: auto;
+        align-self: start;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    .author-avatar img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        filter: grayscale(100%);
+        display: block;
+        overflow: hidden;
+        margin: 16px 10px;
+    }
+
+    .author-name {
+        color: #f1f1f1;
+        grid-area: auto;
+        box-sizing: border-box;
+    }
+
+    .author-name-prefix {
+        font-style: normal;
+        font-weight: 700;
+        color: #7a7a8c;
+    }
+
+    .half-circle {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 48px;
+        fill: none;
+        stroke: #ff8a00;
+        stroke-width: 8;
+        stroke-linecap: round;
+        pointer-events: none;
+    }
+
+    .tags {
+        margin: 1rem 0 2rem;
+        padding: .5rem 0 1rem;
+        line-height: 2;
+        margin-bottom: 0;
+    }
+
+    .tags a {
+        font-style: normal;
+        font-weight: 700;
+        font-size: .5rem;
+        color: #7a7a8c;
+        text-transform: uppercase;
+        font-size: .66rem;
+        border: 3px solid #28242f;
+        border-radius: 2rem;
+        padding: .2rem .85rem .25rem;
+        position: relative;
+        text-decoration: none;
+    }
+
+    .tags a:hover {
+        background: linear-gradient(90deg, #ff8a00, #e52e71);
+        text-shadow: none;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-box-decoration-break: clone;
+        background-clip: text;
+        border-color: white;
+    }
+
+
+    .footer {
+        text-transform: uppercase;
+        margin-top: 5vh;
+        height: 5vh;
+        font-weight: 400;
+        font-size: 0.7rem;
+        text-align: center;
+    }
+
+    .nav-menu a {
+        text-transform: uppercase;
+        font-size: 0.7rem;
+    }
+
+    .social-handle {
+        position: fixed;
+        /* Fix it to the screen */
+        bottom: 20px;
+        /* Distance from the bottom of the page */
+        right: 20px;
+        /* Distance from the right of the page */
+        display: block;
+        /* Hide initially */
+        justify-content: space-around;
+        align-items: center;
+        gap: 4px;
+        z-index: 10;
+        /* Ensure it's on top of other content */
+    }
+
+    .social-handle a {
+        display: inline-block;
+    }
+
+    .social-handle i {
+        font-size: 15px;
+        color: #333;
+        /* Default color for icons */
+        border: 0.5px solid #000;
+        border-radius: 50%;
+        padding: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .social-handle i:hover {
+        color: #ff2759;
+        /* Hover color */
+        border-color: #ff2759;
+        /* Hover border color */
+        transform: scale(1.4);
+        /* Increase the size by 20% */
+        z-index: 20;
+        /* Ensure the hovered icon is on top */
+    }
+
+
+    /* Specific color for each icon */
+    .fa-github {
+        color: black !important;
+        /* Facebook blue */
+    }
+
+    .fa-facebook {
+        color: #3b5998 !important;
+        /* Facebook blue */
+    }
+
+    .fa-twitter {
+        color: #1da1f2 !important;
+        /* Twitter blue */
+    }
+
+    .fa-instagram {
+        color: #e4405f !important;
+        /* Instagram pinkish red */
+    }
+
+    .fa-youtube {
+        color: #ff0000 !important;
+        /* YouTube red */
+    }
+
+    .fa-linkedin {
+        color: #0077b5 !important;
+        /* LinkedIn blue */
+    }
+
+    .fa-medium {
+        color: black !important;
+        /* LinkedIn blue */
+    }
+/*
+    @media (max-width: 768px) {
+        .card-list {
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .card {
+            width: 70vw;
+            height: 50vh;
+            margin: 0 0 2rem;
+        }
+
+        .card:not(:first-child) {
+            margin-left: 0;
+        }
+
+    }
+*/
+
+    @media (max-width: 900px) {
+
+        .html,
+        body {
+            font-size: 0.8rem;
+            overflow: hidden;
+        }
+
+        .card-header p {
+            font-size: 8px;
+        }
+
+        .card-header h2 {
+            font-size: 12px;
+            margin: .1rem 0 auto;
+        }
+
+        .card-list {
+            top:15vh;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            padding: 0.5rem;
+        }
+
+        .card-author {
+            margin: 0.5rem 0 0;
+            grid-template-columns: 50px 1fr;
+        }
+
+        .author-avatar img {
+            width: 25px;
+            height: 25px;
+            margin: 8px 5px;
+        }
+
+        .author-name {
+            font-size: 10px;
+        }
+
+        .author-name-prefix {
+            font-style: normal;
+            font-weight: 400;
+            color: #7a7a8c;
+        }
+
+        .half-circle {
+            width: 36px;
+            height: 24px;
+            stroke-width: 2;
+
+        }
+
+        .card {
+            width: 20vw;
+            height: 50vh;
+
+            margin: 0 0 0.1rem;
+        }
+
+        .card:focus-within~.card,
+        .card:hover~.card {
+            transform: translateX(90px);
+        }
+
+        .card:not(:first-child) {
+            margin-left: -90px;
+        }
+
+    }
+
+    /* Show prompt only on mobile portrait */
+    @media screen and (max-width: 768px) and (orientation: portrait) {
+        .orientation-prompt {
+            display: flex;
+        }
+        
+        /* Prevent scrolling when prompt is shown */
+        body {
+            overflow: hidden;
+            height: 100%;
+        }
+    }
+</style>
 
 <body>
+    <!-- Landscape orientation prompt -->
+    <div class="orientation-prompt">
+    </div>
+
     <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
     <button class="menu-btn">☰</button>
     <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
-    <div class="container">
-        <header>
-            <h1>My Projects</h1>
-            <p class="subtitle">A collection of tools and applications I've built. Click on any project to explore it.
-            </p>
-        </header>
-
-        <div class="projects-grid two-tiles">
-            <!-- Project Tile 1 -->
-            <a href="/app/speedtest/home.html" class="project-tile">
-                <div class="project-icon">
-                    <img src="/imgs/speed-test-icon.webp" alt="Speed Test Icon" width="50">
+    <section class="card-list">
+        <article class="card">
+            <header class="card-header">
+                <a href="/app/speedtest/home.html" style="text-decoration: none; color:white;">
+                    <h2>Anonymous Browser Based Speed Test <br>(No Ads)</h2>
+                </a>
+                <p><br>A lightweight, privacy-focused internet speed test that runs directly
+                    in your browser without tracking, ads, or requiring personal data. Measures download, upload,
+                    and latency quickly and accurately. No sign-ups, no distractions.</p>
+            </header>
+            <div class="card-author">
+                <a href="/app/speedtest/home.html" class="author-avatar">
+                    <img src="/imgs/speed-test-icon.webp" alt="Speed Test Icon">
+                </a>
+                <svg class="half-circle" viewBox="0 0 106 57">
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+                <div class="author-name">
+                    <div class="author-name-prefix">Author</div>
+                    Ravzzy
                 </div>
-                <div class="project-content">
-                    <h3 class="project-title">Anonymous Browser-Based Speed Test (No Ads)</h3>
-                    <p class="project-description">A lightweight, privacy-focused internet speed test that runs directly
-                        in your browser without tracking, ads, or requiring personal data. Measures download, upload,
-                        and latency quickly and accurately. No sign-ups, no distractions.</p>
+            </div>
+        </article>
+        <article class="card">
+            <header class="card-header">
+                <a href="/app/remove-background/home.html" style="text-decoration: none; color:white;">
+                    <h2>GhostCut AI</h2>
+                </a>
+                <p><br>A fast, AI-powered tool that removes backgrounds from images
+                    instantly—no downloads, accounts, or watermarks. Just upload, edit, and download in seconds.</p>
+            </header>
+            <div class="card-author">
+                <a href="/app/remove-background/home.html" class="author-avatar">
+                    <img src="/imgs/ghost-cut-ai.webp" alt="Ghostcut AI Icon">
+                </a>
+                <svg class="half-circle" viewBox="0 0 106 57">
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+                <div class="author-name">
+                    <div class="author-name-prefix">Author</div>
+                    Ravzzy
                 </div>
-            </a>
-
-            <!-- Project Tile 2 -->
-            <a href="/app/remove-background/home.html" class="project-tile">
-                <div class="project-icon">
-                    <img src="/imgs/ghost-cut-ai.webp" alt="Ghostcut AI Icon" width="50">
+            </div>
+        </article>
+        <article class="card">
+            <header class="card-header">
+                <a href="/app/kanban-board/home.html" style="text-decoration: none; color:white;">
+                    <h2>Kanban Board</h2>
+                </a>
+                <p><br>An HTML-based Kanban board is a simple, interactive task management
+                    tool that helps users organize and track their tasks visually. It consists of columns
+                    representing different stages of work (e.g., To Do, In Progress, Done) and draggable task cards
+                    that move between these columns.</p>
+            </header>
+            <div class="card-author">
+                <a href="/app/kanban-board/home.html" class="author-avatar">
+                    <img src="/imgs/kanban-board-icon.webp" alt="Kanban Board Icon">
+                </a>
+                <svg class="half-circle" viewBox="0 0 106 57">
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+                <div class="author-name">
+                    <div class="author-name-prefix">Author</div>
+                    Ravzzy
                 </div>
-                <div class="project-content">
-                    <h3 class="project-title">GhostCut AI</h3>
-                    <p class="project-description">A fast, AI-powered tool that removes backgrounds from images
-                        instantly—no downloads, accounts, or watermarks. Just upload, edit, and download in seconds.</p>
+            </div>
+        </article>
+        <article class="card">
+            <header class="card-header">
+                <a href="/games/galaxy-crusaders.html" style="text-decoration: none; color:white;">
+                    <h2>Galaxy Crusaders</h2>
+                </a>
+                <p><br>A thrilling single-player HTML5 space defense game where you're the
+                    galaxy's last hope. Inspired by classic titles like Space Invaders, you'll command a lone
+                    starship, battling relentless waves of alien forces to protect the cosmos, it's up to you to save the galaxy from
+                    destruction.</p>
+            </header>
+            <div class="card-author">
+                <a href="/games/galaxy-crusaders.html" class="author-avatar">
+                    <img src="/imgs/galaxy-crusaders.png" alt="Galaxy Crusaders Icon">
+                </a>
+                <svg class="half-circle" viewBox="0 0 106 57">
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+                <div class="author-name">
+                    <div class="author-name-prefix">Author</div>
+                    Ravzzy
                 </div>
-            </a>
-
-            <a href="/app/kanban-board/home.html" class="project-tile">
-                <div class="project-icon">
-                    <img src="/imgs/kanban-board-icon.webp" alt="Kanban Board Icon" width="50">
+            </div>
+        </article>
+        <article class="card">
+            <header class="card-header">
+                <a href="/app/code-reviewer/home.html" style="text-decoration: none; color:white;">
+                    <h2>Code Mancer</h2>
+                </a>
+                <p><br>An AI-powered code review assistant running Microsoft's Phi-2 locally on your machine for
+                    private,
+                    anonymous, no-ads and secure code analysis without sharing your code online.
+                </p>
+            </header>
+            <div class="card-author">
+                <a href="/app/code-reviewer/home.html" class="author-avatar">
+                    <img src="/imgs/code-mancer.jpg" alt="Code Mancer Icon">
+                </a>
+                <svg class="half-circle" viewBox="0 0 106 57">
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+                <div class="author-name">
+                    <div class="author-name-prefix">Author</div>
+                    Ravzzy
                 </div>
-                <div class="project-content">
-                    <h3 class="project-title">Kanban Board</h3>
-                    <p class="project-description">An HTML-based Kanban board is a simple, interactive task management
-                        tool that helps users organize and track their tasks visually. It consists of columns
-                        representing different stages of work (e.g., To Do, In Progress, Done) and draggable task cards
-                        that move between these columns.</p>
-                </div>
-            </a>
-
-            <a href="/games/galaxy-crusaders.html" class="project-tile">
-                <div class="project-icon">
-                    <img src="/imgs/galaxy-crusaders.png" alt="Galaxy Crusaders Icon" width="50">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Galaxy Crusaders</h3>
-                    <p class="project-description">
-                        A thrilling single-player HTML5 space defense game where you’re the
-                        galaxy’s last hope. Inspired by classic titles like Space Invaders, you'll command a lone
-                        starship, battling relentless waves of alien forces to protect the cosmos. With fast-paced
-                        action, strategic upgrades, and immersive space battles, it’s up to you to save the galaxy from
-                        destruction.
-                    </p>
-                </div>
-            </a>
-
-            <a href="/app/code-reviewer/home.html" class="project-tile">
-                <div class="project-icon">
-                    <img src="/imgs/code-mancer.jpg" alt="Code Mancer Icon" width="50">
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Code Mancer</h3>
-                    <p class="project-description">
-                        An AI-powered code review assistant running Microsoft's Phi-2 locally on your machine for private,
-                        anonymous, no-ads and secure code analysis without sharing your code online.
-                    </p>
-                </div>
-            </a>
-            <!-- When adding more tiles, remove the "two-tiles" class from projects-grid -->
-            <!-- <a href="LINK_TO_PROJECT_3" class="project-tile">...</a> -->
-        </div>
-    </div>
-
+            </div>
+        </article>
+    </section>
     <div class="social-handle">
         <a href="https://github.com/ravzzy" target="_blank">
             <i class="fa-brands fa-github"></i>
@@ -349,19 +565,24 @@
     <div class="footer"> &copy;2025 ravzzy</div>
 
     <script>
-        // Automatically remove the two-tiles class when more projects are added
-        document.addEventListener('DOMContentLoaded', function () {
-            const grid = document.querySelector('.projects-grid');
-            if (grid.children.length > 2) {
-                grid.classList.remove('two-tiles');
+        // Check orientation on load and resize
+        function checkOrientation() {
+            const prompt = document.querySelector('.orientation-prompt');
+            if (window.innerWidth <= 768 && window.matchMedia("(orientation: portrait)").matches) {
+                prompt.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            } else {
+                prompt.style.display = 'none';
+                document.body.style.overflow = '';
             }
-        });
-    </script>
-    <script>
-        window.onbeforeunload = function () {
-            window.scrollTo(0, 0);
-        };
+        }
+        
+        // Run on initial load
+        window.addEventListener('load', checkOrientation);
+        
+        // Run on resize or orientation change
+        window.addEventListener('resize', checkOrientation);
+        window.addEventListener('orientationchange', checkOrientation);
     </script>
 </body>
-
 </html>
