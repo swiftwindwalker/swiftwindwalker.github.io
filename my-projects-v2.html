@@ -29,8 +29,8 @@
     body {
         padding: 0;
         margin: 0;
-        background-color: #18151f;
-        color: white;
+        background-color: #f1f1f1;
+        color: black;
         font-family: 'DM Mono', monospace;
     }
 
@@ -38,6 +38,7 @@
         display: flex;
         padding: 3rem;
         overflow-x: scroll;
+        justify-self: center;
     }
 
     .card {
@@ -48,7 +49,8 @@
         padding: 1.5rem;
         border-radius: 16px;
         background: #17141d;
-        box-shadow: -1rem 0 3rem #000;
+        /*box-shadow: -1rem 0 3rem #000;*/
+        box-shadow: -1rem 0 3rem rgba(230, 22, 24, 0.5);
         display: flex;
         flex-direction: column;
         transition: .2s;
@@ -59,8 +61,8 @@
     }
 
     .card-list::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
+        width: 1px;
+        height: 1px;
     }
 
     .card-list::-webkit-scrollbar-thumb {
@@ -140,6 +142,7 @@
     }
 
     .author-name {
+        color: #f1f1f1;
         grid-area: auto;
         box-sizing: border-box;
     }
@@ -253,7 +256,7 @@
 
     /* Specific color for each icon */
     .fa-github {
-        color: white !important;
+        color: black !important;
         /* Facebook blue */
     }
 
@@ -283,7 +286,7 @@
     }
 
     .fa-medium {
-        color: lightgray !important;
+        color: black !important;
         /* LinkedIn blue */
     }
 
@@ -296,7 +299,7 @@
 
         .card {
             width: 70vw;
-            height: auto;
+            height: 50vh;
             margin: 0 0 2rem;
         }
 
@@ -309,6 +312,11 @@
 
     @media (max-width: 900px) {
 
+        .html,
+        body {
+            font-size: 0.8rem;
+        }
+
         .card-header p {
             font-size: 8px;
         }
@@ -319,6 +327,8 @@
         }
 
         .card-list {
+            width: 80vw;
+            height: 80vh;
             align-items: center;
             padding: 0.5rem;
         }
@@ -352,12 +362,22 @@
         }
 
         .card {
+            width: 20vw;
+            height: 50vh;
+
             margin: 0 0 0.1rem;
         }
 
-        .card:not(:first-child) {
-            margin-left: 0;
+        .card:focus-within~.card,
+        .card:hover~.card {
+            transform: translateX(90px);
         }
+
+        .card:not(:first-child) {
+            margin-left: -90px;
+        }
+
+
     }
 </style>
 
