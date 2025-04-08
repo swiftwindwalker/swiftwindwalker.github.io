@@ -190,42 +190,50 @@
             const rssUrl = 'https://medium.com/feed/@ravzzy';
             const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
             const container = document.getElementById('articles');
-
+            
+            // Show loading message
+            container.innerHTML = '<div class="text-center py-10 col-span-full">Loading articles...</div>';
+            
             try {
                 const res = await fetch(apiUrl);
                 const data = await res.json();
-
+    
+                // Clear loading message
+                container.innerHTML = '';
+    
                 if (data.items && data.items.length > 0) {
-                    data.items.forEach(item => {
+                    data.items.forEach((item, index) => {
                         // Extract first image from content
                         const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
                         const imageUrl = imgMatch ? imgMatch[1] : 'https://via.placeholder.com/600x400?text=No+Image';
-
+    
                         const article = document.createElement('div');
                         article.className = `fade-in border-b lg:border-0`;
-
+                        // Add delay based on index for staggered animation
+                        article.style.animationDelay = `${index * 0.1}s`;
+    
                         article.innerHTML = `
-              <a href="${item.link}" target="_blank" class="block group overflow-hidden rounded-lg">
-                <div class="overflow-hidden rounded-md aspect-video mb-4">
-                  <img src="${imageUrl}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 rounded-md" />
-                </div>
-                <h2 class="headline text-xl sm:text-2xl leading-snug group-hover:underline transition duration-300">${item.title}</h2>
-                <p class="text-xs uppercase text-gray-400 mt-1">${new Date(item.pubDate).toLocaleDateString()}</p>
-                <p class="text-base text-gray-700 mt-4 line-clamp-4">${item.description.replace(/<[^>]+>/g, '').slice(0, 200)}...</p>
-              </a>
-            `;
-
+                            <a href="${item.link}" target="_blank" class="block group overflow-hidden rounded-lg">
+                                <div class="overflow-hidden rounded-md aspect-video mb-4">
+                                    <img src="${imageUrl}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 rounded-md" />
+                                </div>
+                                <h2 class="headline text-xl sm:text-2xl leading-snug group-hover:underline transition duration-300">${item.title}</h2>
+                                <p class="text-xs uppercase text-gray-400 mt-1">${new Date(item.pubDate).toLocaleDateString()}</p>
+                                <p class="text-base text-gray-700 mt-4 line-clamp-4">${item.description.replace(/<[^>]+>/g, '').slice(0, 200)}...</p>
+                            </a>
+                        `;
+    
                         container.appendChild(article);
                     });
                 } else {
-                    container.innerHTML = '<p>No articles found.</p>';
+                    container.innerHTML = '<p class="text-center py-10 col-span-full">No articles found.</p>';
                 }
             } catch (error) {
                 console.error('Error loading articles:', error);
-                container.innerHTML = '<p class="text-red-500">Failed to load articles.</p>';
+                container.innerHTML = '<p class="text-center py-10 col-span-full text-red-500">Failed to load articles. Please try again later.</p>';
             }
         }
-
+    
         loadMediumArticles();
     </script>
     <script>
