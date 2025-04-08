@@ -22,9 +22,21 @@
     <script type="module" src="/js/navbar.js" defer></script>
     <script type="module" src="/js/sidebar.js" defer></script>
     <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500&display=swap');
+
+    body {
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+    }
+
+    h1,
+    .headline {
+        font-family: 'Playfair Display', serif;
+    }
 
     body {
         padding: 0;
@@ -37,15 +49,15 @@
 
     .card-list {
         position: relative;
-        top: 5vh;
+        width: 100vw;
         display: flex;
-        padding: 3rem;
+        padding: 1.5rem;
         overflow-x: scroll;
-        justify-self: center;
+        justify-content: center;
     }
 
     .card {
-        height: 65vh;
+        height: 68vh;
         width: 22vw;
         min-width: 12vw;
         padding: 1.5rem;
@@ -202,7 +214,7 @@
 
     .footer {
         text-transform: uppercase;
-        margin-top: 5vh;
+        margin-top: 2vh;
         height: 5vh;
         font-weight: 400;
         font-size: 0.7rem;
@@ -302,6 +314,7 @@
         }
 
         .card-list {
+            margin-top: 2vh;
             flex-direction: column;
             align-items: center;
             padding: 1rem;
@@ -309,7 +322,8 @@
 
         .card {
             width: 70vw;
-            height: 60vh;
+            min-height: 50vh;
+            height: auto;
             margin: 0 0 2rem;
         }
 
@@ -339,21 +353,14 @@
         }
 
         .card-header p {
-            font-size: 8px;
+            font-size: 6px;
         }
 
         .card-header h2 {
-            font-size: 12px;
+            font-size: 8px;
             margin: .1rem 0 auto;
         }
 
-        .card-list {
-            top: 15vh;
-            width: 100vw;
-            height: 100vh;
-            justify-content: center;
-            padding: 0.5rem;
-        }
 
         .card-author {
             margin: 0.5rem 0 0;
@@ -403,13 +410,13 @@
 </style>
 
 <body>
-    <!-- Landscape orientation prompt -->
-    <div class="orientation-prompt">
-    </div>
-
     <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
     <button class="menu-btn">☰</button>
     <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
+    <header class="text-center py-6 border-b border-gray-200 px-4">
+        <h1 class="text-4xl sm:text-2xl font-semibold headline tracking-widest">My Projects</h1>
+        <p class="uppercase text-xs mt-2 tracking-wider text-gray-500">Click on the tile header, you must. Explore my projects, you will.</p>
+    </header>
     <section class="card-list">
         <article class="card">
             <header class="card-header">
@@ -417,8 +424,7 @@
                     <h2>Anonymous Browser Based Speed Test <br>(No Ads)</h2>
                 </a>
                 <p><br>A lightweight, privacy-focused internet speed test that runs directly
-                    in your browser without tracking, ads, or requiring personal data. Measures download, upload,
-                    and latency quickly and accurately. No sign-ups, no distractions.</p>
+                    in your browser without tracking, ads, or requiring personal data.</p>
             </header>
             <div class="card-author">
                 <a href="/app/speedtest/home.html" class="author-avatar">
@@ -460,9 +466,7 @@
                     <h2>Kanban Board</h2>
                 </a>
                 <p><br>An HTML-based Kanban board is a simple, interactive task management
-                    tool that helps users organize and track their tasks visually. It consists of columns
-                    representing different stages of work (e.g., To Do, In Progress, Done) and draggable task cards
-                    that move between these columns.</p>
+                    tool that helps users organize and track their tasks visually.</p>
             </header>
             <div class="card-author">
                 <a href="/app/kanban-board/home.html" class="author-avatar">
@@ -483,10 +487,7 @@
                     <h2>Galaxy Crusaders</h2>
                 </a>
                 <p><br>A thrilling single-player HTML5 space defense game where you're the
-                    galaxy's last hope. Inspired by classic titles like Space Invaders, you'll command a lone
-                    starship, battling relentless waves of alien forces to protect the cosmos, it's up to you to save
-                    the galaxy from
-                    destruction.</p>
+                    galaxy's last hope. You'll command a lone starship, battling relentless waves of alien forces to protect the cosmos.</p>
             </header>
             <div class="card-author">
                 <a href="/games/galaxy-crusaders.html" class="author-avatar">
