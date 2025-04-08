@@ -34,33 +34,10 @@
         font-family: 'DM Mono', monospace;
     }
 
-    /* Landscape orientation prompt */
-    .orientation-prompt {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('/imgs/rotate-your-phone.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        z-index: 1000;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        text-align: center;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-    
-
 
     .card-list {
         position: relative;
-        top:5vh;
+        top: 5vh;
         display: flex;
         padding: 3rem;
         overflow-x: scroll;
@@ -85,7 +62,7 @@
         position: relative;
     }
 
-   .card-list::-webkit-scrollbar {
+    .card-list::-webkit-scrollbar {
         width: 0px;
         height: 0px;
     }
@@ -94,11 +71,11 @@
         background: #201c29;
         border-radius: 10px;
         box-shadow: inset 2px 2px 2px hsla(0, 0%, 100%, .25), inset -2px -2px 2px rgba(0, 0, 0, .25);
-    } 
+    }
 
     .card-list::-webkit-scrollbar-track {
         background: linear-gradient(90deg, #201c29, #201c29 1px, #17141d 0, #17141d);
-    } 
+    }
 
     .card:hover {
         transform: translateY(-1rem);
@@ -314,8 +291,16 @@
         color: black !important;
         /* LinkedIn blue */
     }
-/*
-    @media (max-width: 768px) {
+
+    @media (max-width: 768px) and (orientation: portrait) {
+
+        .html,
+        body {
+            font-size: 0.8rem;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
         .card-list {
             flex-direction: column;
             align-items: center;
@@ -324,8 +309,18 @@
 
         .card {
             width: 70vw;
-            height: 50vh;
+            height: 60vh;
             margin: 0 0 2rem;
+        }
+
+
+        .card:hover {
+            transform: translateY(0);
+        }
+
+        .card:focus-within~.card,
+        .card:hover~.card {
+            transform: translateX(0);
         }
 
         .card:not(:first-child) {
@@ -333,9 +328,9 @@
         }
 
     }
-*/
 
-    @media (max-width: 900px) {
+
+    @media (max-width: 900px) and (orientation: landscape) {
 
         .html,
         body {
@@ -353,7 +348,7 @@
         }
 
         .card-list {
-            top:15vh;
+            top: 15vh;
             width: 100vw;
             height: 100vh;
             justify-content: center;
@@ -404,19 +399,6 @@
             margin-left: -90px;
         }
 
-    }
-
-    /* Show prompt only on mobile portrait */
-    @media screen and (max-width: 768px) and (orientation: portrait) {
-        .orientation-prompt {
-            display: flex;
-        }
-        
-        /* Prevent scrolling when prompt is shown */
-        body {
-            overflow: hidden;
-            height: 100%;
-        }
     }
 </style>
 
@@ -502,7 +484,8 @@
                 </a>
                 <p><br>A thrilling single-player HTML5 space defense game where you're the
                     galaxy's last hope. Inspired by classic titles like Space Invaders, you'll command a lone
-                    starship, battling relentless waves of alien forces to protect the cosmos, it's up to you to save the galaxy from
+                    starship, battling relentless waves of alien forces to protect the cosmos, it's up to you to save
+                    the galaxy from
                     destruction.</p>
             </header>
             <div class="card-author">
@@ -576,13 +559,14 @@
                 document.body.style.overflow = '';
             }
         }
-        
+
         // Run on initial load
         window.addEventListener('load', checkOrientation);
-        
+
         // Run on resize or orientation change
         window.addEventListener('resize', checkOrientation);
         window.addEventListener('orientationchange', checkOrientation);
     </script>
 </body>
+
 </html>
