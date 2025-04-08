@@ -22,7 +22,9 @@ body {
 	text-transform: uppercase;
 	background-color: #f1f1f1;
 }
-
+.nav-menu a {
+	color: black;
+}
 
 .loader-overlay {
 	position: fixed;
