@@ -546,27 +546,6 @@
         </a>
     </div>
     <div class="footer"> &copy;2025 ravzzy</div>
-
-    <script>
-        // Check orientation on load and resize
-        function checkOrientation() {
-            const prompt = document.querySelector('.orientation-prompt');
-            if (window.innerWidth <= 768 && window.matchMedia("(orientation: portrait)").matches) {
-                prompt.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            } else {
-                prompt.style.display = 'none';
-                document.body.style.overflow = '';
-            }
-        }
-
-        // Run on initial load
-        window.addEventListener('load', checkOrientation);
-
-        // Run on resize or orientation change
-        window.addEventListener('resize', checkOrientation);
-        window.addEventListener('orientationchange', checkOrientation);
-    </script>
 </body>
 
 </html>
