@@ -48,11 +48,6 @@ body {
     margin: 0;
 }
 
-.nav-menu a {
-    font-weight: 400;
-    text-transform: uppercase;
-}
-
 .header-actions {
     display: flex;
     gap: 10px;

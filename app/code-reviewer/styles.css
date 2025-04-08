@@ -225,14 +225,6 @@
   #copy-btn:hover {
     background-color: #5a6268;
   }
-
-  .nav-menu a {
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    font-weight: 550;
-    font-family: 'Noto Sans KR', sans-serif;
-
-}
   
   .footer {
     position: fixed;
