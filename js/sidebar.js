@@ -1,6 +1,7 @@
 import { handleLayout } from '/js/onload.js';  // Import the function
 
 // Fetch sidebar HTML dynamically and insert it into the page
+document.addEventListener('DOMContentLoaded', function() {
 
 fetch('/html/sidebar.html')
     .then(response => response.text())
@@ -98,4 +99,4 @@ fetch('/html/sidebar.html')
     }, 100);
 
       
-
+});

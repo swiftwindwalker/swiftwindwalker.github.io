@@ -1,6 +1,7 @@
 import { handleLayout } from '/js/onload.js';  // Import the function
 
 // Fetch sidebar HTML dynamically and insert it into the page
+document.addEventListener('DOMContentLoaded', function() {
 
 fetch('/html/navbar.html')
     .then(response => response.text())
@@ -92,3 +93,5 @@ document.querySelectorAll(".shuffle-text > a").forEach(textElement => {
 	}
 })
 };
+
+});
