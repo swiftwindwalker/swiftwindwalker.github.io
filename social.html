@@ -24,10 +24,14 @@
     <script type="module" src="/js/navbar.js" defer></script>
     <script type="module" src="/js/sidebar.js" defer></script>
     <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap');
+
         :root {
             --black: #000000;
-            --white: #ffffff;
+            --white: #f1f1f1;
             --red: #ff0000;
             --grey: #2a2a2a;
             --light-grey: #e0e0e0;
@@ -42,44 +46,41 @@
         }
 
         body {
-            background-color: var(--black);
+            background-color: var(--white);
             color: var(--white);
             min-height: 100vh;
             max-width: 100vw;
+            font-family: 'Inter', sans-serif;
         }
 
         .nav-menu a {
             text-transform: uppercase;
+            color: var(--black);
         }
 
         header {
             padding-top: 3rem;
-            padding-bottom: 1.5rem;
+            padding-bottom: 1rem;
             text-align: center;
-            background-color: var(--grey);
+            background-color: var(--white);
             border-bottom: 1px solid var(--red);
         }
 
         h1 {
-            top: 2rem;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            letter-spacing: -0.5px;
+            color: var(--black);
+            font-family: 'Playfair Display', serif;
         }
 
         .subtitle {
-            opacity: 0.8;
-            font-weight: 300;
-            font-size: 0.9rem;
-            color: var(--light-grey);
+            color: grey;
+            font-family: 'Inter', sans-serif;
         }
 
         .socials-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
-            padding: 3rem;
+            padding: 2rem;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -179,7 +180,7 @@
             gap: 1rem;
             padding: 1rem;
             flex-wrap: wrap;
-            background: var(--grey);
+            background: var(--white);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -220,7 +221,7 @@
             text-align: center;
             width: 100%;
             /* Optional, for visibility */
-            color: var(--gray-500);
+            color: var(--black);
             /* Optional, for text color */
             padding: 10px 0;
         }
@@ -271,7 +272,7 @@
 
         /* Specific color for each icon */
         .fa-github {
-            color: lightblue !important;
+            color: black !important;
             /* Facebook blue */
         }
 
@@ -301,7 +302,7 @@
         }
 
         .fa-medium {
-            color: lightgray !important;
+            color: black !important;
             /* Facebook blue */
         }
 
@@ -353,9 +354,9 @@
     <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
     <button class="menu-btn">☰</button>
     <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
-    <header>
-        <h1>In a Galaxy Not So Far Away</h1>
-        <p class="subtitle">Explore my latest content across platforms</p>
+    <header class="text-center border-b border-gray-200 px-1">
+        <h1 class="text-2xl sm:text-5xl font-semibold headline tracking-widest">In a Galaxy Not So Far Away</h1>
+        <p class="uppercase text-xs mt-2 tracking-wider text-gray-500">Explore my latest content across platforms</p>
     </header>
 
     <div class="filter-buttons">
