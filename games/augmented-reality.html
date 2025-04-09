@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script type="module" src="/js/onload.js"></script>
     <script type="module" src="/js/navbar.js"></script>
     <script type="module" src="/js/sidebar.js"></script>
     <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
@@ -37,7 +38,7 @@
 
         body {
             margin: 0;
-            font-size: 8px;
+            font-size: 16px;
             font-family: 'Noto Sans KR', sans-serif;
             background: #000;
         }
@@ -128,13 +129,16 @@
 
             /* Larger buttons for mobile */
             .controls button {
-                padding: 16px 24px;
-                font-size: 2.5rem;
+                font-size: 3rem;
                 margin-bottom: 3rem;
             }
 
             .menu-btn {
-                font-size : 2.5rem;
+                font-size : 4rem;
+            }
+            .menu-link {
+                font-size : 4rem;
+
             }
 
             /* Adjust control spacing for mobile */
@@ -234,7 +238,7 @@
             lighting.style.height = '100vh';
             lighting.style.background = 'radial-gradient(circle at center, rgba(0,255,255,0.1) 0%, transparent 60%)';
             lighting.style.pointerEvents = 'none';
-            lighting.style.animation = 'rotate 20s linear infinite';
+           // lighting.style.animation = 'rotate 20s linear infinite';
             document.body.appendChild(lighting);
 
             // CSS for lighting animation
