@@ -267,7 +267,7 @@
     <div class="footer"> &copy;2025 ravzzy</div>
 
     <script>
-        // Add this at the beginning of your script to prevent touch scrolling
+        // Prevent touch scrolling
         document.addEventListener('touchmove', function (e) {
             e.preventDefault();
         }, { passive: false });
@@ -281,7 +281,7 @@
         const models = [
             { url: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb', name: 'Astronaut' },
             { url: 'https://modelviewer.dev/shared-assets/models/RobotExpressive.glb', name: 'Robot' },
-            { url: 'https://modelviewer.dev/shared-assets/models/Fox.glb', name: 'Fox' },
+            { url: './asset/tifa.glb', name: 'Tifa' },
             { url: 'https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb', name: 'Neil Armstrong' }
         ];
 
@@ -319,7 +319,7 @@
             }, 1000);
         });
 
-        // Add cool lighting effect when model is loaded
+        // cool lighting effect when model is loaded
         modelViewer.addEventListener('load', () => {
             // Create dynamic lighting
             const lighting = document.createElement('div');
@@ -331,7 +331,7 @@
             lighting.style.animation = 'rotate 20s linear infinite';
             document.body.appendChild(lighting);
 
-            // Add CSS for lighting animation
+            // CSS for lighting animation
             const style = document.createElement('style');
             style.textContent = `
             @keyframes rotate {
