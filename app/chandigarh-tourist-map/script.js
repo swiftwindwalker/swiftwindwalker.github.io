@@ -123,55 +123,11 @@ const attractions = [
     }
 ];
 
-// Store all markers
+// Store all markers and list items
 const allMarkers = [];
+const allListItems = [];
 
-// Add markers to map
-attractions.forEach(attraction => {
-    const marker = L.marker(attraction.location, {
-        icon: createCustomIcon(attraction.type)
-    });
-
-    // Create popup content
-    let popupContent = `
-        <h3>${attraction.name}</h3>
-        ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" style="width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:10px;">` : ''}
-        <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
-            <span><i class="fas fa-${attractionTypes[attraction.type].icon}"></i> ${attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</span>
-    `;
-    
-    if (attraction.type === 'restaurant') {
-        popupContent += `<span><i class="fas fa-rupee-sign"></i> ${attraction.price === 'high' ? '₹₹₹ (Expensive)' : attraction.price === 'medium' ? '₹₹ (Moderate)' : '₹ (Budget)'}</span>`;
-    }
-    
-    if (attraction.rating) {
-        popupContent += `<span><i class="fas fa-star"></i> ${attraction.rating}</span>`;
-    }
-    
-    if (attraction.openingHours) {
-        popupContent += `<span><i class="fas fa-clock"></i> ${attraction.openingHours}</span>`;
-    }
-    
-    popupContent += `</div>
-        <p style="margin-bottom:10px;">${attraction.description}</p>
-    `;
-    
-    if (attraction.website) {
-        popupContent += `<a href="${attraction.website}" target="_blank" style="display:inline-block;background:#4361ee;color:white;padding:5px 10px;border-radius:5px;text-decoration:none;"><i class="fas fa-external-link-alt"></i> Official Website</a>`;
-    }
-    
-    marker.bindPopup(popupContent);
-    marker.addTo(map);
-    
-    // Store marker with its data
-    allMarkers.push({
-        marker: marker,
-        type: attraction.type,
-        id: attraction.id
-    });
-});
-
-// Initialize filters
+// Initialize filters for both desktop and mobile
 function initializeFilters() {
     const desktopFilters = document.getElementById('filter-options');
     const mobileFilters = document.getElementById('mobile-filter-grid');
@@ -179,36 +135,95 @@ function initializeFilters() {
     Object.keys(attractionTypes).forEach(type => {
         const typeData = attractionTypes[type];
         
-        // Desktop filter
+        // Create common inner HTML for the filter option
+        const filterHTML = `
+            <input type="checkbox" class="filter" value="${type}" checked>
+            <span class="filter-label"><i class="fas fa-${typeData.icon}"></i> ${type.charAt(0).toUpperCase() + type.slice(1)}</span>
+        `;
+        
+        // Desktop filter element
         const desktopFilter = document.createElement('label');
         desktopFilter.className = 'filter-option';
-        desktopFilter.innerHTML = `
-            <input type="checkbox" class="filter" value="${type}" checked>
-            <span class="filter-label"><i class="fas fa-${typeData.icon}"></i> ${type.charAt(0).toUpperCase() + type.slice(1)}</span>
-        `;
+        desktopFilter.innerHTML = filterHTML;
         desktopFilters.appendChild(desktopFilter);
         
-        // Mobile filter
+        // Mobile filter element
         const mobileFilter = document.createElement('label');
         mobileFilter.className = 'filter-option';
-        mobileFilter.innerHTML = `
-            <input type="checkbox" class="filter" value="${type}" checked>
-            <span class="filter-label"><i class="fas fa-${typeData.icon}"></i> ${type.charAt(0).toUpperCase() + type.slice(1)}</span>
-        `;
+        mobileFilter.innerHTML = filterHTML;
         mobileFilters.appendChild(mobileFilter);
     });
     
-    // Add event listeners to filters
+    // Attach a single change event listener to each filter input to sync the two groups
+    syncFilters();
+}
+
+// Synchronize desktop and mobile filter checkboxes with the same value
+function syncFilters() {
+    // For each checkbox, when changed update all checkboxes with the same value.
     document.querySelectorAll('.filter').forEach(filter => {
-        filter.addEventListener('change', updateVisibleAttractions);
+        filter.addEventListener('change', e => {
+            const { value, checked } = e.target;
+            // Update all checkboxes that share the same value.
+            document.querySelectorAll(`.filter[value="${value}"]`).forEach(cb => {
+                cb.checked = checked;
+            });
+            updateVisibleAttractions();
+        });
     });
 }
 
-// Initialize attraction list
-function initializeAttractionList() {
+// Initialize attraction list and markers
+function initializeAttractions() {
     const listContainer = document.getElementById('attractions-list');
     
     attractions.forEach(attraction => {
+        // Create marker
+        const marker = L.marker(attraction.location, {
+            icon: createCustomIcon(attraction.type)
+        });
+
+        // Create popup content
+        let popupContent = `
+            <h3>${attraction.name}</h3>
+            ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" style="width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:10px;">` : ''}
+            <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
+                <span><i class="fas fa-${attractionTypes[attraction.type].icon}"></i> ${attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</span>
+        `;
+        
+        if (attraction.type === 'restaurant') {
+            popupContent += `<span><i class="fas fa-rupee-sign"></i> ${
+                attraction.price === 'high' ? '₹₹₹ (Expensive)' : 
+                attraction.price === 'medium' ? '₹₹ (Moderate)' : '₹ (Budget)'
+            }</span>`;
+        }
+        
+        if (attraction.rating) {
+            popupContent += `<span><i class="fas fa-star"></i> ${attraction.rating}</span>`;
+        }
+        
+        if (attraction.openingHours) {
+            popupContent += `<span><i class="fas fa-clock"></i> ${attraction.openingHours}</span>`;
+        }
+        
+        popupContent += `</div>
+            <p style="margin-bottom:10px;">${attraction.description}</p>
+        `;
+        
+        if (attraction.website) {
+            popupContent += `<a href="${attraction.website}" target="_blank" style="display:inline-block;background:#4361ee;color:white;padding:5px 10px;border-radius:5px;text-decoration:none;"><i class="fas fa-external-link-alt"></i> Official Website</a>`;
+        }
+        
+        marker.bindPopup(popupContent);
+        
+        // Store marker with its type and id
+        allMarkers.push({
+            marker: marker,
+            type: attraction.type,
+            id: attraction.id
+        });
+
+        // Create list item
         const item = document.createElement('div');
         item.className = 'attraction-item';
         item.dataset.id = attraction.id;
@@ -235,33 +250,33 @@ function initializeAttractionList() {
         
         item.addEventListener('click', () => {
             map.setView(attraction.location, 16);
-            // Find and open the corresponding marker's popup
-            allMarkers.forEach(markerObj => {
-                if (markerObj.id === attraction.id) {
-                    markerObj.marker.openPopup();
-                }
-            });
+            marker.openPopup();
         });
         
         listContainer.appendChild(item);
+        allListItems.push(item);
     });
     
-    updateAttractionCount(attractions.length);
+    updateVisibleAttractions();
 }
 
-// Update visible attractions based on filters
+// Update visible attractions based on selected filters and the search term
 function updateVisibleAttractions() {
-    const selectedTypes = Array.from(document.querySelectorAll('.filter:checked')).map(f => f.value);
-    const searchTerm = document.getElementById('search').value.toLowerCase();
+    // Get unique selected types (from both desktop and mobile)
+    const selectedTypes = [...new Set(
+      Array.from(document.querySelectorAll('.filter:checked')).map(f => f.value)
+    )];
     
+    const searchTerm = document.getElementById('search').value.toLowerCase();
     let visibleCount = 0;
     
-    // Update map markers
+    // Update map markers visibility
     allMarkers.forEach(markerObj => {
-        const shouldShow = selectedTypes.includes(markerObj.type) && 
-                         markerObj.marker.getPopup().getContent().toLowerCase().includes(searchTerm);
+        const attraction = attractions.find(a => a.id === markerObj.id);
+        const matchesType = selectedTypes.includes(markerObj.type);
+        const matchesSearch = attraction.name.toLowerCase().includes(searchTerm);
         
-        if (shouldShow) {
+        if (matchesType && matchesSearch) {
             markerObj.marker.addTo(map);
             visibleCount++;
         } else {
@@ -269,8 +284,8 @@ function updateVisibleAttractions() {
         }
     });
     
-    // Update list items
-    document.querySelectorAll('.attraction-item').forEach(item => {
+    // Update list items visibility
+    allListItems.forEach(item => {
         const matchesType = selectedTypes.includes(item.dataset.type);
         const matchesSearch = item.querySelector('h4').textContent.toLowerCase().includes(searchTerm);
         
@@ -284,17 +299,17 @@ function updateVisibleAttractions() {
     updateAttractionCount(visibleCount);
 }
 
-// Update attraction count
+// Update the displayed count of visible attractions
 function updateAttractionCount(count) {
     document.getElementById('count').textContent = `(${count})`;
 }
 
 // Search functionality
-document.getElementById('search').addEventListener('input', (e) => {
+document.getElementById('search').addEventListener('input', () => {
     updateVisibleAttractions();
 });
 
-// Select All/Deselect All functionality
+// Select All/Deselect All functionality (Desktop)
 document.getElementById('select-all').addEventListener('click', () => {
     document.querySelectorAll('.sidebar .filter').forEach(filter => {
         filter.checked = true;
@@ -309,6 +324,7 @@ document.getElementById('deselect-all').addEventListener('click', () => {
     updateVisibleAttractions();
 });
 
+// Select All/Deselect All functionality (Mobile)
 document.getElementById('select-all-mobile').addEventListener('click', () => {
     document.querySelectorAll('.mobile-filters .filter').forEach(filter => {
         filter.checked = true;
@@ -323,12 +339,12 @@ document.getElementById('deselect-all-mobile').addEventListener('click', () => {
     updateVisibleAttractions();
 });
 
-// Mobile filters toggle
+// Mobile filters toggle (if needed)
 document.getElementById('filter-toggle').addEventListener('click', () => {
     document.getElementById('mobile-filters').classList.toggle('active');
 });
 
-// Locate user
+// Locate user functionality
 document.getElementById('locate-btn').addEventListener('click', () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -357,5 +373,4 @@ document.getElementById('locate-btn').addEventListener('click', () => {
 
 // Initialize the app
 initializeFilters();
-initializeAttractionList();
-updateVisibleAttractions();
+initializeAttractions();
