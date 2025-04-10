@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chandigarh Tourist Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1><i class="fas fa-map-marked-alt"></i> Chandigarh Tourist Map</h1>
+            <div class="mobile-controls">
+                <button id="filter-toggle"><i class="fas fa-filter"></i> Filters</button>
+                <button id="locate-btn"><i class="fas fa-location-arrow"></i></button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Mobile Filters -->
+            <div class="mobile-filters" id="mobile-filters">
+                <div class="filter-actions">
+                    <button id="select-all-mobile">Select All</button>
+                    <button id="deselect-all-mobile">Deselect All</button>
+                </div>
+                <div class="filter-grid" id="mobile-filter-grid"></div>
+            </div>
+
+            <!-- Desktop Sidebar -->
+            <aside class="sidebar">
+                <div class="search-box">
+                    <input type="text" id="search" placeholder="Search attractions...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="filter-section">
+                    <div class="filter-actions">
+                        <button id="select-all">Select All</button>
+                        <button id="deselect-all">Deselect All</button>
+                    </div>
+                    <div class="filter-options" id="filter-options"></div>
+                </div>
+                
+                <div class="attractions-list">
+                    <h3><i class="fas fa-list"></i> Attractions <span id="count">(0)</span></h3>
+                    <div class="list-container" id="attractions-list"></div>
+                </div>
+            </aside>
+
+            <!-- Map Container -->
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-legend">
+                    <div><i class="fas fa-utensils"></i> Restaurants</div>
+                    <div><i class="fas fa-landmark"></i> Historical</div>
+                    <div><i class="fas fa-toilet"></i> Toilets</div>
+                    <div><i class="fas fa-shopping-bag"></i> Shopping</div>
+                    <div><i class="fas fa-university"></i> Museums</div>
+                    <div><i class="fas fa-pray"></i> Religious</div>
+                    <div><i class="fas fa-tree"></i> Parks</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
