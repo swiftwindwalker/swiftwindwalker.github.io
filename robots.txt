@@ -10,4 +10,4 @@ Disallow: /cgi-bin/
 Allow: /
 
 # Sitemap location (update this if your sitemap has a different URL)
-Sitemap: https://ravzzy.com/sitemap.xml
+Sitemap: https://www.ravzzy.com/sitemap.xml
