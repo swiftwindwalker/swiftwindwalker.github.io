@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +21,9 @@
             --dark: #1e293b;
             --gray: #94a3b8;
             --radius: 8px;
-            --shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            --panel-width: 350px;
+            --panel-transition: transform 0.3s ease-in-out;
         }
 
         * {
@@ -158,19 +161,59 @@
             text-align: center;
         }
 
-        /* Attractions List */
+        /* Attractions Panel */
         .attractions-container {
             position: absolute;
-            right: 10px;
-            top: 10px;
-            bottom: 10px;
-            width: 350px;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: var(--panel-width);
             background: white;
-            border-radius: var(--radius);
             box-shadow: var(--shadow);
             z-index: 100;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            transform: translateX(calc(var(--panel-width) - 40px));
+            transition: var(--panel-transition);
+        }
+
+        .attractions-container.open {
+            transform: translateX(0);
+        }
+
+        .attractions-handle {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 80px;
+            background: white;
+            border-radius: var(--radius) 0 0 var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .attractions-handle i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .attractions-handle i,
+        .map-control-btn i {
+            transition: all 0.3s ease;
+        }
+
+        .attractions-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-left: 40px;
             overflow: hidden;
         }
 
@@ -244,12 +287,21 @@
         /* Map Controls */
         .map-controls {
             position: absolute;
-            right: 370px;
+            right: calc(var(--panel-width) + 20px);
             top: 10px;
             z-index: 100;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            transition: right 0.3s ease;
+        }
+
+        .attractions-container.open~.map-controls {
+            right: calc(var(--panel-width) + 20px);
+        }
+
+        .attractions-container:not(.open)~.map-controls {
+            right: 20px;
         }
 
         .map-control-btn {
@@ -270,7 +322,7 @@
             position: absolute;
             bottom: 20px;
             right: 20px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             padding: 0.75rem 1rem;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
@@ -293,22 +345,29 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
+            :root {
+                --panel-width: 85%;
+            }
+
             .attractions-container {
-                width: 100%;
-                right: 0;
-                bottom: 0;
-                top: auto;
-                height: 40vh;
-                border-radius: var(--radius) var(--radius) 0 0;
+                transform: translateX(100%);
             }
-            
+
+            .attractions-container.open {
+                transform: translateX(calc(100% - var(--panel-width)));
+            }
+
+            .attractions-handle {
+                left: -40px;
+                border-radius: 0 var(--radius) var(--radius) 0;
+            }
+
+            .attractions-content {
+                margin-left: 0;
+            }
+
             .map-controls {
-                right: 10px;
-                bottom: calc(40vh + 20px);
-            }
-            
-            .header-container {
-                max-width: calc(100% - 20px);
+                right: 20px;
             }
         }
 
@@ -380,9 +439,10 @@
         }
     </style>
 </head>
+
 <body>
     <div id="map"></div>
-    
+
     <!-- Header and Filter Dropdown -->
     <div class="header-container">
         <div class="app-header">
@@ -391,7 +451,7 @@
                 <i class="fas fa-filter"></i> Filters
             </button>
         </div>
-        
+
         <div class="filter-dropdown" id="filter-dropdown">
             <div class="filter-actions">
                 <button id="select-all">Select All</button>
@@ -400,22 +460,31 @@
             <div class="filter-options" id="filter-options"></div>
         </div>
     </div>
-    
-    <!-- Attractions List -->
-    <div class="attractions-container">
-        <div class="attractions-header">
-            <h3><i class="fas fa-list"></i> Attractions <span id="count">(0)</span></h3>
+
+    <!-- Attractions Panel -->
+    <div class="attractions-container" id="attractions-container">
+        <div class="attractions-handle" id="attractions-handle">
+            <i id="chevron-handle" class="fa-solid fa-chevron-right"></i>
         </div>
-        <div class="attractions-list" id="attractions-list"></div>
+        <div class="attractions-content">
+            <div class="attractions-header">
+                <h3><i class="fas fa-list"></i> Attractions <span id="count">(0)</span></h3>
+            </div>
+            <div class="attractions-list" id="attractions-list"></div>
+        </div>
     </div>
-    
+
     <!-- Map Controls -->
     <div class="map-controls">
         <button class="map-control-btn" id="locate-btn" title="Locate me">
             <i class="fas fa-location-arrow"></i>
         </button>
+        <button class="map-control-btn" id="toggle-panel-btn" title="Toggle panel">
+            <i id="chevron-btn" class="fa-solid fa-chevron-right"></i>
+        </button>
     </div>
-    
+
+
     <!-- Map Legend -->
     <div class="map-legend">
         <div><i class="fas fa-utensils"></i> Restaurants</div>
@@ -681,10 +750,10 @@
         // Initialize filters
         function initializeFilters() {
             const filterOptions = document.getElementById('filter-options');
-            
+
             Object.keys(attractionTypes).forEach(type => {
                 const typeData = attractionTypes[type];
-                
+
                 const filterOption = document.createElement('label');
                 filterOption.className = 'filter-option';
                 filterOption.innerHTML = `
@@ -693,7 +762,7 @@
                 `;
                 filterOptions.appendChild(filterOption);
             });
-            
+
             // Attach change event listeners to filters
             document.querySelectorAll('.filter').forEach(filter => {
                 filter.addEventListener('change', () => {
@@ -705,7 +774,7 @@
         // Initialize attraction list and markers
         function initializeAttractions() {
             const listContainer = document.getElementById('attractions-list');
-            
+
             attractions.forEach(attraction => {
                 // Create marker
                 const marker = L.marker(attraction.location, {
@@ -719,32 +788,31 @@
                     <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
                         <span><i class="fas fa-${attractionTypes[attraction.type].icon}"></i> ${attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</span>
                 `;
-                
+
                 if (attraction.price) {
-                    popupContent += `<span><i class="fa-solid fa-indian-rupee-sign"></i> ${
-                        attraction.price === 'high' ? 'Expensive' : 
+                    popupContent += `<span><i class="fa-solid fa-indian-rupee-sign"></i> ${attraction.price === 'high' ? 'Expensive' :
                         attraction.price === 'medium' ? 'Moderate' : 'Budget'
-                    }</span>`;
+                        }</span>`;
                 }
-                
+
                 if (attraction.rating) {
                     popupContent += `<span><i class="fas fa-star"></i> ${attraction.rating}</span>`;
                 }
-                
+
                 if (attraction.openingHours) {
                     popupContent += `<span><i class="fas fa-clock"></i> ${attraction.openingHours}</span>`;
                 }
-                
+
                 popupContent += `</div>
                     <p style="margin-bottom:10px;">${attraction.description}</p>
                 `;
-                
+
                 if (attraction.website) {
                     popupContent += `<a href="${attraction.website}" target="_blank" style="display:inline-block;background:#4361ee;color:white;padding:5px 10px;border-radius:5px;text-decoration:none;"><i class="fas fa-external-link-alt"></i> Official Website</a>`;
                 }
-                
+
                 marker.bindPopup(popupContent);
-                
+
                 // Store marker with its type and id
                 allMarkers.push({
                     marker: marker,
@@ -757,7 +825,7 @@
                 item.className = 'attraction-item';
                 item.dataset.id = attraction.id;
                 item.dataset.type = attraction.type;
-                
+
                 item.innerHTML = `
                     <h4>${attraction.name}</h4>
                     <div class="attraction-meta">
@@ -766,16 +834,16 @@
                     </div>
                     ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" class="attraction-image">` : ''}
                 `;
-                
+
                 item.addEventListener('click', () => {
                     map.setView(attraction.location, 16);
                     marker.openPopup();
                 });
-                
+
                 listContainer.appendChild(item);
                 allListItems.push(item);
             });
-            
+
             updateVisibleAttractions();
         }
 
@@ -783,7 +851,7 @@
         function updateVisibleAttractions() {
             const selectedTypes = Array.from(document.querySelectorAll('.filter:checked')).map(f => f.value);
             let visibleCount = 0;
-            
+
             // Update map markers visibility
             allMarkers.forEach(markerObj => {
                 if (selectedTypes.includes(markerObj.type)) {
@@ -793,7 +861,7 @@
                     markerObj.marker.remove();
                 }
             });
-            
+
             // Update list items visibility
             allListItems.forEach(item => {
                 if (selectedTypes.includes(item.dataset.type)) {
@@ -802,7 +870,7 @@
                     item.style.display = 'none';
                 }
             });
-            
+
             updateAttractionCount(visibleCount);
         }
 
@@ -827,6 +895,86 @@
             }
         });
 
+
+
+
+
+
+
+
+
+
+        // Toggle attractions panel
+        // Toggle attractions panel
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Get references to elements
+    const attractionsContainer = document.getElementById('attractions-container');
+    const attractionsHandle = document.getElementById('attractions-handle');
+    const togglePanelBtn = document.getElementById('toggle-panel-btn');
+
+    // Only proceed if all required elements exist
+    if (!attractionsContainer || !attractionsHandle || !togglePanelBtn) {
+        console.error('Required elements not found in DOM');
+        return;
+    }
+
+    function toggleAttractionsPanel() {
+        console.log('Toggling panel...');
+        const isNowOpen = attractionsContainer.classList.toggle('open');
+        updateChevronIcons(isNowOpen);
+    }
+
+    function updateChevronIcons(isPanelOpen) {
+    const handleIcon = document.getElementById('chevron-handle');
+    const panelBtnIcon = document.getElementById('chevron-btn');
+
+    if (handleIcon && panelBtnIcon) {
+        const iconName = isPanelOpen ? 'chevron-left' : 'chevron-right';
+
+        // Font Awesome auto-replaces <i> with <svg>, so we update data-icon
+        handleIcon.setAttribute('data-icon', iconName);
+        panelBtnIcon.setAttribute('data-icon', iconName);
+
+        // Optional: also update class to help with fallback
+        handleIcon.classList.remove('fa-chevron-left', 'fa-chevron-right');
+        handleIcon.classList.add(`fa-${iconName}`);
+
+        panelBtnIcon.classList.remove('fa-chevron-left', 'fa-chevron-right');
+        panelBtnIcon.classList.add(`fa-${iconName}`);
+    } else {
+        console.warn('Chevron icons not found');
+    }
+}
+
+
+
+
+
+    // Initialize the panel state
+    function initializePanel() {
+        // Ensure panel starts closed
+        attractionsContainer.classList.remove('open');
+        
+        // Set initial icons
+        updateChevronIcons(false);
+        
+        // Set up event listeners
+        attractionsHandle.addEventListener('click', toggleAttractionsPanel);
+        togglePanelBtn.addEventListener('click', toggleAttractionsPanel);
+    }
+
+    // Initialize the panel
+    initializePanel();
+});
+
+
+
+
+
+
+
+
         // Select All/Deselect All functionality
         document.getElementById('select-all').addEventListener('click', () => {
             document.querySelectorAll('.filter').forEach(filter => {
@@ -849,7 +997,7 @@
                     position => {
                         const userLocation = [position.coords.latitude, position.coords.longitude];
                         map.setView(userLocation, 15);
-                        
+
                         L.marker(userLocation, {
                             icon: L.divIcon({
                                 className: 'user-location-icon',
@@ -874,4 +1022,5 @@
         initializeAttractions();
     </script>
 </body>
+
 </html>
