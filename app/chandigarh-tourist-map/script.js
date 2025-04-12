@@ -51,7 +51,7 @@ function createCustomIcon(type) {
 const attractions = [
     {
         id: 1,
-        name: "The Taj Chandigarh",
+        name: "The Taj Chandigarh, Sector 17",
         location: [30.7455673, 76.7851957],
         type: "hotels",
         price: "high",
@@ -63,7 +63,7 @@ const attractions = [
     },
     {
         id: 2,
-        name: "Rock Garden",
+        name: "Rock Garden, Sector 1",
         location: [30.753402769627606, 76.80940495108885],
         type: "historical",
         image: "https://chandigarhtourism.gov.in/uploads/IMG_37281.jpg",
@@ -74,7 +74,7 @@ const attractions = [
     },
     {
         id: 3,
-        name: "Capitol Complex",
+        name: "Capitol Complex, Sector 1",
         location: [30.75931744094497, 76.80818794575899],
         type: "historical",
         image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/5c/50/39/massing-at-its-best.jpg?w=1800&h=-1&s=1",
@@ -94,7 +94,7 @@ const attractions = [
     },
     {
         id: 5,
-        name: "Elante Mall",
+        name: "Elante Mall, Industrial Area Phase 1",
         location: [30.706839047446945, 76.80400865021424],
         type: "shopping",
         image: "https://www.nexusselecttrust.com/resources/assets/images/nexus-elante/exterior/Exterior06.jpg",
@@ -105,7 +105,7 @@ const attractions = [
     },
     {
         id: 6,
-        name: "Natural History Museum",
+        name: "Natural History Museum, Sector 10",
         location: [30.749106369205858, 76.78363501910539],
         type: "museum",
         image: "https://chdmuseum.gov.in//admin/uploads/background/6803a23d1c4810484ed6679342c00771.jpg",
@@ -116,7 +116,7 @@ const attractions = [
     },
     {
         id: 7,
-        name: "ISKCON Temple",
+        name: "ISKCON Temple, Sector 36",
         location: [30.734953196041875, 76.76362353558507],
         type: "religious",
         image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/c7/92/0a/iskcon-temple-chandigarh.jpg?w=1400&h=800&s=1",
@@ -127,17 +127,65 @@ const attractions = [
     },
     {
         id: 8,
-        name: "Back to Source",
+        name: "Back to Source, Sector 17",
         location: [30.74363545826538, 76.78786944415323],
         type: "cafe",
         price: "high",
         image: "https://lh3.googleusercontent.com/ZmRIYlveWJJaPhHR5UcZcNN6BvPNY_J9-AN_baOc1qIoR7KiU0kBqGeZKwCQQual19-SkPK3iBNoWiGEiWMR1_JNGxzU7Ts3qpM=s1800",
         description: "Plant-filled space offering coffee, pastries & meals made with thoughtfully sourced ingredients.",
         website: "https://back2source.in/",
-        openingHours: "Sunday, 9:30 AM–11 PM",
+        openingHours: "9:30 AM–11 PM",
         rating: "4.5/5"
+    },
+    {
+        id: 9,
+        name: "Dastaan, Sector 7",
+        location: [30.730181422446208, 76.80210067317164],
+        type: "restaurant",
+        price: "high",
+        image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/a4/96/e0/fb-img-1613325870627.jpg?w=1000&h=600&s=1",
+        description: "Polished restaurant specializing in elevated traditional dishes, including curry & rice meals.",
+        website: "https://www.swiggy.com/restaurants/dastaan-sector-7-sector26-32-chandigarh-64358/dineout?is_retargeting=true&media_source=GoogleReserve&utm_campaign=GoogleMap&utm_source=GoogleReserve",
+        openingHours: "11:30 AM – 11:30 PM",
+        rating: "4.4/5"
+    },
+    {
+        id: 10,
+        name: "Sukhna Lake, Sector 1",
+        location: [30.744992597596827, 76.81003942402694],
+        type: "historical",
+        image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/8a/a0/07/this-photo-was-clicked.jpg?w=1400&h=-1&s=1",
+        description: "Lively spot for boating on the lake, plus jogging, bird-watching & other waterside activities.",
+        website: "https://chandigarhtourism.gov.in/pages/page/lake",
+        openingHours: "5:00 AM – 9:00 PM",
+        rating: "4.5/5"
+    },
+    {
+        id: 11,
+        name: "Garg Chaat, Sector 23",
+        location: [30.73788924976692, 76.76699087871121],
+        type: "fastfood",
+        price: "low",
+        image: "https://lh3.googleusercontent.com/p/AF1QipOYMoNBHzaAHqV4S7yUj45invt3zTFfYFLnzdhi=s1360-w1360-h1020",
+        description: "Famous for its chaat and street food.",
+        openingHours: "11:30 AM – 9 PM",
+        rating: "4.1/5"
+    },
+    {
+        id: 12,
+        name: "Zakir Hussain Rose Garden, Sector 16",
+        location: [30.74729717441752, 76.78371502834581],
+        type: "park",
+        price: "low",
+        image: "https://lh3.googleusercontent.com/p/AF1QipMmKZWvMFEDlbPhfDUVMzWXUKdV6t2_E_OmnYEg=w400-h225-k-no",
+        description: "Opened in 1967, this 30-acre botanical garden offers many rose varieties, walking paths & fountains.",
+        openingHours: "09:00 AM – 10:00 PM",
+        rating: "4.4/5"
     }
 ];
+
+
+
 
 // Store all markers and list items
 const allMarkers = [];
@@ -206,11 +254,10 @@ function initializeAttractions() {
             <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
                 <span><i class="fas fa-${attractionTypes[attraction.type].icon}"></i> ${attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</span>
         `;
-        
-        if (attraction.type === 'restaurant') {
-            popupContent += `<span><i class="fas fa-rupee-sign"></i> ${
-                attraction.price === 'high' ? '₹₹₹ (Expensive)' : 
-                attraction.price === 'medium' ? '₹₹ (Moderate)' : '₹ (Budget)'
+        if (attraction.type === 'restaurant', 'cafe', 'fastfood') {
+            popupContent += `<span><i class="fa-solid fa-indian-rupee-sign"></i> ${
+                attraction.price === 'high' ? 'Expensive' : 
+                attraction.price === 'medium' ? 'Moderate' : 'Budget'
             }</span>`;
         }
         
@@ -245,15 +292,15 @@ function initializeAttractions() {
         item.dataset.id = attraction.id;
         item.dataset.type = attraction.type;
         
-        let priceHtml = '';
-        if (attraction.type === 'restaurant') {
+       let priceHtml = '';
+        /*if (attraction.type === 'restaurant', 'cafe', 'fastfood') {
             const priceClass = attraction.price === 'high' ? 'price-high' : 
                              attraction.price === 'medium' ? 'price-medium' : 'price-low';
             priceHtml = `<span class="price-indicator ${priceClass}">${
-                attraction.price === 'high' ? '₹₹₹ (Expensive)' : 
-                attraction.price === 'medium' ? '₹₹ (Moderate)' : '₹ (Budget)'
+                attraction.price === 'high' ? '₹₹₹' : 
+                attraction.price === 'medium' ? '₹₹' : '₹'
             }</span>`;
-        }
+        }*/
         
         item.innerHTML = `
             <h4>${attraction.name} ${priceHtml}</h4>
