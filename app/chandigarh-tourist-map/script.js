@@ -340,9 +340,29 @@ document.getElementById('deselect-all-mobile').addEventListener('click', () => {
 });
 
 // Mobile filters toggle (if needed)
-document.getElementById('filter-toggle').addEventListener('click', () => {
-    document.getElementById('mobile-filters').classList.toggle('active');
+// Mobile filters toggle
+const filterToggle = document.getElementById('filter-toggle');
+const mobileFilters = document.getElementById('mobile-filters');
+
+filterToggle.addEventListener('click', () => {
+    mobileFilters.classList.toggle('active');
+    
+    // Close when clicking outside
+    if (mobileFilters.classList.contains('active')) {
+        setTimeout(() => {
+            document.addEventListener('click', closeFiltersOnClickOutside);
+        }, 10);
+    } else {
+        document.removeEventListener('click', closeFiltersOnClickOutside);
+    }
 });
+
+function closeFiltersOnClickOutside(e) {
+    if (!mobileFilters.contains(e.target) && e.target !== filterToggle) {
+        mobileFilters.classList.remove('active');
+        document.removeEventListener('click', closeFiltersOnClickOutside);
+    }
+}
 
 // Locate user functionality
 document.getElementById('locate-btn').addEventListener('click', () => {
