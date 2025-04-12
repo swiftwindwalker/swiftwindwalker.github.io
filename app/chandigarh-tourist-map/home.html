@@ -189,7 +189,6 @@
             transform: translateY(-50%);
             width: 40px;
             height: 80px;
-            /*background: #e61618;*/
             background: var(--primary);
             border-radius: var(--radius) 0 0 var(--radius);
             box-shadow: var(--shadow);
@@ -289,21 +288,12 @@
         /* Map Controls */
         .map-controls {
             position: absolute;
-            right: calc(var(--panel-width) + 20px);
-            top: 100px;
+            left: 20px;
+            bottom: 20px;
             z-index: 100;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            transition: right 0.3s ease;
-        }
-
-        .attractions-container.open~.map-controls {
-            right: calc(var(--panel-width) + 20px);
-        }
-
-        .attractions-container:not(.open)~.map-controls {
-            right: 20px;
         }
 
         .map-control-btn {
@@ -348,16 +338,30 @@
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             :root {
-                --panel-width: 85%;
+                --panel-width: 100%;
+            }
+
+            .app-header h1 {
+                font-size: 1rem;
+
+            }
+
+            .app-header {
+                width: calc(var(--panel-width) - 30px);
             }
 
             .attractions-container {
-                transform: translateX(100%);
+                transform: translateX(calc(var(--panel-width) - 10px));
             }
 
-            .attractions-container.open {
-                transform: translateX(calc(100% - var(--panel-width)));
+            .attractions-handle {
+                width: 20px;
+                height: 80px;
             }
+            /*
+            .attractions-container.open {
+                transform: translateX(15%);
+            } 
 
             .attractions-handle {
                 left: -40px;
@@ -365,12 +369,8 @@
             }
 
             .attractions-content {
-                margin-left: 0;
-            }
-
-            .map-controls {
-                right: 20px;
-            }
+                margin-left: 40px;
+            } */
         }
 
         /* Popup Styles */
@@ -448,7 +448,7 @@
     <!-- Header and Filter Dropdown -->
     <div class="header-container">
         <div class="app-header">
-            <h1><i class="fas fa-map-marked-alt"></i> Chandigarh Tourist Map</h1>
+            <h1><i class="fas fa-map-marked-alt"></i> Chandigarh: Places of Interest</h1>
             <button class="filter-toggle" id="filter-toggle">
                 <i class="fas fa-filter"></i> Filters
             </button>
@@ -481,9 +481,6 @@
         <button class="map-control-btn" id="locate-btn" title="Locate me">
             <i class="fas fa-location-arrow"></i>
         </button>
-        <button class="map-control-btn" id="toggle-panel-btn" title="Toggle panel">
-            <i id="chevron-btn" class="fa-solid fa-chevron-left"></i>
-        </button>
     </div>
 
 
@@ -500,7 +497,6 @@
         <div><i class="fas fa-pray"></i> Religious</div>
         <div><i class="fas fa-tree"></i> Parks</div>
     </div> -->
-
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
@@ -896,26 +892,15 @@
                 filterDropdown.classList.remove('active');
             }
         });
-
-
-
-
-
-
-
-
-
-
-        // Toggle attractions panel
+     // Toggle attractions panel
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Get references to elements
     const attractionsContainer = document.getElementById('attractions-container');
     const attractionsHandle = document.getElementById('attractions-handle');
-    const togglePanelBtn = document.getElementById('toggle-panel-btn');
 
     // Only proceed if all required elements exist
-    if (!attractionsContainer || !attractionsHandle || !togglePanelBtn) {
+    if (!attractionsContainer || !attractionsHandle) {
         console.error('Required elements not found in DOM');
         return;
     }
@@ -928,29 +913,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateChevronIcons(isPanelOpen) {
     const handleIcon = document.getElementById('chevron-handle');
-    const panelBtnIcon = document.getElementById('chevron-btn');
 
-    if (handleIcon && panelBtnIcon) {
+    if (handleIcon) {
         const iconName = isPanelOpen ? 'chevron-right' : 'chevron-left';
 
         // Font Awesome auto-replaces <i> with <svg>, so we update data-icon
         handleIcon.setAttribute('data-icon', iconName);
-        panelBtnIcon.setAttribute('data-icon', iconName);
 
         // Optional: also update class to help with fallback
         handleIcon.classList.remove('fa-chevron-right', 'fa-chevron-left');
         handleIcon.classList.add(`fa-${iconName}`);
 
-        panelBtnIcon.classList.remove('fa-chevron-right', 'fa-chevron-left');
-        panelBtnIcon.classList.add(`fa-${iconName}`);
     } else {
         console.warn('Chevron icons not found');
     }
 }
-
-
-
-
 
     // Initialize the panel state
     function initializePanel() {
@@ -962,19 +939,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Set up event listeners
         attractionsHandle.addEventListener('click', toggleAttractionsPanel);
-        togglePanelBtn.addEventListener('click', toggleAttractionsPanel);
     }
 
     // Initialize the panel
     initializePanel();
 });
-
-
-
-
-
-
-
 
         // Select All/Deselect All functionality
         document.getElementById('select-all').addEventListener('click', () => {
