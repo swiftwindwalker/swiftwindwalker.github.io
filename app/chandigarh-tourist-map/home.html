@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chandigarh Tourist Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --light: #f8f9fa;
+            --dark: #1e293b;
+            --gray: #94a3b8;
+            --radius: 8px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        /* Header and Filter Dropdown */
+        .header-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .app-header {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-header h1 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-toggle {
+            background: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        .filter-toggle i {
+            color: var(--primary);
+        }
+
+        .filter-dropdown {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 15px;
+            display: none;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .filter-dropdown.active {
+            display: block;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-actions button {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .filter-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius);
+            cursor: pointer;
+        }
+
+        .filter-option input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .filter-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .filter-label i {
+            color: var(--primary);
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Attractions List */
+        .attractions-container {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            bottom: 10px;
+            width: 350px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .attractions-header {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .attractions-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        #count {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: normal;
+        }
+
+        .attractions-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 15px 15px;
+        }
+
+        .attraction-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+
+        .attraction-item:last-child {
+            border-bottom: none;
+        }
+
+        .attraction-item:hover {
+            background: #f8fafc;
+        }
+
+        .attraction-item h4 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .attraction-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .attraction-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .attraction-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Map Controls */
+        .map-controls {
+            position: absolute;
+            right: 370px;
+            top: 10px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .map-control-btn {
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .map-legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            z-index: 10;
+            font-size: 0.85rem;
+        }
+
+        .map-legend div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .map-legend i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .attractions-container {
+                width: 100%;
+                right: 0;
+                bottom: 0;
+                top: auto;
+                height: 40vh;
+                border-radius: var(--radius) var(--radius) 0 0;
+            }
+            
+            .map-controls {
+                right: 10px;
+                bottom: calc(40vh + 20px);
+            }
+            
+            .header-container {
+                max-width: calc(100% - 20px);
+            }
+        }
+
+        /* Popup Styles */
+        .leaflet-popup-content {
+            width: 280px !important;
+            margin: 1rem !important;
+        }
+
+        .leaflet-popup-content-wrapper {
+            border-radius: var(--radius) !important;
+            box-shadow: var(--shadow) !important;
+        }
+
+        .leaflet-popup-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .leaflet-popup-content img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            margin-bottom: 0.75rem;
+        }
+
+        .popup-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .popup-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .popup-description {
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .popup-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        /* Marker Clusters */
+        .marker-cluster {
+            background: rgba(67, 97, 238, 0.2) !important;
+        }
+
+        .marker-cluster div {
+            background: var(--primary) !important;
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    
+    <!-- Header and Filter Dropdown -->
+    <div class="header-container">
+        <div class="app-header">
+            <h1><i class="fas fa-map-marked-alt"></i> Chandigarh Tourist Map</h1>
+            <button class="filter-toggle" id="filter-toggle">
+                <i class="fas fa-filter"></i> Filters
+            </button>
+        </div>
+        
+        <div class="filter-dropdown" id="filter-dropdown">
+            <div class="filter-actions">
+                <button id="select-all">Select All</button>
+                <button id="deselect-all">Deselect All</button>
+            </div>
+            <div class="filter-options" id="filter-options"></div>
+        </div>
+    </div>
+    
+    <!-- Attractions List -->
+    <div class="attractions-container">
+        <div class="attractions-header">
+            <h3><i class="fas fa-list"></i> Attractions <span id="count">(0)</span></h3>
+        </div>
+        <div class="attractions-list" id="attractions-list"></div>
+    </div>
+    
+    <!-- Map Controls -->
+    <div class="map-controls">
+        <button class="map-control-btn" id="locate-btn" title="Locate me">
+            <i class="fas fa-location-arrow"></i>
+        </button>
+    </div>
+    
+    <!-- Map Legend -->
+    <div class="map-legend">
+        <div><i class="fas fa-utensils"></i> Restaurants</div>
+        <div><i class="fas fa-hotel"></i> Hotels</div>
+        <div><i class="fas fa-coffee"></i> Cafe</div>
+        <div><i class="fas fa-burger"></i> Fast Food</div>
+        <div><i class="fas fa-landmark"></i> Historical</div>
+        <div><i class="fas fa-toilet"></i> Toilets</div>
+        <div><i class="fas fa-shopping-bag"></i> Shopping</div>
+        <div><i class="fas fa-university"></i> Museums</div>
+        <div><i class="fas fa-pray"></i> Religious</div>
+        <div><i class="fas fa-tree"></i> Parks</div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([30.7333, 76.7794], 13);
+
+        // Add tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Define attraction types and colors
+        const attractionTypes = {
+            restaurant: { icon: 'utensils', color: '#e63946' },
+            hotels: { icon: 'hotel', color: '#14213d' },
+            cafe: { icon: 'coffee', color: '#e07a5f' },
+            fastfood: { icon: 'burger', color: '#e07a5f' },
+            historical: { icon: 'landmark', color: '#f77f00' },
+            toilet: { icon: 'toilet', color: '#6a4c93' },
+            shopping: { icon: 'bag-shopping', color: '#457b9d' },
+            museum: { icon: 'museum', color: '#588157' },
+            religious: { icon: 'hands-praying', color: '#9d4edd' },
+            park: { icon: 'tree', color: '#2a9d8f' }
+        };
+
+        // Create custom icon function
+        function createCustomIcon(type) {
+            return L.divIcon({
+                className: 'custom-icon',
+                html: `
+                    <div style="
+                        background: ${attractionTypes[type].color};
+                        width: 36px;
+                        height: 36px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-size: 16px;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                        border: 2px solid white;
+                    ">
+                        <i class="fas fa-${attractionTypes[type].icon}"></i>
+                    </div>
+                `,
+                iconSize: [36, 36],
+                iconAnchor: [18, 18],
+                popupAnchor: [0, -18]
+            });
+        }
+
+        // Attractions data
+        const attractions = [
+            {
+                id: 1,
+                name: "The Taj Chandigarh, Sector 17",
+                location: [30.7455673, 76.7851957],
+                type: "hotels",
+                price: "high",
+                image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/20/5c/cb/exterior.jpg?w=1400&h=800&s=1",
+                description: "Upscale hotel with elegant dining options.",
+                website: "https://www.tajhotels.com/en-in/hotels/taj-chandigarh",
+                openingHours: "7:00 AM - 11:00 PM",
+                rating: "4.4/5"
+            },
+            {
+                id: 2,
+                name: "Rock Garden, Sector 1",
+                location: [30.753402769627606, 76.80940495108885],
+                type: "historical",
+                image: "https://chandigarhtourism.gov.in/uploads/IMG_37281.jpg",
+                description: "Sculpture garden built with industrial waste.",
+                website: "https://chandigarhtourism.gov.in/pages/page/rock-garden",
+                openingHours: "9:00 AM - 6:00 PM",
+                rating: "4.4/5"
+            },
+            {
+                id: 3,
+                name: "Capitol Complex, Sector 1",
+                location: [30.75931744094497, 76.80818794575899],
+                type: "historical",
+                image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/5c/50/39/massing-at-its-best.jpg?w=1800&h=-1&s=1",
+                description: "UNESCO World Heritage Site.",
+                website: "https://lecorbusier-worldheritage.org/en/complexe-du-capitole/",
+                openingHours: "10:00 AM - 5:00 PM",
+                rating: "4.1/5"
+            },
+            {
+                id: 4,
+                name: "Public Toilet - Sector 17",
+                location: [30.738251481356752, 76.78251653879303],
+                type: "toilet",
+                description: "Clean public toilet facility.",
+                openingHours: "24/7",
+                rating: "4.0/5"
+            },
+            {
+                id: 5,
+                name: "Elante Mall, Industrial Area Phase 1",
+                location: [30.706839047446945, 76.80400865021424],
+                type: "shopping",
+                price: "medium",
+                image: "https://www.nexusselecttrust.com/resources/assets/images/nexus-elante/exterior/Exterior06.jpg",
+                description: "One of the largest malls in North India.",
+                website: "https://www.nexusselecttrust.com/nexus-elante",
+                openingHours: "10:00 AM - 10:00 PM",
+                rating: "4.6/5"
+            },
+            {
+                id: 6,
+                name: "Natural History Museum, Sector 10",
+                location: [30.749106369205858, 76.78363501910539],
+                type: "museum",
+                image: "https://chdmuseum.gov.in//admin/uploads/background/6803a23d1c4810484ed6679342c00771.jpg",
+                description: "The museum has four major sections entitled as Redefining Our Past, Cyclorama of Evolution of life, Dinosaur of India, and Human Evolution",
+                website: "https://chdmuseum.gov.in/home/naturalhistorymuseum",
+                openingHours: "10:00 AM - 4:30 PM",
+                rating: "4.5/5"
+            },
+            {
+                id: 7,
+                name: "ISKCON Temple, Sector 36",
+                location: [30.734953196041875, 76.76362353558507],
+                type: "religious",
+                image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/c7/92/0a/iskcon-temple-chandigarh.jpg?w=1400&h=800&s=1",
+                description: "Beautiful Hare Krishna temple.",
+                website: "https://www.iskconchandigarh.com/",
+                openingHours: "4:30–5 AM, 7:15 AM – 12:45 PM, 4:15 – 8:30 PM",
+                rating: "4.5/5"
+            },
+            {
+                id: 8,
+                name: "Back to Source, Sector 17",
+                location: [30.74363545826538, 76.78786944415323],
+                type: "cafe",
+                price: "high",
+                image: "https://lh3.googleusercontent.com/ZmRIYlveWJJaPhHR5UcZcNN6BvPNY_J9-AN_baOc1qIoR7KiU0kBqGeZKwCQQual19-SkPK3iBNoWiGEiWMR1_JNGxzU7Ts3qpM=s1800",
+                description: "Plant-filled space offering coffee, pastries & meals made with thoughtfully sourced ingredients.",
+                website: "https://back2source.in/",
+                openingHours: "9:30 AM–11 PM",
+                rating: "4.5/5"
+            },
+            {
+                id: 9,
+                name: "Dastaan, Sector 7",
+                location: [30.730181422446208, 76.80210067317164],
+                type: "restaurant",
+                price: "high",
+                image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/a4/96/e0/fb-img-1613325870627.jpg?w=1000&h=600&s=1",
+                description: "Polished restaurant specializing in elevated traditional dishes, including curry & rice meals.",
+                website: "https://www.swiggy.com/restaurants/dastaan-sector-7-sector26-32-chandigarh-64358/dineout?is_retargeting=true&media_source=GoogleReserve&utm_campaign=GoogleMap&utm_source=GoogleReserve",
+                openingHours: "11:30 AM – 11:30 PM",
+                rating: "4.4/5"
+            },
+            {
+                id: 10,
+                name: "Sukhna Lake, Sector 1",
+                location: [30.744992597596827, 76.81003942402694],
+                type: "historical",
+                image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/8a/a0/07/this-photo-was-clicked.jpg?w=1400&h=-1&s=1",
+                description: "Lively spot for boating on the lake, plus jogging, bird-watching & other waterside activities.",
+                website: "https://chandigarhtourism.gov.in/pages/page/lake",
+                openingHours: "5:00 AM – 9:00 PM",
+                rating: "4.5/5"
+            },
+            {
+                id: 11,
+                name: "Garg Chaat, Sector 23",
+                location: [30.73788924976692, 76.76699087871121],
+                type: "fastfood",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/p/AF1QipOYMoNBHzaAHqV4S7yUj45invt3zTFfYFLnzdhi=s1360-w1360-h1020",
+                description: "Famous for its chaat and street food.",
+                openingHours: "11:30 AM – 9 PM",
+                rating: "4.1/5"
+            },
+            {
+                id: 12,
+                name: "Zakir Hussain Rose Garden, Sector 16",
+                location: [30.74729717441752, 76.78371502834581],
+                type: "park",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/p/AF1QipMmKZWvMFEDlbPhfDUVMzWXUKdV6t2_E_OmnYEg=w400-h225-k-no",
+                description: "Opened in 1967, this 30-acre botanical garden offers many rose varieties, walking paths & fountains.",
+                openingHours: "09:00 AM – 10:00 PM",
+                rating: "4.4/5"
+            },
+            {
+                id: 13,
+                name: "Plaza, Sector 17",
+                location: [30.740677573185238, 76.7826207652169],
+                type: "shopping",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu0zcy8hKPqZFjdLH-rDAGFPdHc9zh_0E6LG0saTI-AXWFEZngimsWW5BndkXT8GBNHh_jFblzuehUOqWdS3CTI1qJpYfGz3mR5xFQm3GXn4TlLY8e0SmAAsbL2Xqwq08Cilhqne=w400-h300-k-no",
+                description: "Sector 17 Plaza is a popular shopping and entertainment hub. It is known for its open spaces, branded stores, local boutiques and various dining options.",
+                openingHours: "10:00 AM – 8:00 PM",
+                rating: "4.6/5"
+            },
+            {
+                id: 14,
+                name: "Leisure Valley, Sector 10",
+                location: [30.754748654319272, 76.79404869036004],
+                type: "park",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu3kEhUOaXyP0S2x5tdxAwXdsCB6QFKeV97xlqfp1gEs6Vnigrb-52PUDXWdjcUUfHFt993T5eHhU1OXjBSSHTaS7CTWo_CCxH27CazKKqUSaa0fEz_GpC8Czt1JSFSYfNHr6m9FQg=w400-h464-k-no",
+                description: "Leisure Valley is a beautiful park located in Chandigarh, India. It is known for its lush greenery, well-maintained gardens, and serene atmosphere. The park is a popular spot for picnics, jogging, and leisurely walks.",
+                openingHours: "5:00 AM – 9:00 PM",
+                rating: "4.5/5"
+            },
+            {
+                id: 15,
+                name: "Gurudwara Sahib Ji Patshahi Dasvin, Sector 8",
+                location: [30.74257167064625, 76.79553161308576],
+                type: "religious",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/p/AF1QipOEk2vTFhaYDzADceBH9Mkk1fZLqwp4Cl4N-Yxf=w400-h533-k-no",
+                description: "A beautiful Gurudwara with a peaceful ambiance.",
+                openingHours: "4:00 AM – 10:00 PM",
+                rating: "4.8/5"
+            },
+            {
+                id: 16,
+                name: "Christ Church - C.N.I Diocese of Chandigarh, Sector 18",
+                location: [30.735898566114827, 76.78713183617879],
+                type: "religious",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/p/AF1QipNw0j5omDlEdll-5T5CpXQTcAV-xNZshZHClHSO=w400-h225-k-no",
+                description: "A beautiful church with stunning architecture.",
+                rating: "4.6/5"
+            },
+            {
+                id: 17,
+                name: "Jama Masjid Chandigarh, Sector 19",
+                location: [30.725180635971853, 76.78849407903269],
+                type: "religious",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/p/AF1QipM8Lz9XDIxcs3NtZlHG5vW2vwOrvFSPbsAo4-Ho=w400-h281-k-no",
+                description: "A beautiful mosque with stunning architecture.",
+                rating: "4.7/5"
+            }
+        ];
+
+        // Store all markers and list items
+        const allMarkers = [];
+        const allListItems = [];
+
+        // Initialize filters
+        function initializeFilters() {
+            const filterOptions = document.getElementById('filter-options');
+            
+            Object.keys(attractionTypes).forEach(type => {
+                const typeData = attractionTypes[type];
+                
+                const filterOption = document.createElement('label');
+                filterOption.className = 'filter-option';
+                filterOption.innerHTML = `
+                    <input type="checkbox" class="filter" value="${type}" checked>
+                    <span class="filter-label"><i class="fas fa-${typeData.icon}"></i> ${type.charAt(0).toUpperCase() + type.slice(1)}</span>
+                `;
+                filterOptions.appendChild(filterOption);
+            });
+            
+            // Attach change event listeners to filters
+            document.querySelectorAll('.filter').forEach(filter => {
+                filter.addEventListener('change', () => {
+                    updateVisibleAttractions();
+                });
+            });
+        }
+
+        // Initialize attraction list and markers
+        function initializeAttractions() {
+            const listContainer = document.getElementById('attractions-list');
+            
+            attractions.forEach(attraction => {
+                // Create marker
+                const marker = L.marker(attraction.location, {
+                    icon: createCustomIcon(attraction.type)
+                });
+
+                // Create popup content
+                let popupContent = `
+                    <h3>${attraction.name}</h3>
+                    ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" style="width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:10px;">` : ''}
+                    <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
+                        <span><i class="fas fa-${attractionTypes[attraction.type].icon}"></i> ${attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</span>
+                `;
+                
+                if (attraction.price) {
+                    popupContent += `<span><i class="fa-solid fa-indian-rupee-sign"></i> ${
+                        attraction.price === 'high' ? 'Expensive' : 
+                        attraction.price === 'medium' ? 'Moderate' : 'Budget'
+                    }</span>`;
+                }
+                
+                if (attraction.rating) {
+                    popupContent += `<span><i class="fas fa-star"></i> ${attraction.rating}</span>`;
+                }
+                
+                if (attraction.openingHours) {
+                    popupContent += `<span><i class="fas fa-clock"></i> ${attraction.openingHours}</span>`;
+                }
+                
+                popupContent += `</div>
+                    <p style="margin-bottom:10px;">${attraction.description}</p>
+                `;
+                
+                if (attraction.website) {
+                    popupContent += `<a href="${attraction.website}" target="_blank" style="display:inline-block;background:#4361ee;color:white;padding:5px 10px;border-radius:5px;text-decoration:none;"><i class="fas fa-external-link-alt"></i> Official Website</a>`;
+                }
+                
+                marker.bindPopup(popupContent);
+                
+                // Store marker with its type and id
+                allMarkers.push({
+                    marker: marker,
+                    type: attraction.type,
+                    id: attraction.id
+                });
+
+                // Create list item
+                const item = document.createElement('div');
+                item.className = 'attraction-item';
+                item.dataset.id = attraction.id;
+                item.dataset.type = attraction.type;
+                
+                item.innerHTML = `
+                    <h4>${attraction.name}</h4>
+                    <div class="attraction-meta">
+                        <span><i class="fas fa-${attractionTypes[attraction.type].icon}"></i> ${attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</span>
+                        ${attraction.rating ? `<span><i class="fas fa-star"></i> ${attraction.rating}</span>` : ''}
+                    </div>
+                    ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" class="attraction-image">` : ''}
+                `;
+                
+                item.addEventListener('click', () => {
+                    map.setView(attraction.location, 16);
+                    marker.openPopup();
+                });
+                
+                listContainer.appendChild(item);
+                allListItems.push(item);
+            });
+            
+            updateVisibleAttractions();
+        }
+
+        // Update visible attractions based on selected filters
+        function updateVisibleAttractions() {
+            const selectedTypes = Array.from(document.querySelectorAll('.filter:checked')).map(f => f.value);
+            let visibleCount = 0;
+            
+            // Update map markers visibility
+            allMarkers.forEach(markerObj => {
+                if (selectedTypes.includes(markerObj.type)) {
+                    markerObj.marker.addTo(map);
+                    visibleCount++;
+                } else {
+                    markerObj.marker.remove();
+                }
+            });
+            
+            // Update list items visibility
+            allListItems.forEach(item => {
+                if (selectedTypes.includes(item.dataset.type)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            updateAttractionCount(visibleCount);
+        }
+
+        // Update the displayed count of visible attractions
+        function updateAttractionCount(count) {
+            document.getElementById('count').textContent = `(${count})`;
+        }
+
+        // Toggle filter dropdown
+        const filterToggle = document.getElementById('filter-toggle');
+        const filterDropdown = document.getElementById('filter-dropdown');
+
+        filterToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            filterDropdown.classList.toggle('active');
+        });
+
+        // Close filter dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!filterDropdown.contains(e.target) && e.target !== filterToggle) {
+                filterDropdown.classList.remove('active');
+            }
+        });
+
+        // Select All/Deselect All functionality
+        document.getElementById('select-all').addEventListener('click', () => {
+            document.querySelectorAll('.filter').forEach(filter => {
+                filter.checked = true;
+            });
+            updateVisibleAttractions();
+        });
+
+        document.getElementById('deselect-all').addEventListener('click', () => {
+            document.querySelectorAll('.filter').forEach(filter => {
+                filter.checked = false;
+            });
+            updateVisibleAttractions();
+        });
+
+        // Locate user functionality
+        document.getElementById('locate-btn').addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const userLocation = [position.coords.latitude, position.coords.longitude];
+                        map.setView(userLocation, 15);
+                        
+                        L.marker(userLocation, {
+                            icon: L.divIcon({
+                                className: 'user-location-icon',
+                                html: '<div style="background: #4361ee; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 3px rgba(67,97,238,0.5);"></div>',
+                                iconSize: [24, 24],
+                                iconAnchor: [12, 12]
+                            }),
+                            zIndexOffset: 1000
+                        }).addTo(map).bindPopup('Your location').openPopup();
+                    },
+                    error => {
+                        alert('Unable to get your location: ' + error.message);
+                    }
+                );
+            } else {
+                alert('Geolocation is not supported by your browser');
+            }
+        });
+
+        // Initialize the app
+        initializeFilters();
+        initializeAttractions();
+    </script>
+</body>
+</html>

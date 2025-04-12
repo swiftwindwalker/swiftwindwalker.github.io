@@ -97,6 +97,7 @@ const attractions = [
         name: "Elante Mall, Industrial Area Phase 1",
         location: [30.706839047446945, 76.80400865021424],
         type: "shopping",
+        price: "medium",
         image: "https://www.nexusselecttrust.com/resources/assets/images/nexus-elante/exterior/Exterior06.jpg",
         description: "One of the largest malls in North India.",
         website: "https://www.nexusselecttrust.com/nexus-elante",
