@@ -181,10 +181,61 @@ const attractions = [
         description: "Opened in 1967, this 30-acre botanical garden offers many rose varieties, walking paths & fountains.",
         openingHours: "09:00 AM – 10:00 PM",
         rating: "4.4/5"
+    },
+    {
+        id: 13,
+        name: "Plaza, Sector 17",
+        location: [30.740677573185238, 76.7826207652169],
+        type: "shopping",
+        price: "low",
+        image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu0zcy8hKPqZFjdLH-rDAGFPdHc9zh_0E6LG0saTI-AXWFEZngimsWW5BndkXT8GBNHh_jFblzuehUOqWdS3CTI1qJpYfGz3mR5xFQm3GXn4TlLY8e0SmAAsbL2Xqwq08Cilhqne=w400-h300-k-no",
+        description: "Sector 17 Plaza is a popular shopping and entertainment hub. It is known for its open spaces, branded stores, local boutiques and various dining options.",
+        openingHours: "10:00 AM – 8:00 PM",
+        rating: "4.6/5"
+    },
+    {
+        id: 14,
+        name: "Leisure Valley, Sector 10",
+        location: [30.754748654319272, 76.79404869036004],
+        type: "park",
+        price: "low",
+        image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu3kEhUOaXyP0S2x5tdxAwXdsCB6QFKeV97xlqfp1gEs6Vnigrb-52PUDXWdjcUUfHFt993T5eHhU1OXjBSSHTaS7CTWo_CCxH27CazKKqUSaa0fEz_GpC8Czt1JSFSYfNHr6m9FQg=w400-h464-k-no",
+        description: "Leisure Valley is a beautiful park located in Chandigarh, India. It is known for its lush greenery, well-maintained gardens, and serene atmosphere. The park is a popular spot for picnics, jogging, and leisurely walks.",
+        openingHours: "5:00 AM – 9:00 PM",
+        rating: "4.5/5"
+    },
+    {
+        id: 15,
+        name: "Gurudwara Sahib Ji Patshahi Dasvin, Sector 8",
+        location: [30.74257167064625, 76.79553161308576],
+        type: "religious",
+        price: "low",
+        image: "https://lh3.googleusercontent.com/p/AF1QipOEk2vTFhaYDzADceBH9Mkk1fZLqwp4Cl4N-Yxf=w400-h533-k-no",
+        description: "A beautiful Gurudwara with a peaceful ambiance.",
+        openingHours: "4:00 AM – 10:00 PM",
+        rating: "4.8/5"
+    },
+    {
+        id: 16,
+        name: "Christ Church - C.N.I Diocese of Chandigarh, Sector 18",
+        location: [30.735898566114827, 76.78713183617879],
+        type: "religious",
+        price: "low",
+        image: "https://lh3.googleusercontent.com/p/AF1QipNw0j5omDlEdll-5T5CpXQTcAV-xNZshZHClHSO=w400-h225-k-no",
+        description: "A beautiful church with stunning architecture.",
+        rating: "4.6/5"
+    },
+    {
+        id: 17,
+        name: "Jama Masjid Chandigarh, Sector 19",
+        location: [30.725180635971853, 76.78849407903269],
+        type: "religious",
+        price: "low",
+        image: "https://lh3.googleusercontent.com/p/AF1QipM8Lz9XDIxcs3NtZlHG5vW2vwOrvFSPbsAo4-Ho=w400-h281-k-no",
+        description: "A beautiful mosque with stunning architecture.",
+        rating: "4.7/5"
     }
 ];
-
-
 
 
 // Store all markers and list items
