@@ -311,14 +311,14 @@ document.getElementById('search').addEventListener('input', () => {
 
 // Select All/Deselect All functionality (Desktop)
 document.getElementById('select-all').addEventListener('click', () => {
-    document.querySelectorAll('.sidebar .filter').forEach(filter => {
+    document.querySelectorAll('.filter').forEach(filter => {
         filter.checked = true;
     });
     updateVisibleAttractions();
 });
 
 document.getElementById('deselect-all').addEventListener('click', () => {
-    document.querySelectorAll('.sidebar .filter').forEach(filter => {
+    document.querySelectorAll('.filter').forEach(filter => {
         filter.checked = false;
     });
     updateVisibleAttractions();
@@ -326,14 +326,14 @@ document.getElementById('deselect-all').addEventListener('click', () => {
 
 // Select All/Deselect All functionality (Mobile)
 document.getElementById('select-all-mobile').addEventListener('click', () => {
-    document.querySelectorAll('.mobile-filters .filter').forEach(filter => {
+    document.querySelectorAll('.filter').forEach(filter => {
         filter.checked = true;
     });
     updateVisibleAttractions();
 });
 
 document.getElementById('deselect-all-mobile').addEventListener('click', () => {
-    document.querySelectorAll('.mobile-filters .filter').forEach(filter => {
+    document.querySelectorAll('.filter').forEach(filter => {
         filter.checked = false;
     });
     updateVisibleAttractions();
