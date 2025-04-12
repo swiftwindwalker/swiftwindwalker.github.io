@@ -8,13 +8,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // Define attraction types and colors
 const attractionTypes = {
-    restaurant: { icon: 'utensils', color: '#e63946' },
-    historical: { icon: 'landmark', color: '#f77f00' },
-    toilet: { icon: 'toilet', color: '#6a4c93' },
-    shopping: { icon: 'shopping-bag', color: '#457b9d' },
-    museum: { icon: 'university', color: '#588157' },
-    religious: { icon: 'pray', color: '#9d4edd' },
-    park: { icon: 'tree', color: '#2a9d8f' }
+    restaurant: { icon: 'fas fa-utensils', color: '#e63946' },
+    hotels: { icon: 'fas fa-hotel', color: '#14213d' },
+    cafe: { icon: 'fas fa-coffee', color: '#e07a5f' },
+    fastfood: { icon: 'fas fa-burger', color: '#e07a5f' },
+    historical: { icon: 'fas fa-landmark', color: '#f77f00' },
+    toilet: { icon: 'fas fa-toilet', color: '#6a4c93' },
+    shopping: { icon: 'fas fa-bag-shopping', color: '#457b9d' },
+    museum: { icon: 'fas fa-museum', color: '#588157' },
+    religious: { icon: 'fas fa-hands-praying', color: '#9d4edd' },
+    park: { icon: 'fas fa-tree', color: '#2a9d8f' }
 };
 
 // Create custom icon function
@@ -49,76 +52,89 @@ const attractions = [
     {
         id: 1,
         name: "The Taj Chandigarh",
-        location: [30.7350, 76.7786],
-        type: "restaurant",
+        location: [30.7455673, 76.7851957],
+        type: "hotels",
         price: "high",
-        image: "https://media-cdn.tripadvisor.com/media/photo-s/1b/4a/2b/1e/the-taj-chandigarh.jpg",
+        image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/20/5c/cb/exterior.jpg?w=1400&h=800&s=1",
         description: "Upscale hotel with elegant dining options.",
-        website: "https://www.tajhotels.com/",
+        website: "https://www.tajhotels.com/en-in/hotels/taj-chandigarh",
         openingHours: "7:00 AM - 11:00 PM",
-        rating: "4.5/5"
+        rating: "4.4/5"
     },
     {
         id: 2,
         name: "Rock Garden",
-        location: [30.7606, 76.8004],
-        type: "park",
-        image: "https://www.chandigarhtourism.gov.in/images/places-to-visit/headers/rock-garden-chandigarh-header.jpg",
+        location: [30.753402769627606, 76.80940495108885],
+        type: "historical",
+        image: "https://chandigarhtourism.gov.in/uploads/IMG_37281.jpg",
         description: "Sculpture garden built with industrial waste.",
-        website: "https://www.chandigarhtourism.gov.in/rock-garden",
-        openingHours: "9:00 AM - 7:00 PM",
-        rating: "4.6/5"
+        website: "https://chandigarhtourism.gov.in/pages/page/rock-garden",
+        openingHours: "9:00 AM - 6:00 PM",
+        rating: "4.4/5"
     },
     {
         id: 3,
         name: "Capitol Complex",
-        location: [30.7589, 76.8017],
+        location: [30.75931744094497, 76.80818794575899],
         type: "historical",
-        image: "https://www.chandigarhtourism.gov.in/images/places-to-visit/headers/capitol-complex-chandigarh-header.jpg",
+        image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/5c/50/39/massing-at-its-best.jpg?w=1800&h=-1&s=1",
         description: "UNESCO World Heritage Site.",
-        website: "https://whc.unesco.org/en/list/1321",
-        openingHours: "9:00 AM - 5:00 PM",
-        rating: "4.7/5"
+        website: "https://lecorbusier-worldheritage.org/en/complexe-du-capitole/",
+        openingHours: "10:00 AM - 5:00 PM",
+        rating: "4.1/5"
     },
     {
         id: 4,
         name: "Public Toilet - Sector 17",
-        location: [30.7365, 76.7872],
+        location: [30.738251481356752, 76.78251653879303],
         type: "toilet",
         description: "Clean public toilet facility.",
-        openingHours: "6:00 AM - 10:00 PM"
+        openingHours: "24/7",
+        rating: "4.0/5"
     },
     {
         id: 5,
         name: "Elante Mall",
-        location: [30.7136, 76.7688],
+        location: [30.706839047446945, 76.80400865021424],
         type: "shopping",
-        image: "https://content.jdmagicbox.com/comp/chandigarh/20/0172p172std172/list-of-shopping-malls-in-chandigarh-elante-mall-chandigarh-sector-20-1-1m5f0.jpg",
+        image: "https://www.nexusselecttrust.com/resources/assets/images/nexus-elante/exterior/Exterior06.jpg",
         description: "One of the largest malls in North India.",
-        website: "https://www.elantemall.com/",
+        website: "https://www.nexusselecttrust.com/nexus-elante",
         openingHours: "10:00 AM - 10:00 PM",
-        rating: "4.4/5"
+        rating: "4.6/5"
     },
     {
         id: 6,
-        name: "Government Museum",
-        location: [30.7603, 76.8003],
+        name: "Natural History Museum",
+        location: [30.749106369205858, 76.78363501910539],
         type: "museum",
-        image: "https://www.chandigarhtourism.gov.in/images/places-to-visit/headers/government-museum-and-art-gallery-chandigarh-header.jpg",
-        description: "Gandhara sculptures and Pahari paintings.",
-        website: "https://www.chandigarhtourism.gov.in/government-museum-and-art-gallery",
+        image: "https://chdmuseum.gov.in//admin/uploads/background/6803a23d1c4810484ed6679342c00771.jpg",
+        description: "The museum has four major sections entitled as Redefining Our Past, Cyclorama of Evolution of life, Dinosaur of India, and Human Evolution",
+        website: "https://chdmuseum.gov.in/home/naturalhistorymuseum",
         openingHours: "10:00 AM - 4:30 PM",
-        rating: "4.1/5"
+        rating: "4.5/5"
     },
     {
         id: 7,
         name: "ISKCON Temple",
-        location: [30.6969, 76.8018],
+        location: [30.734953196041875, 76.76362353558507],
         type: "religious",
-        image: "https://www.chandigarhtourism.gov.in/images/places-to-visit/headers/iskcon-temple-chandigarh-header.jpg",
+        image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/c7/92/0a/iskcon-temple-chandigarh.jpg?w=1400&h=800&s=1",
         description: "Beautiful Hare Krishna temple.",
         website: "https://www.iskconchandigarh.com/",
-        openingHours: "4:30 AM - 8:30 PM",
+        openingHours: "4:30–5 AM, 7:15 AM – 12:45 PM, 4:15 – 8:30 PM",
+        rating: "4.5/5"
+    },
+    {
+        id: 8,
+        name: "Back to Source",
+        location: [30.74363545826538, 76.78786944415323],
+        type: "cafe",
+        price: "high",
+        image: "https://lh3.googleusercontent.com/ZmRIYlveWJJaPhHR5UcZcNN6BvPNY_J9-AN_baOc1qIoR7KiU0kBqGeZKwCQQual19-SkPK3iBNoWiGEiWMR1_JNGxzU7Ts3qpM=s1800",
+        description: "Plant-filled space offering coffee, pastries & meals made with thoughtfully sourced ingredients.",
+        website: "https://back2source.in/",
+        openingHours: "Sunday, 9:30 AM–11 PM",
         rating: "4.5/5"
     }
 ];
