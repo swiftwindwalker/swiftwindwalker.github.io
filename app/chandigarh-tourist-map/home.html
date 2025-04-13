@@ -347,17 +347,18 @@
             }
 
             .app-header {
-                width: calc(var(--panel-width) - 30px);
+                width: calc(var(--panel-width) - 40px);
             }
 
             .attractions-container {
-                transform: translateX(calc(var(--panel-width) - 10px));
+                transform: translateX(calc(var(--panel-width) - 20px));
             }
 
             .attractions-handle {
-                width: 20px;
+                width: 30px;
                 height: 80px;
             }
+
             /*
             .attractions-container.open {
                 transform: translateX(15%);
@@ -770,6 +771,7 @@
         }
 
         // Initialize attraction list and markers
+        // Initialize attraction list and markers - UPDATED VERSION
         function initializeAttractions() {
             const listContainer = document.getElementById('attractions-list');
 
@@ -779,36 +781,39 @@
                     icon: createCustomIcon(attraction.type)
                 });
 
-                // Create popup content
+                // UPDATED POPUP CONTENT WITH CONSISTENT BUTTONS
                 let popupContent = `
-                    <h3>${attraction.name}</h3>
-                    ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" style="width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:10px;">` : ''}
-                    <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
-                        <span><i class="fas fa-${attractionTypes[attraction.type].icon}"></i> ${attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</span>
-                `;
+            <h3>${attraction.name}</h3>
+            ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" style="width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:10px;">` : ''}
+            <div class="popup-meta">
+                <span><i class="fas fa-${attractionTypes[attraction.type].icon}"></i> ${attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</span>
+                ${attraction.rating ? `<span><i class="fas fa-star"></i> ${attraction.rating}</span>` : ''}
+                ${attraction.openingHours ? `<span><i class="fas fa-clock"></i> ${attraction.openingHours}</span>` : ''}
+            </div>
+            <p class="popup-description">${attraction.description}</p>
+            <div class="popup-actions" style="display: flex; gap: 10px; margin-top: 15px;">
+        `;
 
-                if (attraction.price) {
-                    popupContent += `<span><i class="fa-solid fa-indian-rupee-sign"></i> ${attraction.price === 'high' ? 'Expensive' :
-                        attraction.price === 'medium' ? 'Moderate' : 'Budget'
-                        }</span>`;
-                }
+                // Add Open in Maps button (now blue like website button)
+                popupContent += `
+            <a href="https://www.google.com/maps/search/?api=1&query=${attraction.location[0]},${attraction.location[1]}" 
+               target="_blank" class="popup-link" style="background: var(--primary); color: white; text-decoration: none; padding: 8px 12px; border-radius: var(--radius); display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fas fa-map-marked-alt"></i> Open in Maps
+            </a>
+        `;
 
-                if (attraction.rating) {
-                    popupContent += `<span><i class="fas fa-star"></i> ${attraction.rating}</span>`;
-                }
-
-                if (attraction.openingHours) {
-                    popupContent += `<span><i class="fas fa-clock"></i> ${attraction.openingHours}</span>`;
-                }
-
-                popupContent += `</div>
-                    <p style="margin-bottom:10px;">${attraction.description}</p>
-                `;
-
+                // Add website button if available
                 if (attraction.website) {
-                    popupContent += `<a href="${attraction.website}" target="_blank" style="display:inline-block;background:#4361ee;color:white;padding:5px 10px;border-radius:5px;text-decoration:none;"><i class="fas fa-external-link-alt"></i> Official Website</a>`;
+                    popupContent += `
+                <a href="${attraction.website}" target="_blank" class="popup-link" style="background: var(--primary); color: white; text-decoration: none; padding: 8px 12px; border-radius: var(--radius); display: inline-flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-external-link-alt"></i> Official Website
+                </a>
+            `;
                 }
 
+                popupContent += `</div>`;
+
+                // Bind popup to marker
                 marker.bindPopup(popupContent);
 
                 // Store marker with its type and id
@@ -818,20 +823,31 @@
                     id: attraction.id
                 });
 
-                // Create list item
+                // Create list item with matching buttons
                 const item = document.createElement('div');
                 item.className = 'attraction-item';
                 item.dataset.id = attraction.id;
                 item.dataset.type = attraction.type;
 
                 item.innerHTML = `
-                    <h4>${attraction.name}</h4>
-                    <div class="attraction-meta">
-                        <span><i class="fas fa-${attractionTypes[attraction.type].icon}"></i> ${attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</span>
-                        ${attraction.rating ? `<span><i class="fas fa-star"></i> ${attraction.rating}</span>` : ''}
-                    </div>
-                    ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" class="attraction-image">` : ''}
-                `;
+            <h4>${attraction.name}</h4>
+            <div class="attraction-meta">
+                <span><i class="fas fa-${attractionTypes[attraction.type].icon}"></i> ${attraction.type.charAt(0).toUpperCase() + attraction.type.slice(1)}</span>
+                ${attraction.rating ? `<span><i class="fas fa-star"></i> ${attraction.rating}</span>` : ''}
+            </div>
+            ${attraction.image ? `<img src="${attraction.image}" alt="${attraction.name}" class="attraction-image">` : ''}
+            <div class="attraction-actions" style="display: flex; gap: 10px; margin-top: 12px;">
+                <a href="https://www.google.com/maps/search/?api=1&query=${attraction.location[0]},${attraction.location[1]}" 
+                   target="_blank" style="background: var(--primary); color: white; text-decoration: none; padding: 6px 10px; border-radius: var(--radius); display: inline-flex; align-items: center; gap: 5px; font-size: 0.85rem; flex: 1; justify-content: center;">
+                    <i class="fas fa-map-marked-alt" style="font-size: 0.9rem;"></i> Maps
+                </a>
+                ${attraction.website ? `
+                <a href="${attraction.website}" target="_blank" style="background: var(--primary); color: white; text-decoration: none; padding: 6px 10px; border-radius: var(--radius); display: inline-flex; align-items: center; gap: 5px; font-size: 0.85rem; flex: 1; justify-content: center;">
+                    <i class="fas fa-external-link-alt" style="font-size: 0.9rem;"></i> Website
+                </a>
+                ` : ''}
+            </div>
+        `;
 
                 item.addEventListener('click', () => {
                     map.setView(attraction.location, 16);
@@ -844,7 +860,6 @@
 
             updateVisibleAttractions();
         }
-
         // Update visible attractions based on selected filters
         function updateVisibleAttractions() {
             const selectedTypes = Array.from(document.querySelectorAll('.filter:checked')).map(f => f.value);
@@ -892,58 +907,58 @@
                 filterDropdown.classList.remove('active');
             }
         });
-     // Toggle attractions panel
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Get references to elements
-    const attractionsContainer = document.getElementById('attractions-container');
-    const attractionsHandle = document.getElementById('attractions-handle');
+        // Toggle attractions panel
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get references to elements
+            const attractionsContainer = document.getElementById('attractions-container');
+            const attractionsHandle = document.getElementById('attractions-handle');
 
-    // Only proceed if all required elements exist
-    if (!attractionsContainer || !attractionsHandle) {
-        console.error('Required elements not found in DOM');
-        return;
-    }
+            // Only proceed if all required elements exist
+            if (!attractionsContainer || !attractionsHandle) {
+                console.error('Required elements not found in DOM');
+                return;
+            }
 
-    function toggleAttractionsPanel() {
-        console.log('Toggling panel...');
-        const isNowOpen = attractionsContainer.classList.toggle('open');
-        updateChevronIcons(isNowOpen);
-    }
+            function toggleAttractionsPanel() {
+                console.log('Toggling panel...');
+                const isNowOpen = attractionsContainer.classList.toggle('open');
+                updateChevronIcons(isNowOpen);
+            }
 
-    function updateChevronIcons(isPanelOpen) {
-    const handleIcon = document.getElementById('chevron-handle');
+            function updateChevronIcons(isPanelOpen) {
+                const handleIcon = document.getElementById('chevron-handle');
 
-    if (handleIcon) {
-        const iconName = isPanelOpen ? 'chevron-right' : 'chevron-left';
+                if (handleIcon) {
+                    const iconName = isPanelOpen ? 'chevron-right' : 'chevron-left';
 
-        // Font Awesome auto-replaces <i> with <svg>, so we update data-icon
-        handleIcon.setAttribute('data-icon', iconName);
+                    // Font Awesome auto-replaces <i> with <svg>, so we update data-icon
+                    handleIcon.setAttribute('data-icon', iconName);
 
-        // Optional: also update class to help with fallback
-        handleIcon.classList.remove('fa-chevron-right', 'fa-chevron-left');
-        handleIcon.classList.add(`fa-${iconName}`);
+                    // Optional: also update class to help with fallback
+                    handleIcon.classList.remove('fa-chevron-right', 'fa-chevron-left');
+                    handleIcon.classList.add(`fa-${iconName}`);
 
-    } else {
-        console.warn('Chevron icons not found');
-    }
-}
+                } else {
+                    console.warn('Chevron icons not found');
+                }
+            }
 
-    // Initialize the panel state
-    function initializePanel() {
-        // Ensure panel starts closed
-        attractionsContainer.classList.remove('open');
-        
-        // Set initial icons
-        updateChevronIcons(false);
-        
-        // Set up event listeners
-        attractionsHandle.addEventListener('click', toggleAttractionsPanel);
-    }
+            // Initialize the panel state
+            function initializePanel() {
+                // Ensure panel starts closed
+                attractionsContainer.classList.remove('open');
 
-    // Initialize the panel
-    initializePanel();
-});
+                // Set initial icons
+                updateChevronIcons(false);
+
+                // Set up event listeners
+                attractionsHandle.addEventListener('click', toggleAttractionsPanel);
+            }
+
+            // Initialize the panel
+            initializePanel();
+        });
 
         // Select All/Deselect All functionality
         document.getElementById('select-all').addEventListener('click', () => {
