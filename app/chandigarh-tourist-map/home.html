@@ -4,10 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/navbar.css">
     <title>Chandigarh Tourist Map</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-VS2WHLJQNE');
+    </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="/js/onload.js"></script>
+    <script type="module" src="/js/navbar.js"></script>
+    <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
     <style>
         :root {
             --primary: #4361ee;
@@ -176,6 +188,7 @@
             overflow: hidden;
             transform: translateX(calc(var(--panel-width) - 40px));
             transition: var(--panel-transition);
+
         }
 
         .attractions-container.open {
@@ -187,7 +200,7 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 40px;
+            width: 30px;
             height: 80px;
             background: var(--primary);
             border-radius: var(--radius) 0 0 var(--radius);
@@ -198,6 +211,7 @@
             cursor: pointer;
             z-index: 10;
             color: white;
+            margin-left: 5px;
         }
 
         .attractions-handle i {
@@ -347,7 +361,7 @@
             }
 
             .app-header {
-                width: calc(var(--panel-width) - 40px);
+                width: calc(var(--panel-width) - 50px);
             }
 
             .attractions-container {
@@ -440,11 +454,14 @@
             background: var(--primary) !important;
             color: white !important;
         }
+
+
     </style>
 </head>
 
 <body>
     <div id="map"></div>
+    <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
 
     <!-- Header and Filter Dropdown -->
     <div class="header-container">
@@ -498,6 +515,7 @@
         <div><i class="fas fa-pray"></i> Religious</div>
         <div><i class="fas fa-tree"></i> Parks</div>
     </div> -->
+
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
@@ -507,7 +525,7 @@
 
         // Add tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution: '&copy; <a href="https://www.ravzzy.com">Ravzzy</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
         // Define attraction types and colors

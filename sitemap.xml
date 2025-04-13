@@ -10,7 +10,7 @@
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
-    
+
     <url>
         <loc>https://www.ravzzy.com/app/speedtest/home.html</loc>
         <lastmod>2025-03-18T13:21:08+00:00</lastmod>
@@ -69,11 +69,17 @@
         <priority>0.8</priority>
     </url>
 
-        <url>
+    <url>
         <loc>https://www.ravzzy.com/games/augmented-reality.html</loc>
         <lastmod>2025-04-09T09:20:01+00:00</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
 
+    <url>
+        <loc>https://www.ravzzy.com/app/chandigarh-tourist-map/home.html</loc>
+        <lastmod>2025-04-13T00:20:01+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>
