@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore Chandigarh & Tricity with our interactive map! Find top restaurants, cafes, museums, tourist spots, and hidden gems. Perfect for travelers and locals to discover the best places in Chandigarh, Mohali & Panchkula. Trusted by Reddit and Quora users.">
+    <meta name="description"
+        content="Explore Chandigarh & Tricity with our interactive map! Find top restaurants, cafes, museums, tourist spots, and hidden gems. Perfect for travelers and locals to discover the best places in Chandigarh, Mohali & Panchkula. Trusted by Reddit and Quora users.">
     <link rel="stylesheet" href="/css/navbar.css">
     <title>Explore Chandigarh Tricity with Our Interactive Map</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
@@ -455,8 +456,6 @@
             background: var(--primary) !important;
             color: white !important;
         }
-
-
     </style>
 </head>
 
@@ -489,7 +488,7 @@
         </div>
         <div class="attractions-content">
             <div class="attractions-header">
-                <h3><i class="fas fa-list"></i> Attractions <span id="count">(0)</span></h3>
+                <h3><i class="fas fa-list"></i> POI <span id="count">(0)</span></h3>
             </div>
             <div class="attractions-list" id="attractions-list"></div>
         </div>
@@ -1319,12 +1318,66 @@
                 openingHours: "9 AM – 4 PM, 7 PM – 10 PM",
                 price: "low",
                 rating: "4.1/5"
+            },
+            {
+                id: 68,
+                name: "The Chandigarh Golf Club, Sector 6",
+                location: [30.737892332396466, 76.81128808093928],
+                type: "activities",
+                price: "high",
+                openingHours: "6 AM – 10:30 PM",
+                website: "https://www.chandigarhgolfclub.in/",
+                image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu3VGPnxbwEdZmY6dk4EwVqWveHh5G28x6YFLK7w_tCQO1wn_8uJ3bXKTb_QUvNftJ1zi5UauLstgKCUsBuZd7XGurKj0k9tq18BDzMvO2ix8Bbrj6KERyA657jk2Bzu_vEeyYdw=w400-h300-k-no",
+                description: "Chandigarh Golf Club is a premier golf destination in Chandigarh. The club features a well-maintained 18-hole golf course, making it suitable for both beginners and experienced players. It's a great place to enjoy a round of golf amidst beautiful surroundings. Arguably the most sought after membership in Chandigarh.You would of course need membership, or be invited here by a member.",
+                rating: "4.5/5"
+            },
+            {
+                id: 69,
+                name: "Chandigarh Lawn Tennis Association (CLTA), Sector 10",
+                location: [30.750630689867574, 76.78594508124101],
+                type: "activities",
+                price: "high",
+                openingHours: "6 AM – 9 PM",
+                website: "https://www.clta.in/coaching-program/",
+                image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu1aRgQsUXpSyq1nVAW46SAkSPCE2_43VI6wyWla3T4f_2ohmQ5YrLP472oSzGGIvBBtCPG-7M5bbJFSRRz6Na9MGVW0t0HvddLKCWSi6vpc9T3Y1gJSD1Kl2aXWvUxEvY23HDVM6Q=w400-h300-k-no",
+                description: "Chandigarh Lawn Tennis Association (CLTA) is a premier tennis destination in Chandigarh. The association features well-maintained courts and offers coaching programs for players of all skill levels. It's a great place to learn and enjoy the sport of tennis.",
+                rating: "4.1/5"
+            },
+            {
+                id: 70,
+                name: "Tiki Taka Football Ground, Paras DownTown Mall, Zirakpur",
+                location: [30.659981639700003, 76.82219653366076],
+                type: "activities",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/p/AF1QipN5NNTxXBgp32mmA4i4U-L6FCaIFoWQfEKf1ZB_=w400-h300-k-no",
+                description: "Football at rooftop, with the planes flying right over your head and the view from here is such a vibe. Go plan with your friends and book this ground for an hour.",
+                rating: "4.9/5"
+            },
+            {
+                id: 71,
+                name: "Footsal/Indoor Cricket, Kickstart, Zirakpur",
+                location: [30.711306178712743, 76.75816306964893],
+                type: "activities",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/p/AF1QipMsL7Bxy467FUx_l5U4geMwKHyVqiPLBHtP22MA=w400-h266-k-no",
+                description: "Two fields available, both have Astroturf. The place is inside the British School.",
+                rating: "4.5/5"
+            },
+            {
+                id: 72,
+                name: "Football, HI SCORE, Rainbow International School, Sector 27",
+                location: [30.72260817946161, 76.79641165404496],
+                type: "activities",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu3wUHRO87hMgIQnHwYmcn2oKfnQr_EfJ636UleBU_feTKIHFc1Pe8eNO3gp_EyIrB83oLONlIc3ukg6yyMVfPeQqfIGmGCRWy5-gB6D5Byp_7tmB6fR5wsSMpZVBLObevN5oDVc=w400-h318-k-no",
+                description: "Football field with Astroturf, located inside the Rainbow International School.",
+                rating: "4.5/5"
             }
 
         ];
-        
-        
-        
+
+
+
 
         // Store all markers and list items
         const allMarkers = [];
