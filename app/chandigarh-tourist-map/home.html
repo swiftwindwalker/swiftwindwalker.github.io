@@ -540,7 +540,8 @@
             shopping: { icon: 'bag-shopping', color: '#457b9d' },
             museum: { icon: 'museum', color: '#588157' },
             religious: { icon: 'hands-praying', color: '#9d4edd' },
-            park: { icon: 'tree', color: '#2a9d8f' }
+            park: { icon: 'tree', color: '#2a9d8f' },
+            activities: { icon: 'person-running', color: '#9c6644' } // or 'dumbbell', 'gamepad', 'hiking'
         };
 
         // Create custom icon function
@@ -1199,6 +1200,93 @@
                 price: "high",
                 rating: "4.5/5"
             },
+            {
+                id: 57,
+                name: "Amrit Confectioners, Sector 59, SAS Nagar",
+                location: [30.714685151377225, 76.71771133998541],
+                type: "restaurant",
+                image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu3LSsoO2JQAoykvcrkB8S86nQXM38clNKh2qM5SvgxCQ9BdXRwo6zr_21NMX_cO4oOCtV8wZ3YUTdRGxtW4BvRmbsCZ5Roi1zIcmFZcT4S-6bJzFxrUlb4z1QTwCThF8XE4fhI0=w400-h302-k-no",
+                description: "Famous for its Sweets and North Indian cuisines, especially paneer dishes.",
+                website: "https://amritconfectioners.com/",
+                openingHours: "09:00 AM – 10:30 PM",
+                price: "medium",
+                rating: "4.3/5"
+            },
+            {
+                id: 58,
+                name: "Sundarams, Sector 26",
+                location: [30.725930784272407, 76.80492064187352],
+                type: "restaurant",
+                image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu06Wm6zDn90729qkeQuY30MDVneFb9tqkIC6cLz5mPdA-JE2WSqw3BG8JqfBMWbq5tZmNsWL4IN_Z9XNRfVOv6uV7H60ONL4rHeoehkql0o3Qee44dE3wOUjU0M5iWp0KWA093e=w400-h533-k-no",
+                description: "Famous South Indian restaurant known for its authentic South Indian cuisine. Great place for filter coffee and dosa.",
+                website: "https://sundaramsfoods.com/",
+                openingHours: "09:00 AM – 10:30 PM",
+                price: "high",
+                rating: "4.4/5"
+            },
+            {
+                id: 59,
+                name: "Bougainvillea Park, Sector 3",
+                location: [30.75827894049822, 76.79597447372099],
+                type: "park",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/p/AF1QipNHfidErUyVL-wWAoAYkrPEg99BCur3LAdYrh_2=w400-h252-k-no",
+                description: "Garden filled with bougainvillea, as well as flowering trees & a war memorial to Indian soldiers.",
+                rating: "4.4/5"
+            },
+            {
+                id: 60,
+                name: "Billiards/Snooker - The Mohali Club - Wyndham, Sector 65, SAS Nagar",
+                location: [30.68502746790125, 76.75018335105426],
+                type: "activities",
+                price: "high",
+                image: "https://lh3.googleusercontent.com/p/AF1QipN0p9g7dqpf3y5DPKE6rY3kX7VoNg05eYMRqVCG=w400-h266-k-no",
+                description: "Wyndham is a popular destination for billiards and snooker enthusiasts. The club offers well-maintained tables and a friendly atmosphere for players of all skill levels.",
+                website: "https://www.mohaliclub.net/index.html#",
+                rating: "4.4/5"
+            },
+            {
+                id: 61,
+                name: "Table Tennis/ Swimming Pool/ Squash/ Badminton - Chandigarh Sports Complex, Sector 50",
+                location: [30.701086534300355, 76.74714308761268],
+                type: "activities",
+                price: "medium",
+                openingHours: "4 PM – 10 PM",
+                image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu2SGtvvv34Wu_hTFOfj_dhctS5voPL9CgA_fhSb7hQ1iT89Gk7wbhgB8jU6pNwEFUbKuyR17TESAPiQ2L47Nz0JuGuSa_ryXqCcK64y0b58_SO6Jx-03SHr2SFPLVF1Tg2JzpkiVw=w400-h225-k-no",
+                description: "Chandigarh Sports Complex is a popular destination for sports enthusiasts. The complex offers a range of facilities for table tennis, swimming, squash, and badminton, making it a great place to stay active and enjoy various sports.",
+                rating: "4.3/5"
+            },
+            {
+                id: 62,
+                name: "Skatepark, Urban Park, Sector 17",
+                location: [30.73824025711689, 76.78066120613052],
+                type: "activities",
+                price: "low",
+                image: "https://lh3.googleusercontent.com/gpms-cs-s/AIMqDu3wFbBwpOrSQiwEZN2R3KgzF5V3btWx1klFwzxGOnzUm9_bQYDg0EUBHxk61G_ur6l5_WUTBqSw3uT3zzkOqIJdtQqbwN5gQTZuA5J_S2jLd9iJuvDnR6RS5YaEUnYytwyql9Kg=w400-h300-k-no",
+                description: "Chandigarh Skatepark is a popular destination for skateboarders and BMX riders. The park features ramps, rails, and other obstacles for skaters of all skill levels. It's a great place to practice tricks and meet fellow enthusiasts.",
+                rating: "4.9/5"
+            },
+            {
+                id: 63,
+                name: "Football Astroturf, Urban Park, Sector 17",
+                location: [30.737779666852106, 76.77929765095841],
+                type: "activities",
+                price: "low",
+                image: "https://tidasports.com/wp-content/uploads/2024/03/4407image_cropper_1701931430111.jpg",
+                description: "Chandigarh Football Astroturf is a popular destination for football enthusiasts. The facility features a well-maintained artificial turf pitch, making it suitable for year-round play. It's a great place to join local leagues or simply enjoy a casual game with friends.",
+                rating: "4.9/5"
+            },
+            {
+                id: 64,
+                name: "Chandigarh Polo Club, Nayagaon, Khudda Lahora",
+                location: [30.781563974793464, 76.785195138456],
+                type: "activities",
+                price: "low",
+                openingHours: "6 AM – 7 PM",
+                image: "https://lh3.googleusercontent.com/p/AF1QipO3kes37huyNf-MQU5ey7HLnJREiLYO33OVyk11=w400-h399-k-no",
+                description: "Chandigarh Polo Club is a premier destination for polo enthusiasts. The club offers well-maintained grounds and facilities for both players and spectators. It's a great place to watch thrilling polo matches and experience the excitement of this royal sport. The route to the club isn't well maintained, so be careful while driving.",
+                rating: "4.7/5"
+            }
 
 
         ];
