@@ -351,39 +351,6 @@
             color: var(--primary);
         }
 
-        /* Heatmap Button Styles */
-        #heatmap-btn.active {
-            background: var(--danger);
-        }
-
-        /* Heatmap legend style */
-        .heatmap-legend {
-            padding: 6px 8px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            line-height: 1.4;
-        }
-
-        .heatmap-legend h4 {
-            margin: 0 0 5px;
-            color: var(--dark);
-            font-size: 0.9rem;
-        }
-
-        .heatmap-legend div {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2px;
-        }
-
-        .heatmap-legend i {
-            width: 20px;
-            height: 10px;
-            margin-right: 5px;
-            display: inline-block;
-        }
-
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             :root {
@@ -532,9 +499,6 @@
         <button class="map-control-btn" id="locate-btn" title="Locate me">
             <i class="fas fa-location-arrow"></i>
         </button>
-        <button class="map-control-btn" id="heatmap-btn" title="Toggle Heatmap">
-            <i class="fas fa-fire"></i>
-        </button>
     </div>
 
 
@@ -552,24 +516,12 @@
         <div><i class="fas fa-tree"></i> Parks</div>
     </div> -->
 
-    <!-- Heatmap Legend -->
-   <!-- <div class="map-legend heatmap-legend" id="heatmap-legend" style="display: none;">
-        <h4>Heatmap Intensity</h4>
-        <div><i style="background: blue;"></i> Low</div>
-        <div><i style="background: cyan;"></i> Medium</div>
-        <div><i style="background: lime;"></i> High</div>
-        <div><i style="background: yellow;"></i> Very High</div>
-        <div><i style="background: red;"></i> Extreme</div>
-    </div> -->
-
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script>
         // Initialize the map
         const map = L.map('map').setView([30.7333, 76.7794], 13);
-
 
         // Add tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -1815,98 +1767,9 @@
             }
         });
 
-        // Add this to your existing JavaScript code:
-
-        // Heatmap layer variable
-
-        // Heatmap variables
-        let heatmapLayer = null;
-        let heatmapActive = false;
-        let currentHeatmapType = null;
-
-        // Function to generate heatmap data
-        function generateHeatmapData(typeFilter = null) {
-            return attractions
-                .filter(attraction => !typeFilter || attraction.type === typeFilter)
-                .map(attraction => [attraction.location[0], attraction.location[1], 1]);
-        }
-
-        // Function to toggle heatmap view
-        function toggleHeatmap(type = null) {
-            // Remove existing heatmap if any
-            if (heatmapLayer) {
-                map.removeLayer(heatmapLayer);
-                heatmapLayer = null;
-                //document.getElementById('heatmap-legend').style.display = 'none';
-            }
-
-            // If toggling off, just return
-            if (!heatmapActive) return;
-
-            // Generate heatmap data
-            const heatmapData = generateHeatmapData(type);
-
-            // Create new heatmap layer
-            heatmapLayer = L.heatLayer(heatmapData, {
-                radius: 25,
-                blur: 15,
-                maxZoom: 17,
-                gradient: { 0.4: 'blue', 0.6: 'cyan', 0.7: 'lime', 0.8: 'yellow', 1.0: 'red' }
-            }).addTo(map);
-
-            //document.getElementById('heatmap-legend').style.display = 'block';
-        }
-
-        // Add event listener for heatmap button
-        document.getElementById('heatmap-btn').addEventListener('click', function () {
-            heatmapActive = !heatmapActive;
-            this.classList.toggle('active');
-
-            const selectedTypes = Array.from(document.querySelectorAll('.filter:checked')).map(f => f.value);
-            currentHeatmapType = selectedTypes.length === 1 ? selectedTypes[0] : null;
-            toggleHeatmap(currentHeatmapType);
-        });
-
-        // Update your filter change handler to also update heatmap if active
-        function updateVisibleAttractions() {
-            const selectedTypes = Array.from(document.querySelectorAll('.filter:checked')).map(f => f.value);
-            let visibleCount = 0;
-
-            // Update map markers visibility
-            allMarkers.forEach(markerObj => {
-                if (selectedTypes.includes(markerObj.type)) {
-                    markerObj.marker.addTo(map);
-                    visibleCount++;
-                } else {
-                    markerObj.marker.remove();
-                }
-            });
-
-            // Update list items visibility
-            allListItems.forEach(item => {
-                if (selectedTypes.includes(item.dataset.type)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // Update heatmap if active
-            // Add this at the end:
-            if (heatmapActive) {
-                const selectedTypes = Array.from(document.querySelectorAll('.filter:checked')).map(f => f.value);
-                currentHeatmapType = selectedTypes.length === 1 ? selectedTypes[0] : null;
-                toggleHeatmap(currentHeatmapType);
-            }
-            updateAttractionCount(visibleCount);
-
-        }
-
         // Initialize the app
         initializeFilters();
         initializeAttractions();
-
-
     </script>
 </body>
 
