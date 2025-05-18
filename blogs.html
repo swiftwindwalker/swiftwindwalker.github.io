@@ -4,6 +4,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Ravzzy Blogs | Creative Ideas, Tech, Design & Lifestyle">
+    <meta name="description"
+        content="Explore Ravzzy’s blog featuring bold ideas, tech insights, creative inspiration, and lifestyle tips. Curated stories for curious minds.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ravzzy.com/blogs.html">
+    <meta property="og:title" content="Ravzzy Blogs | Creative Ideas, Tech, Design & Lifestyle">
+    <meta property="og:description"
+        content="Discover fresh content on tech, design, lifestyle and more—curated by Ravzzy.">
+    <meta property="og:image" content="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*ZYe_8RKndtJU88lZUttt8Q.jpeg">
+    <!-- Replace with an actual image URL -->
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.ravzzy.com/blogs.html">
+    <meta name="twitter:title" content="Ravzzy Blogs | Creative Ideas, Tech, Design & Lifestyle">
+    <meta name="twitter:description"
+        content="Explore creative blogs on Ravzzy—covering tech, trends, lifestyle, and design.">
+    <meta name="twitter:image" content="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*ZYe_8RKndtJU88lZUttt8Q.jpeg">
+    <!-- Replace with actual image -->
+
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet"
@@ -146,7 +169,6 @@
             color: #0077b5 !important;
             /* LinkedIn blue */
         }
-
     </style>
 </head>
 
@@ -154,7 +176,7 @@
     <div id="navbar-container" class="navbar-container"></div> <!-- Navbar will be inserted here via js-->
     <button class="menu-btn">☰</button>
     <div id="sidebar-container" class="sidebar-container"></div> <!-- Sidebar will be inserted here via js -->
-    
+
     <!-- Header -->
     <header class="text-center py-10 border-b border-gray-200 px-2">
         <h1 class="text-4xl sm:text-4xl font-semibold headline tracking-widest">Echoes of the Force</h1>
@@ -196,28 +218,28 @@
             const rssUrl = 'https://medium.com/feed/@ravzzy';
             const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
             const container = document.getElementById('articles');
-            
+
             // Show loading message
             container.innerHTML = '<div class="text-center py-10 col-span-full">Loading articles...</div>';
-            
+
             try {
                 const res = await fetch(apiUrl);
                 const data = await res.json();
-    
+
                 // Clear loading message
                 container.innerHTML = '';
-    
+
                 if (data.items && data.items.length > 0) {
                     data.items.forEach((item, index) => {
                         // Extract first image from content
                         const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
                         const imageUrl = imgMatch ? imgMatch[1] : 'https://via.placeholder.com/600x400?text=No+Image';
-    
+
                         const article = document.createElement('div');
                         article.className = `fade-in border-b lg:border-0`;
                         // Add delay based on index for staggered animation
                         article.style.animationDelay = `${index * 0.1}s`;
-    
+
                         article.innerHTML = `
                             <a href="${item.link}" target="_blank" class="block group overflow-hidden rounded-lg">
                                 <div class="overflow-hidden rounded-md aspect-video mb-4">
@@ -228,7 +250,7 @@
                                 <p class="text-base text-gray-700 mt-4 line-clamp-4">${item.description.replace(/<[^>]+>/g, '').slice(0, 200)}...</p>
                             </a>
                         `;
-    
+
                         container.appendChild(article);
                     });
                 } else {
@@ -239,7 +261,7 @@
                 container.innerHTML = '<p class="text-center py-10 col-span-full text-red-500">Failed to load articles. Please try again later.</p>';
             }
         }
-    
+
         loadMediumArticles();
     </script>
     <script>
