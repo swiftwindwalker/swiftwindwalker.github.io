@@ -212,50 +212,87 @@
     </div>
     <div class="footer"> &copy;2025 ravzzy</div>
 
-    <!-- JS -->
+    <!-- Blog articles from locally generated JSON (GitHub Actions) -->
     <script>
         async function loadMediumArticles() {
-            const rssUrl = 'https://medium.com/feed/@ravzzy';
-            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
             const container = document.getElementById('articles');
+            const apiUrl = '/data/medium-articles.json';
 
-            // Show loading message
             container.innerHTML = '<div class="text-center py-10 col-span-full">Loading articles...</div>';
 
             try {
-                const res = await fetch(apiUrl);
-                const data = await res.json();
-
-                // Clear loading message
-                container.innerHTML = '';
-
-                if (data.items && data.items.length > 0) {
-                    data.items.forEach((item, index) => {
-                        // Extract first image from content
-                        const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
-                        const imageUrl = imgMatch ? imgMatch[1] : 'https://via.placeholder.com/600x400?text=No+Image';
-
-                        const article = document.createElement('div');
-                        article.className = `fade-in border-b lg:border-0`;
-                        // Add delay based on index for staggered animation
-                        article.style.animationDelay = `${index * 0.1}s`;
-
-                        article.innerHTML = `
-                            <a href="${item.link}" target="_blank" class="block group overflow-hidden rounded-lg">
-                                <div class="overflow-hidden rounded-md aspect-video mb-4">
-                                    <img src="${imageUrl}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 rounded-md" />
-                                </div>
-                                <h2 class="headline text-xl sm:text-2xl leading-snug group-hover:underline transition duration-300">${item.title}</h2>
-                                <p class="text-xs uppercase text-gray-400 mt-1">${new Date(item.pubDate).toLocaleDateString()}</p>
-                                <p class="text-base text-gray-700 mt-4 line-clamp-4">${item.description.replace(/<[^>]+>/g, '').slice(0, 200)}...</p>
-                            </a>
-                        `;
-
-                        container.appendChild(article);
-                    });
-                } else {
-                    container.innerHTML = '<p class="text-center py-10 col-span-full">No articles found.</p>';
+                const response = await fetch(apiUrl, { cache: 'no-cache' });
+                if (!response.ok) {
+                    throw new Error(`Article JSON request failed (HTTP ${response.status})`);
                 }
+
+                const data = await response.json();
+                if (data.status !== 'ok' || !Array.isArray(data.items)) {
+                    throw new Error('Unexpected article JSON format');
+                }
+
+                container.replaceChildren();
+                if (data.items.length === 0) {
+                    container.innerHTML = '<p class="text-center py-10 col-span-full">No articles found.</p>';
+                    return;
+                }
+
+                data.items.forEach((item, index) => {
+                    // Decode descriptions as text, and inspect article HTML for an image.
+                    const articleHtml = new DOMParser().parseFromString(
+                        item.content || item.description || '', 'text/html'
+                    );
+                    const firstImage = articleHtml.querySelector('img[src]');
+                    const fallbackImage = '/imgs/favicon.png';
+                    const imageCandidate = firstImage?.getAttribute('src') || fallbackImage;
+                    const imageUrl = /^https?:\/\//i.test(imageCandidate) || imageCandidate.startsWith('/')
+                        ? imageCandidate : fallbackImage;
+
+                    const summaryHtml = new DOMParser().parseFromString(
+                        item.description || '', 'text/html'
+                    );
+                    const summaryText = (summaryHtml.body.textContent || '').trim();
+                    const summary = summaryText.length > 200
+                        ? `${summaryText.slice(0, 200)}...` : summaryText;
+
+                    const article = document.createElement('div');
+                    article.className = 'fade-in border-b lg:border-0';
+                    article.style.animationDelay = `${index * 0.1}s`;
+
+                    const link = document.createElement('a');
+                    link.className = 'block group overflow-hidden rounded-lg';
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    const articleLink = item.link || '';
+                    link.href = /^https?:\/\//i.test(articleLink) ? articleLink : '#';
+
+                    const imageWrap = document.createElement('div');
+                    imageWrap.className = 'overflow-hidden rounded-md aspect-video mb-4';
+                    const image = document.createElement('img');
+                    image.src = imageUrl;
+                    image.alt = item.title || 'Article thumbnail';
+                    image.loading = 'lazy';
+                    image.className = 'w-full h-full object-cover group-hover:scale-105 transition duration-500 rounded-md';
+                    imageWrap.appendChild(image);
+
+                    const headline = document.createElement('h2');
+                    headline.className = 'headline text-xl sm:text-2xl leading-snug group-hover:underline transition duration-300';
+                    headline.textContent = item.title || 'Untitled article';
+
+                    const date = document.createElement('p');
+                    date.className = 'text-xs uppercase text-gray-400 mt-1';
+                    const parsedDate = new Date(item.pubDate || '');
+                    date.textContent = Number.isNaN(parsedDate.getTime())
+                        ? '' : parsedDate.toLocaleDateString();
+
+                    const description = document.createElement('p');
+                    description.className = 'text-base text-gray-700 mt-4 line-clamp-4';
+                    description.textContent = summary;
+
+                    link.append(imageWrap, headline, date, description);
+                    article.appendChild(link);
+                    container.appendChild(article);
+                });
             } catch (error) {
                 console.error('Error loading articles:', error);
                 container.innerHTML = '<p class="text-center py-10 col-span-full text-red-500">Failed to load articles. Please try again later.</p>';
