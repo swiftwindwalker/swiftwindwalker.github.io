@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
-
+<!-- Add lang="en" to the existing opening html tag -->
 <head>
-    <title>HaloView AR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HaloView AR | Interactive 3D & Augmented Reality Viewer</title>
+    <meta name="description"
+        content="Explore 3D models with HaloView AR, an interactive browser-based viewer with augmented reality capabilities on compatible devices.">
+
+    <link rel="canonical" href="https://www.ravzzy.com/games/augmented-reality.html">
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/navbar.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
@@ -17,12 +22,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script type="module" src="/js/onload.js"></script>
+    <script type="module" src="/js/onload.js"></script>
     <script type="module" src="/js/navbar.js"></script>
     <script type="module" src="/js/sidebar.js"></script>
     <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
     <style>
-            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 
         /* Prevent any scrolling on the page */
@@ -65,7 +70,7 @@
             z-index: 10;
         }
 
-       .controls button {
+        .controls button {
             padding: 12px 20px;
             font-size: 1rem;
             background: rgba(0, 150, 255, 0.7);
@@ -134,10 +139,11 @@
             }
 
             .menu-btn {
-                font-size : 4rem;
+                font-size: 4rem;
             }
+
             .menu-link {
-                font-size : 4rem;
+                font-size: 4rem;
 
             }
 
@@ -238,7 +244,7 @@
             lighting.style.height = '100vh';
             lighting.style.background = 'radial-gradient(circle at center, rgba(0,255,255,0.1) 0%, transparent 60%)';
             lighting.style.pointerEvents = 'none';
-           // lighting.style.animation = 'rotate 20s linear infinite';
+            // lighting.style.animation = 'rotate 20s linear infinite';
             document.body.appendChild(lighting);
 
             // CSS for lighting animation
