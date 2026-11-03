@@ -4,15 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GhostCut AI - Bg Remover</title>
+    <title>Free AI Background Remover | GhostCut AI by Ravzzy</title>
+    <meta name="description"
+        content="Remove image backgrounds using GhostCut AI, a free browser-based background removal tool. Create transparent images without uploading them to a server.">
+    <link rel="canonical" href="https://www.ravzzy.com/app/remove-background/home.html">
+
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/navbar.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VS2WHLJQNE"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -26,24 +30,34 @@
     <link rel="shortcut icon" href="/imgs/favicon.png" type="image/x-icon" />
     <style>
         :root {
-        --primary: #e61618; /* Changed to red */
-        --primary-light: #2b2b2b; /* Dark grey */
-        --success: #10b981;
-        --error: #ef4444;
-        --warning: #f59e0b;
-        --gray-100: #121212; /* Dark background */
-        --gray-200: #1e1e1e; /* Slightly lighter dark */
-        --gray-300: #2d2d2d; /* Borders */
-        --gray-400: #4a4a4a; /* Secondary text */
-        --gray-500: #7a7a7a; /* Subtle text */
-        --gray-600: #a0a0a0; /* Main text */
-        --gray-700: #c0c0c0; /* Bright text */
-        --gray-800: #e0e0e0; /* Very bright text */
-        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-        --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-    }
+            --primary: #e61618;
+            /* Changed to red */
+            --primary-light: #2b2b2b;
+            /* Dark grey */
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --gray-100: #121212;
+            /* Dark background */
+            --gray-200: #1e1e1e;
+            /* Slightly lighter dark */
+            --gray-300: #2d2d2d;
+            /* Borders */
+            --gray-400: #4a4a4a;
+            /* Secondary text */
+            --gray-500: #7a7a7a;
+            /* Subtle text */
+            --gray-600: #a0a0a0;
+            /* Main text */
+            --gray-700: #c0c0c0;
+            /* Bright text */
+            --gray-800: #e0e0e0;
+            /* Very bright text */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        }
 
         * {
             box-sizing: border-box;
@@ -65,7 +79,7 @@
 
         .container {
             max-width: 95vw;
-            margin-top:5vh !important;
+            margin-top: 5vh !important;
             margin: 0 auto;
             background: #1a1a1a;
             border-radius: 12px;
@@ -198,8 +212,8 @@
 
         .btn-secondary {
             background-color: var(--gray-300);
-        color: var(--gray-700);
-        border: 1px solid var(--gray-400);  
+            color: var(--gray-700);
+            border: 1px solid var(--gray-400);
         }
 
         .btn-secondary:hover {
@@ -249,8 +263,8 @@
             border: 1px solid var(--gray-300);
             overflow: hidden;
             background:
-            linear-gradient(45deg, var(--gray-300) 25%, transparent 25%, transparent 75%, var(--gray-300) 75%),
-            linear-gradient(45deg, var(--gray-300) 25%, transparent 25%, transparent 75%, var(--gray-300) 75%);
+                linear-gradient(45deg, var(--gray-300) 25%, transparent 25%, transparent 75%, var(--gray-300) 75%),
+                linear-gradient(45deg, var(--gray-300) 25%, transparent 25%, transparent 75%, var(--gray-300) 75%);
             background-size: 20px 20px;
             background-position: 0 0, 10px 10px;
         }
@@ -536,11 +550,12 @@
                 max-width: 100%;
             }
 
-            .status-title, .status-message{
+            .status-title,
+            .status-message {
                 text-align: center;
             }
 
-            footer-msg{
+            footer-msg {
                 font-size: 0.7rem;
             }
 
@@ -558,7 +573,8 @@
     <div class="container">
         <header>
             <h1>GhostCut AI</h1>
-            <p class="subtitle">Effortlessly Remove Backgrounds with AI Anyonymously- Try It Now and Enhance Your Images Instantly! </p>
+            <p class="subtitle">Effortlessly Remove Backgrounds with AI Anyonymously- Try It Now and Enhance Your Images
+                Instantly! </p>
         </header>
 
         <div class="content">
@@ -788,7 +804,7 @@
         async function init() {
             try {
 
-                
+
                 showLoading("Initializing application...");
 
                 // Try WebGL first, fallback to CPU
