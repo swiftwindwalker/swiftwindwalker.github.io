@@ -15,9 +15,42 @@ function updateScroll(){
 }
 addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(updateScroll);}},{passive:true});
 addEventListener('resize',updateScroll);updateScroll();
-const descriptions={overview:'Illustrative overview: total balance, income, expenses and category chart',accounts:'Illustrative accounts: bank and cash balances, credit limit and billing day',plan:'Illustrative planning: monthly budget and savings goals'};
-const tabs=[...document.querySelectorAll('[role="tab"]')];
-function activate(tab){tabs.forEach(t=>{t.setAttribute('aria-selected',String(t===tab));t.tabIndex=t===tab?0:-1;});const image=document.getElementById('feature-screen');image.src=`assets/${tab.dataset.screen}.svg`;image.alt=descriptions[tab.dataset.screen];document.getElementById('feature-panel').setAttribute('aria-labelledby',tab.id);}
+const screens = {
+ overview: {src:'assets/screenshots/overview-light.webp', alt:'Koinmi Overview in light grey with unified balances and account page controls', title:'Overview'},
+ activity: {src:'assets/screenshots/activity-light.webp', alt:'Koinmi Activity transaction calendar and matching daily transactions', title:'Activity'},
+ plan: {src:'assets/screenshots/plan-light.webp', alt:'Koinmi Plan with daily budget perspective, monthly budget and category limits', title:'Plan'},
+ insights: {src:'assets/screenshots/insights-light.webp', alt:'Koinmi Insights donut chart and spending categories', title:'Insights'},
+ settings: {src:'assets/screenshots/settings-light.webp', alt:'Koinmi Settings with organised collapsible categories', title:'Settings'}
+};
+const appearances = {
+ light: {src:'assets/screenshots/overview-light.webp', title:'Light Grey'},
+ grey: {src:'assets/screenshots/overview-dark-grey.webp', title:'Dark Grey'},
+ lilac: {src:'assets/screenshots/overview-dark-lilac.webp', title:'Dark Lilac'}
+};
+const tabs=[...document.querySelectorAll('.feature-list [role="tab"]')];
+const appearanceButtons=[...document.querySelectorAll('[data-appearance]')];
+let selectedAppearance='light';
+let selectedScreen='overview';
+function renderScreen(){
+ const image=document.getElementById('feature-screen');
+ const screen=screens[selectedScreen];
+ if(!image || !screen) return;
+ const overview=selectedScreen==='overview';
+ const appearance=appearances[selectedAppearance];
+ image.src=overview ? appearance.src : screen.src;
+ image.alt=overview ? `Koinmi Overview in ${appearance.title}, showing account balances, income, transfers and expenses` : screen.alt;
+ document.querySelector('.appearance-modes').hidden=!overview;
+ document.getElementById('feature-caption').textContent=`${screen.title} · ${overview ? appearance.title : 'Light Mode'}`;
+ appearanceButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.appearance===selectedAppearance)));
+ if(!reducedMotion && image.animate) image.animate([{opacity:0.4,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}],{duration:240,easing:'ease-out'});
+}
+function activate(tab){
+ tabs.forEach(t=>{t.setAttribute('aria-selected',String(t===tab));t.tabIndex=t===tab?0:-1;});
+ selectedScreen=tab.dataset.screen;
+ renderScreen();
+ document.getElementById('feature-panel').setAttribute('aria-labelledby',tab.id);
+}
+appearanceButtons.forEach(button=>button.addEventListener('click',()=>{selectedAppearance=button.dataset.appearance;renderScreen();}));
 tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>activate(tab));tab.addEventListener('keydown',event=>{let next;if(event.key==='ArrowDown'||event.key==='ArrowRight')next=(index+1)%tabs.length;if(event.key==='ArrowUp'||event.key==='ArrowLeft')next=(index-1+tabs.length)%tabs.length;if(event.key==='Home')next=0;if(event.key==='End')next=tabs.length-1;if(next!==undefined){event.preventDefault();activate(tabs[next]);tabs[next].focus();}});});
 document.getElementById('year').textContent=new Date().getFullYear();
 
@@ -52,7 +85,7 @@ policyExpand.addEventListener('click', () => {
  const expand = !topics.every(topic => topic.open);
  topics.forEach(topic => topic.open = expand);
  policyExpand.setAttribute('aria-expanded', String(expand));
- policyExpand.innerHTML = expand ? 'Collapse all sections <span aria-hidden="true">−</span>' : 'Expand all sections <span aria-hidden="true">+</span>';
+ policyExpand.innerHTML = expand ? 'Collapse All Sections <span aria-hidden="true">−</span>' : 'Expand All Sections <span aria-hidden="true">+</span>';
 });
 // Open a linked policy topic if a visitor uses a deep link to a disclosure.
 function openPolicyAnchor() {

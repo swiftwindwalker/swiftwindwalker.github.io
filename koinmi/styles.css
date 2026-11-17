@@ -2171,3 +2171,44 @@ h1,h2,h3,.brand,.feature-list strong{
 	}
 }
  
+/* Koinmi v2: real screens and a complete feature tour. Original theme/animation rules retained. */
+.phone img { display:block; height:auto; }
+.phone .island { display:none; }
+.feature-explorer { align-items:start; }
+.feature-screen-wrap { position:sticky; top:100px; padding-top:0; }
+.feature-controls { min-height:94px; position:relative; z-index:2; text-align:center; width:100%; }
+.appearance-modes { display:flex; flex-wrap:wrap; justify-content:center; gap:6px; padding:5px; border:1px solid var(--line); border-radius:24px; width:fit-content; margin:0 auto; }
+.appearance-modes[hidden] { display:none; }
+.appearance-modes button { border:0; border-radius:18px; padding:9px 12px; background:transparent; color:var(--muted); font:inherit; font-size:12px; cursor:pointer; min-height:40px; transition:background .2s,color .2s; }
+.appearance-modes button[aria-pressed=true] { background:#181818; color:white; }
+#feature-caption { font-size:12px; line-height:1.5; color:var(--muted); margin:12px 0 20px; }
+.feature-list button { padding:24px 0; }
+.feature-list strong { font-size:22px; line-height:1.35; display:block; }
+.feature-list small { font-size:14px; line-height:1.75; max-width:420px; margin-top:10px; }
+.feature-phone { transform:rotate(4deg); }
+.everyday-details { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px; padding-top:70px; margin-top:55px; border-top:1px solid var(--line); }
+.detail-index { font-size:10px; letter-spacing:.08em; color:var(--mint); }
+.everyday-details h3,.pro-feature h3 { font-size:22px; line-height:1.3; letter-spacing:-.035em; margin:16px 0 12px; font-weight:600; }
+.everyday-details p,.pro-feature p { color:var(--muted); font-size:14px; line-height:1.85; margin:0; }
+.pro-suite { border-top:1px solid var(--line); margin-top:80px; padding-top:65px; scroll-margin-top:105px; }
+.pro-intro { max-width:650px; }
+.pro-intro h2 { font-size:clamp(40px,5.5vw,72px); line-height:1.05; margin:18px 0 24px; letter-spacing:-.055em; }
+.pro-intro h2 span { color:var(--mint); }
+.pro-intro>p:last-child { font-size:17px; color:var(--muted); line-height:1.8; max-width:560px; }
+.pro-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px; margin-top:45px; }
+.pro-feature { border-top:1px solid var(--line); padding-top:22px; }
+.pro-free-note { font-size:13px; line-height:1.9; color:var(--muted); margin-top:38px; max-width:900px; }
+button:focus-visible,a:focus-visible,[role=tabpanel]:focus-visible { outline:2px solid var(--mint); outline-offset:5px; }
+@media(max-width:900px) { .everyday-details,.pro-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; } }
+@media(max-width:640px) {
+ .navlinks a[href="#pro"] { display:none; }
+ .feature-screen-wrap { position:relative; top:auto; min-height:570px; }
+ .feature-list strong { font-size:21px; }
+ .feature-controls { min-height:98px; }
+ .everyday-details,.pro-grid { grid-template-columns:1fr; gap:28px; }
+ .everyday-details { padding-top:40px; margin-top:35px; }
+ .pro-suite { margin-top:45px; padding-top:45px; }
+ .pro-intro h2 { font-size:44px; }
+}
+@media(prefers-reduced-motion:reduce) { .feature-phone { transform:none; } }
+@media print { .feature-screen-wrap { position:static; } .pro-feature,.everyday-details article { break-inside:avoid; } }
