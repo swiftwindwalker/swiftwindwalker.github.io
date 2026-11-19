@@ -15,8 +15,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <title>Soriketo — Free for Life. Ad-Free for Life. | Ravzzy</title>
   <link rel="icon" href="assets/soriketo-icon.png">
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=2">
+  <script src="script.js?v=2" defer></script>
 </head>
 <body id="top">
   <a href="#main" class="skip">Skip to content</a>
@@ -26,7 +26,7 @@
       <div class="nav-links">
         <a href="#features">Explore</a>
         <a href="#privacy-policy">Privacy</a>
-        <a href="#support">Support</a>
+        <a href="#support">FAQ &amp; Support</a>
         <a href="https://www.ravzzy.com/">Ravzzy</a>
       </div>
       <a class="pill nav-cta" href="#availability">iPhone &amp; iPad</a>
@@ -44,7 +44,7 @@
             <img src="assets/screens/saved-light.webp" width="600" height="1228" alt="Soriketo’s Saved Stories magazine in light mode" decoding="async">
           </figure>
           <figure class="device hero-right">
-            <img src="assets/screens/profile-light.webp" width="600" height="1228" alt="Soriketo’s private reader profile in light mode" decoding="async">
+            <img src="assets/screens/profile-light.webp?v=2" width="600" height="1228" alt="Soriketo’s private reader profile in light mode" decoding="async">
           </figure>
           <figure class="device hero-center">
             <img src="assets/screens/edition-dark.webp" width="600" height="1228" alt="A Soriketo edition in dark mode, with story photography and topic filters" decoding="async" fetchpriority="high">
@@ -65,8 +65,8 @@
           <div class="screen-picker" role="group" aria-label="Choose an app screen">
             <button type="button" data-screen="edition" aria-pressed="true"><strong>Your Edition</strong><span>Follow the subjects you love and browse stories in a magazine-style layout.</span></button>
             <button type="button" data-screen="saved" aria-pressed="false"><strong>Saved Stories</strong><span>Keep the stories that stayed with you in a magazine of their own.</span></button>
-            <button type="button" data-screen="profile" aria-pressed="false"><strong>Your Reading Room</strong><span>Find recent reads, set a profile photo and collect optional reading flairs.</span></button>
-            <button type="button" data-screen="settings" aria-pressed="false"><strong>Make It Yours</strong><span>Choose your appearance, manage sources and decide how you want to read.</span></button>
+            <button type="button" data-screen="profile" aria-pressed="false"><strong>Your Reading Room</strong><span>Revisit recent reads, see your achievements and make the space yours with a name and photo.</span></button>
+            <button type="button" data-screen="settings" aria-pressed="false"><strong>Make It Yours</strong><span>Follow topics, add your own feeds, switch appearance and set reminders or backups.</span></button>
           </div>
           <div class="screen-display" data-mode="light">
             <div class="mode-picker" role="group" aria-label="Screenshot appearance">
@@ -101,49 +101,162 @@
       </div>
     </section>
 
-    <div class="wrap section help-grid">
+    <div class="wrap section privacy-section">
       <section id="privacy-policy" aria-labelledby="privacy-title">
         <p class="eyebrow">Privacy</p>
         <h2 id="privacy-title">Your reading<br><em>stays yours.</em></h2>
-        <p>Soriketo needs no account. Your reader profile, preferences, saved stories, reading history and flairs are stored on your device.</p>
+        <p>Soriketo needs no account. Your reader profile, preferences, saved stories, reading history and achievements are stored on your device.</p>
         <details>
           <summary>Read the Privacy Policy</summary>
           <div class="disclosure">
             <h3>Reading and storage</h3>
-            <p>Soriketo stores reading data and cached content locally. The app has no advertising or advertising trackers. Optional summaries use Apple Intelligence on supported devices.</p>
+            <p>Soriketo stores reading data and cached content locally. The app has no advertising or advertising trackers. Optional summaries use Apple Intelligence on supported devices. Reading reminders are scheduled on your device.</p>
             <h3>Publishers and content</h3>
             <p>Soriketo connects directly to publishers and content hosts to fetch feeds, stories and images. Those services can receive standard request information, such as your IP address. When you open a publisher’s website, its own privacy policy applies.</p>
             <h3>Backups, tips and support</h3>
             <p>If you export or schedule a backup, Soriketo writes the file to the Files location you choose. Your selected storage provider may sync it. Apple processes optional tips through the App Store. If you email for support, Ravzzy receives the information you share in the message.</p>
             <h3>Managing your data</h3>
-            <p>You can clear reading history in Profile, remove saved stories in the app and manage exported backup files in Files.</p>
+            <p>You can clear reading history in Profile, reset Edition’s read status in Settings, remove saved stories and manage exported backups in Files.</p>
           </div>
         </details>
       </section>
-      <section id="support" aria-labelledby="support-title">
-        <p class="eyebrow">Support</p>
-        <h2 id="support-title">How can<br><em>we help?</em></h2>
-        <details>
-          <summary>Will Soriketo always be free?</summary>
-          <p>Yes. Soriketo is free and ad-free for life. Optional tips support development and don’t unlock features or renew automatically.</p>
-        </details>
-        <details>
-          <summary>How do I follow a source?</summary>
-          <p>Open Profile, then tap Settings and choose Sources. You can enable a built-in source or add a public RSS or Atom feed and assign it to a topic you follow.</p>
-        </details>
-        <details>
-          <summary>Can I read offline?</summary>
-          <p>Previously prepared articles can be read offline while they’re stored on your device. Fetching new stories or opening a publisher’s website requires a connection.</p>
-        </details>
-        <a class="pill support-link" href="mailto:ravzzyytube+soriketo@gmail.com">Email Soriketo support</a>
-      </section>
     </div>
+    <section class="section faq" id="support" aria-labelledby="support-title">
+      <div class="wrap">
+        <div class="section-intro">
+          <p class="eyebrow">Help &amp; Support</p>
+          <h2 id="support-title">Soriketo <em>FAQ.</em></h2>
+          <p>Set up your Edition, find feeds you want to follow, and manage your reading and backups.</p>
+        </div>
+        <nav class="faq-nav" aria-label="FAQ topics">
+          <a href="#faq-edition">Reading &amp; Edition</a>
+          <a href="#faq-sources">Topics &amp; Sources</a>
+          <a href="#faq-settings">Reading Settings</a>
+          <a href="#faq-backups">Backups &amp; Data</a>
+        </nav>
+        <div class="faq-grid">
+          <section class="faq-group" id="faq-edition" aria-labelledby="faq-edition-title">
+            <h3 id="faq-edition-title">Reading &amp; Edition</h3>
+            <details>
+              <summary>Is Soriketo free? What is the Tip Jar?</summary>
+              <p>Soriketo is free and ad-free for life. Optional one-time tips through the App Store support development. Every feature is available without a tip, and tips never renew automatically. Publisher websites may display their own ads or subscription prompts.</p>
+            </details>
+            <details>
+              <summary>How do I refresh Edition or find more stories?</summary>
+              <p>Pull down from the top of Edition or a topic and release to check your sources. New unread stories go first. If there are no new entries, Soriketo can surface other unread stories from the cache. Swipe up at the bottom to load more.</p>
+            </details>
+            <details>
+              <summary>Why does the first Edition take longer?</summary>
+              <p>On first use, Soriketo prepares stories and images from the topics you chose. If a matching Edition was prepared by a successful background or manual refresh in the last 12 hours, the app can reuse it on launch without starting another automatic refresh. iOS decides when background refresh runs, so you can always pull down to check for more.</p>
+            </details>
+            <details>
+              <summary>Where did a story go after I opened it?</summary>
+              <p>Edition and its topic views show unread stories. Opened stories can be found in Profile under Reading History. Save a story with the bookmark icon to keep it in Saved, where you can pull down to reveal search.</p>
+            </details>
+            <details>
+              <summary>Can I read offline or copy a passage?</summary>
+              <p>Previously prepared articles can be read offline while their content is cached on your device. New stories and publisher websites need a connection. In the native reader, tap the copy icon and choose <strong>Select Text</strong> for a passage or <strong>Copy Entire Article</strong> for the full text.</p>
+            </details>
+          </section>
+          <section class="faq-group" id="faq-sources" aria-labelledby="faq-sources-title">
+            <h3 id="faq-sources-title">Topics &amp; Sources</h3>
+            <details>
+              <summary>How do I follow topics and manage built-in sources?</summary>
+              <p>Open <strong>Profile → Settings → Subscribed Topics</strong> to follow or unfollow topics. Open <strong>Sources</strong> to turn individual publishers on or off. The pencil beside a built-in source lets you rename it, change its topic, or use a replacement feed.</p>
+            </details>
+            <details>
+              <summary>How do I add my own source?</summary>
+              <div class="disclosure">
+                <ol>
+                  <li>Open <strong>Profile → Settings → Sources → Add Custom Source</strong>.</li>
+                  <li>Paste a public <strong>HTTPS RSS or Atom feed URL</strong>. You can give the source your own name.</li>
+                  <li>Assign it to a topic you follow, or choose <strong>Create Topic</strong>. Tap <strong>Save</strong> to check the feed. If you pick an existing topic you don’t follow, turn it on under <strong>Subscribed Topics</strong>.</li>
+                </ol>
+                <p>Use the switch beside a custom source to pause it, or the three-dot menu to edit or delete it.</p>
+              </div>
+            </details>
+            <details>
+              <summary>How do I find a publisher’s feed URL?</summary>
+              <div class="disclosure">
+                <ol>
+                  <li>Look on the publisher’s website for <strong>RSS</strong>, <strong>Atom</strong>, <strong>Feeds</strong>, or the RSS icon. The footer and Help pages are good places to start.</li>
+                  <li>If you can’t find it, search for the publisher or blog name followed by <strong>RSS feed</strong>. Some publishers offer separate feeds for each section.</li>
+                  <li>Copy the link to the feed itself. It may show raw XML or open a feed preview in your browser. You can see examples on <a href="https://www.nasa.gov/rss-feeds/">NASA’s RSS feeds page</a> and <a href="https://www.theguardian.com/help/feeds">The Guardian’s feed help page</a>.</li>
+                </ol>
+                <p>Some websites don’t publish a public feed. Soriketo needs an RSS or Atom feed URL to add them as custom sources.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Why is a source missing or showing no articles?</summary>
+              <p>Check that the feed URL is public, uses HTTPS, and opens without signing in. Make sure the source is enabled and its topic is followed. If the feed only publishes summaries or provides links to stories Soriketo can’t prepare in its reader, turn off <strong>In-App Reading Only</strong> to include eligible publisher stories. Pull to refresh after checking.</p>
+            </details>
+          </section>
+          <section class="faq-group" id="faq-settings" aria-labelledby="faq-settings-title">
+            <h3 id="faq-settings-title">Reading Settings</h3>
+            <details>
+              <summary>What does In-App Reading Only do?</summary>
+              <p>When it’s on, Edition includes stories Soriketo can present in its native reader. Turn it off to also include eligible articles that open in the publisher’s web view. Publisher subscriptions and paywalls still apply on the publisher’s site.</p>
+            </details>
+            <details>
+              <summary>How do I change the appearance?</summary>
+              <p>Go to <strong>Profile → Settings → Appearance</strong> and choose <strong>System</strong>, <strong>Light</strong>, or <strong>Dark</strong>. System follows your device’s appearance setting.</p>
+            </details>
+            <details>
+              <summary>How do I use Apple Intelligence summaries?</summary>
+              <p>Turn on <strong>Apple Intelligence</strong> in Soriketo Settings, then tap the sparkle icon in a native article. The button appears when Apple Intelligence is available on the device. Check the device’s Apple Intelligence settings if it’s missing.</p>
+            </details>
+            <details>
+              <summary>How do Reading Reminders work?</summary>
+              <p>Reading Reminder is on by default, with delivery subject to iOS notification permission. Choose a time in Settings. Soriketo sends one reminder at the next occurrence of that time after at least 72 hours away. Opening the app resets the wait. Tap the reminder to open Edition, or use <strong>Send Test Notification</strong> to check delivery in about five seconds. You can turn reminders off at any time.</p>
+            </details>
+            <details>
+              <summary>How do I change my profile name or photo?</summary>
+              <p>Tap the pencil on your reading room in <strong>Profile</strong>. Update your name or choose a photo and save your changes. This profile is stored on your device.</p>
+            </details>
+            <details>
+              <summary>What counts toward streaks and achievements?</summary>
+              <p>With <strong>Track Reading Streak</strong> on, opening Soriketo on consecutive days builds your streak. Achievements also recognize distinct articles opened, saved, or shared. See your progress in <strong>Profile → View All Achievements</strong>.</p>
+            </details>
+          </section>
+          <section class="faq-group" id="faq-backups" aria-labelledby="faq-backups-title">
+            <h3 id="faq-backups-title">Backups &amp; Data</h3>
+            <details>
+              <summary>How do I back up or move my reading data?</summary>
+              <p>Open <strong>Profile → Settings → Backup &amp; Restore → Export a New Backup</strong> and choose a location in Files. On another device, use <strong>Restore from File</strong> and confirm that you want to replace its current profile data. The JSON backup includes saved stories, reading history, read status, achievements, and settings. Backup folder access is device-specific, so choose a folder again when needed.</p>
+            </details>
+            <details>
+              <summary>How do I schedule backups or choose a folder?</summary>
+              <p>Open <strong>Backup &amp; Restore → Scheduled Backups</strong>, then use <strong>Choose a Folder in Files</strong> or <strong>Change Folder in Files</strong>. Select a writable location and choose <strong>Daily</strong>, <strong>Weekly</strong>, or <strong>Every 30 days</strong>. <strong>Back Up Now</strong> writes on demand. iOS can defer scheduled backups. Soriketo also checks for overdue backups when you open it.</p>
+            </details>
+            <details>
+              <summary>Will each scheduled backup create a new file?</summary>
+              <p>Turn on <strong>Overwrite Previous Backup</strong> to update one file named <code>Soriketo-backup-latest.json</code>. Leave it off to keep dated copies. These files contain readable JSON and may include private reading data, so choose where you store or share them.</p>
+            </details>
+            <details>
+              <summary>What’s the difference between Clear Cache and Clear Reading History?</summary>
+              <p><strong>Clear Cache</strong> resets the read status used by Edition, so previously opened stories can appear again. <strong>Clear Reading History</strong> removes the list of recent reads from Profile and keeps the read status Edition uses. Saved stories and achievement progress are kept in both cases.</p>
+            </details>
+            <details>
+              <summary>What happens if I choose Restore to Default?</summary>
+              <p>Soriketo removes custom topics and sources, resets settings, turns off scheduled backups, and asks you to choose topics again. Your profile, saved stories, reading history, and achievements are kept. Use <strong>Open Backup &amp; Restore</strong> in the confirmation to export a backup before you reset.</p>
+            </details>
+          </section>
+        </div>
+        <div class="support-contact">
+          <div>
+            <h3>Still Need Help?</h3>
+            <p>Include your app version and iOS or iPadOS version, plus the steps that led to the issue. For a feed problem, include its public RSS or Atom URL.</p>
+          </div>
+          <a class="pill support-link" href="mailto:ravzzyytube+soriketo@gmail.com">Email Soriketo support</a>
+        </div>
+      </div>
+    </section>
   </main>
   <footer class="footer">
     <div class="wrap">
       <a class="brand" href="#top"><img src="assets/soriketo-icon.png" width="32" height="32" alt="">Soriketo<span aria-hidden="true">.</span></a>
       <a href="https://www.ravzzy.com/">Made by Ravzzy</a>
-      <div><a href="#privacy-policy">Privacy</a><a href="#support">Support</a></div>
+      <div><a href="#privacy-policy">Privacy</a><a href="#support">FAQ &amp; Support</a></div>
     </div>
   </footer>
 </body>

@@ -7,3 +7,5 @@ The app already links to `/soriketo/#privacy-policy` and `/soriketo/#support`. K
 When the public App Store listing is live, set `APP_STORE_URL` in `script.js` to the listing URL. The site will replace the development status with an App Store button. App Store Connect and TestFlight URLs are intended for their respective private and beta workflows.
 
 The four gallery choices each have a light and dark screenshot. The eight images are optimized WebP exports from the supplied iPhone captures with the status bar cropped. The app logo and the social sharing image are included.
+
+The FAQ lives at `#support` and retains the in-app support link. Its answers follow the Settings labels in the current Soriketo build.

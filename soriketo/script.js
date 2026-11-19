@@ -23,8 +23,8 @@ scheduleHeroMotion();
 const screenshots = {
   edition: ["Your Edition", "Soriketo’s edition with topic filters and an illustrated lead story"],
   saved: ["Saved Stories", "Soriketo’s Saved Stories with articles on space, nature and travel"],
-  profile: ["Your Reading Room", "Soriketo’s reader profile with the optional Tip Jar, flair collection and library"],
-  settings: ["Make It Yours", "Soriketo settings for topics, sources, appearance, reading and backups"]
+  profile: ["Your Reading Room", "Soriketo’s reader profile with the optional Tip Jar, unlocked achievements and reading library"],
+  settings: ["Make It Yours", "Soriketo settings for sources, appearance, Apple Intelligence, reading reminders and backups"]
 };
 
 const screenButtons = document.querySelectorAll("[data-screen]");
@@ -37,7 +37,8 @@ let appearance = "light";
 
 function showScreenshot() {
   const [title, description] = screenshots[screen];
-  screenshot.src = `assets/screens/${screen}-${appearance}.webp`;
+  const version = screen === "profile" || screen === "settings" ? "?v=2" : "";
+  screenshot.src = `assets/screens/${screen}-${appearance}.webp${version}`;
   screenshot.alt = `${description}, in ${appearance} mode`;
   screenDisplay.dataset.mode = appearance;
   caption.textContent = `${title} · ${appearance === "light" ? "Light" : "Dark"} mode`;
